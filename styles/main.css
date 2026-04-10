@@ -22,6 +22,7 @@
   --shadow-lg:      0 8px 40px rgba(43,191,160,0.15);
   --radius:         18px;
   --radius-sm:      10px;
+  --top-nav-height: 64px;
 }
 
 /* ── RESET ────────────────────────────────────────────── */
@@ -44,6 +45,12 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 /* ── SCROLLBAR ────────────────────────────────────────── */
@@ -69,7 +76,7 @@ a {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  height: 64px;
+  height: var(--top-nav-height);
   background: rgba(255,255,255,0.96);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -2109,8 +2116,8 @@ a {
 /* Full-screen map container */
 .map-page {
   width: 100vw;
-  height: calc(100dvh - 64px); /* leave room for shared top nav */
-  margin-top: 64px;
+  height: calc(100dvh - var(--top-nav-height)); /* leave room for shared top nav */
+  margin-top: var(--top-nav-height);
   overflow: hidden;
   position: relative;
   background: linear-gradient(145deg, #c8f0ea 0%, #a8e6dc 40%, #90ddd2 100%);

@@ -61,15 +61,18 @@ const AUTH_STATE_KEY = 'parkiiin:isAuthenticated';
 
 function setAuthState(isAuthenticated) {
   try {
-    if (isAuthenticated) localStorage.setItem(AUTH_STATE_KEY, '1');
+    if (isAuthenticated) localStorage.setItem(AUTH_STATE_KEY, 'true');
     else localStorage.removeItem(AUTH_STATE_KEY);
-  } catch (_) {}
+  } catch (error) {
+    console.warn('Auth state could not be persisted.', error);
+  }
 }
 
 function isAuthenticated() {
   try {
-    return localStorage.getItem(AUTH_STATE_KEY) === '1';
-  } catch (_) {
+    return localStorage.getItem(AUTH_STATE_KEY) === 'true';
+  } catch (error) {
+    console.warn('Auth state could not be read.', error);
     return false;
   }
 }
