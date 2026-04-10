@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Машины төрөл — Parkiiin</title>
+  <meta name="description" content="Parkiiin — бүртгэлтэй машинуудаа удирдаж, шинэ машин нэмнэ үү.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+
+  <!-- ── TOP NAV ───────────────────────────────────────── -->
+  <nav class="top-nav" id="topNav" aria-label="Үндсэн навигац">
+    <a class="nav-logo" href="../parkiiin.html">Parkiiin</a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="../parkiiin.html">Нүүр</a>
+      <a class="nav-link" href="findPark.html">Зогсоол</a>
+      <a class="nav-link" href="nearby_washing.html">Үйлчилгээ</a>
+      <a class="nav-link" href="tips.html">Зөвлөмж</a>
+      <a class="nav-link active" href="profile.html">Профайл</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()"
+            aria-label="Цэс нээх" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE MENU ──────────────────────────────────── -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link" href="findPark.html"    onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html"    onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html"        onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html"     onclick="closeMenu()">👤 Профайл</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       CAR TYPES PAGE
+  ══════════════════════════════════════════════════════════ -->
+  <main class="book-main">
+    <div class="book-content">
+
+      <!-- ── Back + Title ─────────────────────────────── -->
+      <div class="book-header">
+        <a href="profile.html" class="back-btn" aria-label="Профайл руу буцах">←</a>
+        <h1 class="book-page-title">Машины төрөл</h1>
+      </div>
+
+      <!-- ── Registered vehicles card ─────────────────── -->
+      <div class="section-card">
+
+        <!-- Card header: title + count -->
+        <div class="subpage-card-header">
+          <span class="subpage-card-title">Бүртгэлтэй машинууд</span>
+          <span class="subpage-card-badge" id="carCountBadge">Нийт: 2</span>
+        </div>
+
+        <!-- Vehicle list -->
+        <ul class="car-list" id="carList" role="list" aria-label="Машины жагсаалт">
+
+          <li>
+            <a href="car_detail.html?plate=1234AAU" class="vehicle-row vehicle-row--link"
+               aria-label="Toyota Prius 30 — 1234 AAU">
+              <span class="vehicle-emoji" aria-hidden="true">🚗</span>
+              <div class="vehicle-info">
+                <div class="vehicle-plate">1234 AAU</div>
+                <div class="vehicle-model">Toyota Prius 30</div>
+              </div>
+              <span class="menu-arrow" aria-hidden="true">›</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="car_detail.html?plate=5678UBB" class="vehicle-row vehicle-row--link vehicle-row--last"
+               aria-label="Hyundai Sonata — 5678 УББ">
+              <span class="vehicle-emoji" aria-hidden="true">🚗</span>
+              <div class="vehicle-info">
+                <div class="vehicle-plate">5678 УББ</div>
+                <div class="vehicle-model">Hyundai Sonata</div>
+              </div>
+              <span class="menu-arrow" aria-hidden="true">›</span>
+            </a>
+          </li>
+
+        </ul><!-- /carList -->
+      </div><!-- /section-card -->
+
+      <!-- ── Add vehicle button ────────────────────────── -->
+      <button class="car-add-btn" id="addCarBtn" onclick="addCar()"
+              aria-label="Шинэ машин нэмэх">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="16"/>
+          <line x1="8"  y1="12" x2="16" y2="12"/>
+        </svg>
+        Машин нэмэх
+      </button>
+
+      <!-- ── Hint paragraph ────────────────────────────── -->
+      <p class="car-hint">
+        Та өөрийн эзэмшдэг болон байнга ашигладаг машинуудаа энд бүртгүүлж,
+        зогсоолын төлбөрөө хялбархан төлөөрэй.
+      </p>
+
+      <!-- ── Add-car sheet (hidden by default) ─────────── -->
+      <div class="car-sheet" id="addCarSheet" role="dialog"
+           aria-modal="true" aria-label="Машин нэмэх" aria-hidden="true">
+
+        <div class="car-sheet-inner">
+          <div class="map-detail-handle" aria-hidden="true"></div>
+
+          <div class="car-sheet-header">
+            <h2 class="car-sheet-title">Машин нэмэх</h2>
+            <button class="car-sheet-close" onclick="closeAddCar()" aria-label="Хаах">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6"  y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+
+          <form id="addCarForm" onsubmit="submitAddCar(event)" novalidate>
+
+            <!-- Plate number -->
+            <div class="form-g">
+              <label class="form-l" for="newPlate">Улсын дугаар</label>
+              <input class="form-i" id="newPlate" type="text"
+                     placeholder="1234 AAU" autocomplete="off" required>
+            </div>
+
+            <!-- Model -->
+            <div class="form-g">
+              <label class="form-l" for="newModel">Маркийн нэр</label>
+              <input class="form-i" id="newModel" type="text"
+                     placeholder="Toyota Prius 30" required>
+            </div>
+
+            <!-- Vehicle type emoji picker -->
+            <div class="form-g">
+              <label class="form-l">Машины төрөл</label>
+              <div class="car-type-grid" id="carTypeGrid" role="group"
+                   aria-label="Машины төрөл сонгох">
+                <button type="button" class="car-type-btn active" data-emoji="🚗"
+                        onclick="selectCarType(this)">🚗 Седан</button>
+                <button type="button" class="car-type-btn" data-emoji="🚙"
+                        onclick="selectCarType(this)">🚙 Жип</button>
+                <button type="button" class="car-type-btn" data-emoji="🚐"
+                        onclick="selectCarType(this)">🚐 Бус</button>
+                <button type="button" class="car-type-btn" data-emoji="🚕"
+                        onclick="selectCarType(this)">🚕 Такси</button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-full" id="addCarSubmitBtn">
+              Машин нэмэх →
+            </button>
+
+          </form>
+        </div>
+
+      </div><!-- /car-sheet -->
+
+      <!-- Sheet backdrop -->
+      <div class="car-sheet-backdrop" id="addCarBackdrop"
+           onclick="closeAddCar()" aria-hidden="true"></div>
+
+    </div><!-- /book-content -->
+  </main>
+
+  <!-- ── BOTTOM NAV ────────────────────────────────────── -->
+  <nav class="bottom-nav booking-bottom-nav" id="bottomNav" aria-label="Доод навигац">
+    <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Нүүр
+    </a>
+    <a class="bottom-nav-item" href="findPark.html" aria-label="Хайх">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Хайх
+    </a>
+    <a class="bottom-nav-item" href="nearby_washing.html" aria-label="Үйлчилгээ">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Үйлчилгээ
+    </a>
+    <a class="bottom-nav-item" href="tips.html" aria-label="Зөвлөмж">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      Зөвлөмж
+    </a>
+    <a class="bottom-nav-item active" href="profile.html" aria-label="Профайл">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Профайл
+    </a>
+  </nav>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

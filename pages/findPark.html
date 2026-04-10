@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зогсоол хайх — Parkiiin</title>
+  <meta name="description" content="Parkiiin — Улаанбаатарын 200+ зогсоол, угаалга, засварын газруудыг газрын зурагт хайна уу.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body class="map-body">
+
+  <!-- ══════════════════════════════════════════════════════
+       FIND PARKING PAGE  (extracted from parkiiin.html #parking)
+  ══════════════════════════════════════════════════════════ -->
+  <div class="map-page" id="mapPage" role="main" aria-label="Зогсоол хайх">
+
+    <!-- ── MAP BACKGROUND ──────────────────────────────── -->
+    <div class="map-canvas" aria-hidden="true">
+      <!-- Decorative road grid -->
+      <div class="map-road map-road--h" style="top:30%"></div>
+      <div class="map-road map-road--h" style="top:52%"></div>
+      <div class="map-road map-road--h" style="top:70%"></div>
+      <div class="map-road map-road--v" style="left:25%"></div>
+      <div class="map-road map-road--v" style="left:50%"></div>
+      <div class="map-road map-road--v" style="left:72%"></div>
+      <!-- City blocks -->
+      <div class="map-block" style="top:10%;left:5%;width:16%;height:16%"></div>
+      <div class="map-block" style="top:10%;left:28%;width:18%;height:16%"></div>
+      <div class="map-block" style="top:10%;left:53%;width:14%;height:16%"></div>
+      <div class="map-block" style="top:10%;right:5%;width:16%;height:16%"></div>
+      <div class="map-block" style="top:34%;left:5%;width:16%;height:14%"></div>
+      <div class="map-block" style="top:34%;left:28%;width:18%;height:14%"></div>
+      <div class="map-block" style="top:34%;left:53%;width:14%;height:14%"></div>
+      <div class="map-block" style="top:34%;right:5%;width:16%;height:14%"></div>
+      <div class="map-block" style="top:56%;left:5%;width:16%;height:10%"></div>
+      <div class="map-block" style="top:56%;left:28%;width:18%;height:10%"></div>
+      <div class="map-block" style="top:56%;right:5%;width:16%;height:10%"></div>
+    </div>
+
+    <!-- ── FLOATING TOP UI ─────────────────────────────── -->
+    <div class="map-top-ui" role="search">
+
+      <!-- Search row -->
+      <div class="map-search-row">
+        <div class="search-bar map-search-bar">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="mapSearchInput" placeholder="Зогсоол, хаяг хайх..."
+                 autocomplete="off" aria-label="Зогсоол хайх"
+                 oninput="filterParkingCards(this.value)">
+        </div>
+        <button class="map-filter-btn" id="mapFilterBtn" onclick="toggleMapFilter(this)"
+                aria-label="Шүүлтүүр" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="4" y1="6" x2="20" y2="6"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+            <line x1="11" y1="18" x2="13" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Category + service tabs (from PARKING section) -->
+      <div class="map-cats" role="tablist" aria-label="Ангилал">
+        <button class="map-cat active" role="tab" aria-selected="true"
+                onclick="mapCat(this)" data-cat="parking">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="1" y="3" width="15" height="13" rx="2"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          Зогсоол
+        </button>
+        <button class="map-cat map-cat--blue" role="tab" aria-selected="false"
+                onclick="mapCat(this); location.href='src/pages/nearby_washing.html'" data-cat="wash">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+          Угаалга
+        </button>
+        <button class="map-cat map-cat--orange" role="tab" aria-selected="false"
+                onclick="mapCat(this); location.href='src/pages/nearby_repairing.html'" data-cat="repair">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+          Засвар
+        </button>
+      </div>
+
+      <!-- Sort filter pills (from PARKING section: Бүгд/Ойрхон/Хямд/Чөлөөтэй) -->
+      <div class="map-sort-tabs" role="group" aria-label="Эрэмбэлэлт">
+        <button class="filter-tab active" onclick="parkingSort(this,'all')"    aria-pressed="true">Бүгд</button>
+        <button class="filter-tab"        onclick="parkingSort(this,'near')"   aria-pressed="false">Ойрхон</button>
+        <button class="filter-tab"        onclick="parkingSort(this,'cheap')"  aria-pressed="false">Хямд</button>
+        <button class="filter-tab"        onclick="parkingSort(this,'free')"   aria-pressed="false">Чөлөөтэй</button>
+      </div>
+
+    </div><!-- /map-top-ui -->
+
+    <!-- ── MAP MARKERS ─────────────────────────────────── -->
+
+    <div class="map-marker" id="markerCentral" style="top:50%; left:35%;"
+         onclick="selectMarker(this, 'central')"
+         role="button" tabindex="0" aria-label="Central Tower Parking — 2,000₮/цаг">
+      <div class="map-marker-pin">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"
+             style="fill:none;stroke:white;stroke-width:2.5;">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+          <path d="M9 8h4.5a1.5 1.5 0 0 1 0 3H9"/>
+        </svg>
+        2,000₮
+      </div>
+    </div>
+
+    <div class="map-marker" id="markerShangri" style="top:28%; left:65%;"
+         onclick="selectMarker(this, 'shangri')"
+         role="button" tabindex="0" aria-label="Shangri-La Зогсоол — 5,000₮/цаг">
+      <div class="map-marker-pin">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"
+             style="fill:none;stroke:white;stroke-width:2.5;">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+          <path d="M9 8h4.5a1.5 1.5 0 0 1 0 3H9"/>
+        </svg>
+        5,000₮
+      </div>
+    </div>
+
+    <div class="map-marker" style="top:62%; left:55%;"
+         onclick="selectMarker(this, 'bluesky')"
+         role="button" tabindex="0" aria-label="Blue Sky Граж — 4,000₮/цаг">
+      <div class="map-marker-pin">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"
+             style="fill:none;stroke:white;stroke-width:2.5;">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+          <path d="M9 8h4.5a1.5 1.5 0 0 1 0 3H9"/>
+        </svg>
+        4,000₮
+      </div>
+    </div>
+
+    <div class="map-marker" style="top:40%; left:20%;"
+         onclick="selectMarker(this, 'ubdel')"
+         role="button" tabindex="0" aria-label="Улаанбаатар Их Дэлгүүр — 2,500₮/цаг">
+      <div class="map-marker-pin">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"
+             style="fill:none;stroke:white;stroke-width:2.5;">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+          <path d="M9 8h4.5a1.5 1.5 0 0 1 0 3H9"/>
+        </svg>
+        2,500₮
+      </div>
+    </div>
+
+    <!-- Wash marker -->
+    <div class="map-marker" id="markerCleanmax" style="top:38%; left:48%;"
+         onclick="selectMarker(this, 'cleanmax')"
+         role="button" tabindex="0" aria-label="CleanMax Auto Wash">
+      <div class="map-marker-pin map-marker-pin--blue">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"
+             style="fill:none;stroke:white;stroke-width:2.5;">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+        </svg>
+        CleanMax
+      </div>
+    </div>
+
+    <!-- Repair marker -->
+    <div class="map-marker" id="markerAutodoc" style="top:56%; left:62%;"
+         onclick="selectMarker(this, 'autodoc')"
+         role="button" tabindex="0" aria-label="Auto Doc Repair">
+      <div class="map-marker-pin map-marker-pin--orange">
+        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"
+             style="fill:none;stroke:white;stroke-width:2.5;">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+        Auto Doc
+      </div>
+    </div>
+
+    <!-- ── MAP CONTROLS ─────────────────────────────────── -->
+    <div class="map-controls" id="mapControls" aria-label="Зурагны удирдлага">
+      <button class="map-control-btn" onclick="toggleLayers(this)"
+              aria-label="Давхарга солих" title="Давхарга">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+          <polyline points="2 17 12 22 22 17"/>
+          <polyline points="2 12 12 17 22 12"/>
+        </svg>
+      </button>
+      <button class="map-control-btn map-control-btn--active" onclick="centerLocation(this)"
+              aria-label="Байршил тодорхойлох" title="Байршил">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- ── BOTTOM DETAIL CARD ───────────────────────────── -->
+    <div class="map-detail-card" id="parkingDetailCard" role="dialog"
+         aria-label="Зогсоолын дэлгэрэнгүй" aria-hidden="true">
+
+      <div class="map-detail-handle" aria-hidden="true"></div>
+
+      <button class="map-detail-close" onclick="dismissCard()" aria-label="Хаах">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="map-detail-header">
+        <div class="map-detail-img" id="detailImg" aria-hidden="true">🏢</div>
+        <div class="map-detail-info">
+          <div class="map-detail-name" id="detailName">Central Tower Parking</div>
+          <div class="map-detail-loc" id="detailLoc">
+            <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"
+                 style="fill:none;stroke:currentColor;stroke-width:2;display:inline;vertical-align:middle;margin-right:2px;">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Сүхбаатар дүүрэг, УБ
+          </div>
+          <div class="map-detail-meta">
+            <span class="map-detail-price" id="detailPrice">2,000₮<span style="font-size:11px;font-weight:400;color:var(--text-muted);">/цаг</span></span>
+            <span class="map-detail-slots" id="detailSlots">12 зогсоол</span>
+            <span class="p-rating" id="detailRating" aria-label="4.8 одтой үнэлгээ">4.8</span>
+          </div>
+        </div>
+        <button class="map-detail-book" id="detailBookBtn"
+                onclick="bookParking()" aria-label="Захиалах">
+          Захиалах →
+        </button>
+      </div>
+
+      <!-- Nearby services -->
+      <div class="map-sub-services">
+        <div class="map-sub-service-row">
+          <span class="map-sub-service-label">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+            Ойролцоох угаалга — 200м
+          </span>
+          <button class="map-sub-service-btn"
+                  onclick="location.href='src/pages/nearby_washing.html'" aria-label="Угаалга харах">
+            Үзэх
+          </button>
+        </div>
+        <div class="map-sub-service-row">
+          <span class="map-sub-service-label">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+            Ойролцоох засвар — 300м
+          </span>
+          <button class="map-sub-service-btn"
+                  onclick="location.href='src/pages/nearby_repairing.html'" aria-label="Засвар харах">
+            Үзэх
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /map-detail-card -->
+
+    <!-- ══════════════════════════════════════════════════
+         PARKING CARD LIST (from parkiiin.html #parking)
+         Scrollable list below the map — swipe up to see
+    ══════════════════════════════════════════════════════ -->
+    <div class="parking-list-sheet" id="parkingListSheet" role="region"
+         aria-label="Зогсоолын жагсаалт">
+
+      <!-- Sheet handle -->
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-header">
+        <h2 class="sheet-title">
+          Ойролцоох зогсоол
+          <span class="sheet-count" id="sheetCount">4</span>
+        </h2>
+        <button class="sheet-list-toggle" onclick="toggleListSheet(this)"
+                aria-label="Жагсаалт нуух/харуулах">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="18 15 12 9 6 15"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Card grid (from parkiiin.html PARKING section) -->
+      <div class="parking-grid" id="parkingCardList" role="list">
+
+        <!-- Card 1: Central Tower -->
+        <div class="parking-card" role="listitem"
+             data-name="central tower parking" data-price="2000" data-slots="12" data-dist="0.3"
+             onclick="location.href='booking.html'">
+          <div class="parking-img c1"><span></span>
+            <div class="p-badge">12 зогсоол</div>
+          </div>
+          <div class="parking-body">
+            <div class="parking-name">Central Tower Parking</div>
+            <div class="parking-loc">📍 Сүхбаатар дүүрэг, 9-р хороо</div>
+            <div class="parking-foot">
+              <div class="p-price">2,000₮<span>/цаг</span></div>
+              <div class="p-rating">4.8</div>
+            </div>
+            <button class="book-btn">Захиалах →</button>
+          </div>
+        </div>
+
+        <!-- Card 2: Shangri-La -->
+        <div class="parking-card" role="listitem"
+             data-name="shangri-la зогсоол" data-price="5000" data-slots="25" data-dist="0.8"
+             onclick="location.href='booking.html'">
+          <div class="parking-img c2"><span></span>
+            <div class="p-badge">Нээлттэй</div>
+          </div>
+          <div class="parking-body">
+            <div class="parking-name">Shangri-La Зогсоол</div>
+            <div class="parking-loc">📍 Сүхбаатар дүүрэг, 1-р хороо</div>
+            <div class="parking-foot">
+              <div class="p-price">5,000₮<span>/цаг</span></div>
+              <div class="p-rating">4.9</div>
+            </div>
+            <button class="book-btn">Захиалах →</button>
+          </div>
+        </div>
+
+        <!-- Card 3: Blue Sky -->
+        <div class="parking-card" role="listitem"
+             data-name="blue sky граж" data-price="4000" data-slots="8" data-dist="1.2"
+             onclick="location.href='booking.html'">
+          <div class="parking-img c3"><span></span></div>
+          <div class="parking-body">
+            <div class="parking-name">Blue Sky Граж</div>
+            <div class="parking-loc">📍 Сүхбаатар дүүрэг, Энхтайваны өргөн чөлөө</div>
+            <div class="parking-foot">
+              <div class="p-price">4,000₮<span>/цаг</span></div>
+              <div class="p-rating">4.7</div>
+            </div>
+            <button class="book-btn">Захиалах →</button>
+          </div>
+        </div>
+
+        <!-- Card 4: Улаанбаатар Их Дэлгүүр -->
+        <div class="parking-card" role="listitem"
+             data-name="улаанбаатар их дэлгүүр" data-price="2500" data-slots="0" data-dist="1.8"
+             onclick="location.href='booking.html'">
+          <div class="parking-img c4"><span></span></div>
+          <div class="parking-body">
+            <div class="parking-name">Улаанбаатар Их Дэлгүүр</div>
+            <div class="parking-loc">📍 Чингэлтэй дүүрэг, 4-р хороо</div>
+            <div class="parking-foot">
+              <div class="p-price">2,500₮<span>/цаг</span></div>
+              <div class="p-rating">4.5</div>
+            </div>
+            <button class="book-btn">Захиалах →</button>
+          </div>
+        </div>
+
+      </div><!-- /#parkingCardList -->
+
+    </div><!-- /parking-list-sheet -->
+
+    <!-- ── BOTTOM NAV ────────────────────────────────────── -->
+    <nav class="bottom-nav map-bottom-nav" id="bottomNav" aria-label="Доод навигац">
+      <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Нүүр
+      </a>
+      <a class="bottom-nav-item active" href="findPark.html" aria-label="Хайх">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Хайх
+      </a>
+      <a class="bottom-nav-item" href="nearby_washing.html" aria-label="Үйлчилгээ">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Үйлчилгээ
+      </a>
+      <a class="bottom-nav-item" href="tips.html" aria-label="Зөвлөмж">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Зөвлөмж
+      </a>
+      <a class="bottom-nav-item" href="profile.html" aria-label="Профайл">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        Профайл
+      </a>
+    </nav>
+
+  </div><!-- /map-page -->
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Feed — Parkiiin</title>
+  <meta name="description" content="Parkiiin — идэвхтэй зогсоолын захиалгын явцыг хянаарай.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+
+  <!-- ── TOP NAV ───────────────────────────────────────── -->
+  <nav class="top-nav" id="topNav" aria-label="Үндсэн навигац">
+    <a class="nav-logo" href="../parkiiin.html">Parkiiin</a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="../parkiiin.html">Нүүр</a>
+      <a class="nav-link" href="findPark.html">Зогсоол</a>
+      <a class="nav-link" href="nearby_washing.html">Үйлчилгээ</a>
+      <a class="nav-link" href="tips.html">Зөвлөмж</a>
+      <a class="nav-link active" href="profile.html">Профайл</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()"
+            aria-label="Цэс нээх" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE MENU ──────────────────────────────────── -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link" href="findPark.html"    onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html"    onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html"        onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html"     onclick="closeMenu()">👤 Профайл</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       ACTIVITY FEED PAGE
+  ══════════════════════════════════════════════════════════ -->
+  <main class="book-main">
+    <div class="book-content activity-page-content">
+
+      <!-- ── Back + Title ─────────────────────────────── -->
+      <div class="book-header">
+        <a href="profile.html" class="back-btn" aria-label="Буцах">←</a>
+        <h1 class="book-page-title">Activity Feed</h1>
+      </div>
+
+      <!-- ── Active session hero ───────────────────────── -->
+      <div class="activity-hero" aria-label="Идэвхтэй зогсоолын товч">
+        <!-- Decorative pulse rings (aria-hidden) -->
+        <div class="activity-ring activity-ring--3" aria-hidden="true"></div>
+        <div class="activity-ring activity-ring--2" aria-hidden="true"></div>
+        <div class="activity-ring activity-ring--1" aria-hidden="true"></div>
+        <!-- Central icon -->
+        <div class="activity-hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <path d="M9 17V8h4.5a2.5 2.5 0 0 1 0 5H9"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ── Session status card ───────────────────────── -->
+      <div class="section-card activity-status-card">
+
+        <div class="activity-status-badge" role="status">
+          <span class="activity-status-dot" aria-hidden="true"></span>
+          Идэвхтэй
+        </div>
+
+        <h2 class="activity-venue">Central Tower Parking</h2>
+
+        <div class="activity-timer" aria-live="polite" aria-label="Үлдсэн хугацаа">
+          <span class="activity-timer-remaining" id="activityRemaining">19:41</span>
+          <span class="activity-timer-lbl">үлдсэн</span>
+        </div>
+
+        <p class="activity-time-note" id="activityNote">
+          Нийт 35 мин · <strong id="activityEndTime">19:59</strong> цагт дуусна
+        </p>
+
+        <!-- Mini progress bar -->
+        <div class="activity-progress-wrap" aria-hidden="true">
+          <div class="activity-progress-bar" id="activityProgressBar"
+               style="width: 44%;"></div>
+        </div>
+        <div class="activity-progress-labels" aria-hidden="true">
+          <span>18:24 эхэлсэн</span>
+          <span id="activityEndLabel">19:59 дуусна</span>
+        </div>
+
+      </div><!-- /activity-status-card -->
+
+      <!-- ── Timeline ──────────────────────────────────── -->
+      <div class="section-card">
+        <div class="sc-title">Захиалгын явц</div>
+
+        <ol class="activity-timeline" aria-label="Захиалгын алхмууд">
+
+          <li class="timeline-step timeline-step--done">
+            <div class="timeline-connector" aria-hidden="true"></div>
+            <div class="timeline-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="timeline-step-body">
+              <span class="timeline-step-num">01</span>
+              <span class="timeline-step-title">Захиалга эхэлсэн</span>
+              <span class="timeline-step-time">18:24</span>
+            </div>
+          </li>
+
+          <li class="timeline-step timeline-step--done">
+            <div class="timeline-connector" aria-hidden="true"></div>
+            <div class="timeline-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="timeline-step-body">
+              <span class="timeline-step-num">02</span>
+              <span class="timeline-step-title">Төлбөр баталгаажсан</span>
+              <span class="timeline-step-time">18:24</span>
+            </div>
+          </li>
+
+          <li class="timeline-step timeline-step--active">
+            <div class="timeline-connector" aria-hidden="true"></div>
+            <div class="timeline-dot timeline-dot--pulse" aria-hidden="true"></div>
+            <div class="timeline-step-body">
+              <span class="timeline-step-num">03</span>
+              <span class="timeline-step-title">Зогсоолд байна</span>
+              <span class="timeline-step-time activity-live-badge">● Шууд</span>
+            </div>
+          </li>
+
+          <li class="timeline-step timeline-step--pending">
+            <div class="timeline-dot timeline-dot--empty" aria-hidden="true"></div>
+            <div class="timeline-step-body">
+              <span class="timeline-step-num">04</span>
+              <span class="timeline-step-title">Дуусгах</span>
+            </div>
+          </li>
+
+        </ol>
+      </div><!-- /timeline card -->
+
+      <!-- ── Action buttons ────────────────────────────── -->
+      <button class="btn-secondary" onclick="extendSession()"
+              aria-label="Зогсоолын хугацааг 30 минутаар сунгах">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+          <line x1="12" y1="6" x2="12" y2="3"/>
+          <polyline points="9 5 12 3 15 5"/>
+        </svg>
+        Хугацаа сунгах +30 мин
+      </button>
+
+      <button class="btn-full btn-full--danger" id="endSessionBtn"
+              onclick="endSession()"
+              aria-label="Зогсоолоос гарах, захиалгыг дуусгах">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9"  y1="9" x2="15" y2="15"/>
+        </svg>
+        Зогсоолоос гарах
+      </button>
+
+    </div><!-- /book-content -->
+  </main>
+
+  <!-- ── BOTTOM NAV ────────────────────────────────────── -->
+  <nav class="bottom-nav booking-bottom-nav" id="bottomNav" aria-label="Доод навигац">
+    <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Нүүр
+    </a>
+    <a class="bottom-nav-item" href="findPark.html" aria-label="Хайх">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Хайх
+    </a>
+    <a class="bottom-nav-item active" href="activityFeed.html" aria-label="Явц">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Явц
+    </a>
+    <a class="bottom-nav-item" href="profile.html" aria-label="Профайл">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Профайл
+    </a>
+  </nav>
+
+  <!-- session data attributes read by JS -->
+  <script>
+    // Pass session data to main.js init (ISO 8601 format)
+    window.ACTIVITY_END_TIME = (() => {
+      const now = new Date();
+      now.setHours(19, 59, 0, 0);
+      return now.toISOString();
+    })();
+    window.ACTIVITY_START_TIME = (() => {
+      const t = new Date();
+      t.setHours(18, 24, 0, 0);
+      return t.toISOString();
+    })();
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

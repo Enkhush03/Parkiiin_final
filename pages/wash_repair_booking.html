@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Цаг захиалах — Parkiiin</title>
+  <meta name="description" content="Parkiiin — угаалга болон засварын цаг захиалах хуудас.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+
+  <!-- ── TOP NAV ───────────────────────────────────────── -->
+  <nav class="top-nav" id="topNav" aria-label="Үндсэн навигац">
+    <a class="nav-logo" href="../parkiiin.html">Parkiiin</a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="../parkiiin.html">Нүүр</a>
+      <a class="nav-link" href="findPark.html">Зогсоол</a>
+      <a class="nav-link active" href="nearby_washing.html">Үйлчилгээ</a>
+      <a class="nav-link" href="tips.html">Зөвлөмж</a>
+      <a class="nav-link" href="profile.html">Профайл</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()"
+            aria-label="Цэс нээх" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE MENU ──────────────────────────────────── -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link" href="findPark.html"    onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link active" href="nearby_washing.html" onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html"        onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html"     onclick="closeMenu()">👤 Профайл</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       WASH / REPAIR BOOKING PAGE
+  ══════════════════════════════════════════════════════════ -->
+  <main class="book-main">
+    <div class="book-content appt-page-content">
+
+      <!-- ── Header: back + venue + avatar ────────────── -->
+      <div class="book-header appt-header">
+        <a href="nearby_washing.html" class="back-btn" aria-label="Буцах">←</a>
+        <div class="appt-brand" aria-label="Үйлчилгээний газар">
+          <span class="appt-brand-dot" aria-hidden="true"></span>
+          Emerald Horizon
+        </div>
+        <div class="appt-avatar" aria-label="Профайл">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ── Page heading ──────────────────────────────── -->
+      <div class="appt-page-heading">
+        <h1 class="book-page-title" style="font-size:22px;">Цаг захиалах</h1>
+        <p class="appt-page-subtitle">Та өөрт тохирох үйлчилгээг болон цагаа сонгоно уу.</p>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           1. SERVICE SELECTION
+      ══════════════════════════════════════════════════ -->
+      <div class="section-card">
+        <div class="appt-sec-head">
+          <span class="appt-sec-bar" aria-hidden="true"></span>
+          <h2 class="appt-sec-title">Үйлчилгээгээ сонгох</h2>
+        </div>
+
+        <div class="svc-grid" role="group" aria-label="Үйлчилгээ сонгох">
+
+          <!-- Card 1: Full wash (selected by default) -->
+          <article class="svc-card svc-card--selected" role="radio" aria-checked="true"
+                   tabindex="0" data-svc="wash" data-price="45000" data-dur="60 мин"
+                   onclick="selectSvc(this)" onkeydown="if(event.key==='Enter'||event.key===' ')selectSvc(this)">
+            <div class="svc-card-top">
+              <div class="svc-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+              </div>
+              <span class="svc-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="svc-title">Бүтэн угаалга</h3>
+            <p class="svc-desc">Гадна, дотор цэвэрлэгээ болон бүрэн өнгөлгөө.</p>
+            <div class="svc-bottom">
+              <span class="svc-price">45,000₮</span>
+              <span class="svc-duration">60 мин</span>
+            </div>
+          </article>
+
+          <!-- Card 2: Oil change -->
+          <article class="svc-card" role="radio" aria-checked="false"
+                   tabindex="0" data-svc="oil" data-price="85000" data-dur="30 мин"
+                   onclick="selectSvc(this)" onkeydown="if(event.key==='Enter'||event.key===' ')selectSvc(this)">
+            <div class="svc-card-top">
+              <div class="svc-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+                </svg>
+              </div>
+              <span class="svc-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="svc-title">Тос солих</h3>
+            <p class="svc-desc">Хөдөлгүүрийн тос болон шүүр солих үйлчилгээ.</p>
+            <div class="svc-bottom">
+              <span class="svc-price">85,000₮</span>
+              <span class="svc-duration">30 мин</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Body work -->
+          <article class="svc-card" role="radio" aria-checked="false"
+                   tabindex="0" data-svc="body" data-price="250000" data-dur="180 мин"
+                   onclick="selectSvc(this)" onkeydown="if(event.key==='Enter'||event.key===' ')selectSvc(this)">
+            <div class="svc-card-top">
+              <div class="svc-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+              </div>
+              <span class="svc-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="svc-title">Кузов өнгөлгөө</h3>
+            <p class="svc-desc">Нано бүрэлт болон гүн өнгөлгөөний үйлчилгээ.</p>
+            <div class="svc-bottom">
+              <span class="svc-price">250,000₮</span>
+              <span class="svc-duration">180 мин</span>
+            </div>
+          </article>
+
+          <!-- Card 4: Tire repair -->
+          <article class="svc-card" role="radio" aria-checked="false"
+                   tabindex="0" data-svc="tire" data-price="15000" data-dur="20 мин"
+                   onclick="selectSvc(this)" onkeydown="if(event.key==='Enter'||event.key===' ')selectSvc(this)">
+            <div class="svc-card-top">
+              <div class="svc-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="3"/>
+                  <line x1="12" y1="2" x2="12" y2="9"/>
+                  <line x1="12" y1="15" x2="12" y2="22"/>
+                  <line x1="2" y1="12" x2="9" y2="12"/>
+                  <line x1="15" y1="12" x2="22" y2="12"/>
+                </svg>
+              </div>
+              <span class="svc-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+            </div>
+            <h3 class="svc-title">Дугуй засвар</h3>
+            <p class="svc-desc">Дугуй нөхөх, тэнцвэржүүлэх болон солих.</p>
+            <div class="svc-bottom">
+              <span class="svc-price">15,000₮</span>
+              <span class="svc-duration">20 мин</span>
+            </div>
+          </article>
+
+        </div><!-- /svc-grid -->
+      </div><!-- /service selection card -->
+
+      <!-- ══════════════════════════════════════════════
+           2. DATE + TIME PICKER
+      ══════════════════════════════════════════════════ -->
+      <div class="section-card">
+        <div class="appt-sec-head">
+          <span class="appt-sec-bar" aria-hidden="true"></span>
+          <h2 class="appt-sec-title">Хугацаа сонгох</h2>
+        </div>
+
+        <!-- Date pills row -->
+        <div class="appt-date-row" role="group" aria-label="Огноо сонгох">
+
+          <button class="date-pill active" type="button" data-date="6-р сарын 24"
+                  onclick="selectDatePill(this)" aria-pressed="true">
+            <span class="date-pill-label">ӨНӨӨДӨР</span>
+            <strong class="date-pill-num">24</strong>
+            <span class="date-pill-day">Даваа</span>
+          </button>
+
+          <button class="date-pill" type="button" data-date="6-р сарын 25"
+                  onclick="selectDatePill(this)" aria-pressed="false">
+            <span class="date-pill-label">МАРГААШ</span>
+            <strong class="date-pill-num">25</strong>
+            <span class="date-pill-day">Мягмар</span>
+          </button>
+
+          <button class="date-pill" type="button" data-date="6-р сарын 26"
+                  onclick="selectDatePill(this)" aria-pressed="false">
+            <span class="date-pill-label">ЛХАГВА</span>
+            <strong class="date-pill-num">26</strong>
+            <span class="date-pill-day">6-р сар</span>
+          </button>
+
+          <button class="date-pill" type="button" data-date="6-р сарын 27"
+                  onclick="selectDatePill(this)" aria-pressed="false">
+            <span class="date-pill-label">ПҮРЭВ</span>
+            <strong class="date-pill-num">27</strong>
+            <span class="date-pill-day">6-р сар</span>
+          </button>
+
+          <button class="date-pill" type="button" data-date="6-р сарын 28"
+                  onclick="selectDatePill(this)" aria-pressed="false">
+            <span class="date-pill-label">БААСАН</span>
+            <strong class="date-pill-num">28</strong>
+            <span class="date-pill-day">6-р сар</span>
+          </button>
+
+        </div><!-- /appt-date-row -->
+
+        <!-- Time slots grid -->
+        <div class="appt-time-grid" role="group" aria-label="Цаг сонгох">
+
+          <button class="appt-time-slot appt-time-slot--disabled" type="button"
+                  disabled aria-disabled="true" aria-label="09:00 дүүрсэн">
+            <span class="appt-slot-hour">09:00</span>
+            <span class="appt-slot-status">Дүүрсэн</span>
+          </button>
+
+          <button class="appt-time-slot appt-time-slot--disabled" type="button"
+                  disabled aria-disabled="true" aria-label="10:00 дүүрсэн">
+            <span class="appt-slot-hour">10:00</span>
+            <span class="appt-slot-status">Дүүрсэн</span>
+          </button>
+
+          <button class="appt-time-slot appt-time-slot--selected" type="button"
+                  data-time="11:00" onclick="selectApptTime(this)"
+                  aria-pressed="true" aria-label="11:00 сонгосон">
+            <span class="appt-slot-hour">11:00</span>
+            <span class="appt-slot-status">Сонгосон</span>
+          </button>
+
+          <button class="appt-time-slot" type="button"
+                  data-time="12:00" onclick="selectApptTime(this)"
+                  aria-pressed="false" aria-label="12:00 боломжтой">
+            <span class="appt-slot-hour">12:00</span>
+            <span class="appt-slot-status">Боломжтой</span>
+          </button>
+
+          <button class="appt-time-slot" type="button"
+                  data-time="13:00" onclick="selectApptTime(this)"
+                  aria-pressed="false" aria-label="13:00 боломжтой">
+            <span class="appt-slot-hour">13:00</span>
+            <span class="appt-slot-status">Боломжтой</span>
+          </button>
+
+          <button class="appt-time-slot" type="button"
+                  data-time="14:00" onclick="selectApptTime(this)"
+                  aria-pressed="false" aria-label="14:00 боломжтой">
+            <span class="appt-slot-hour">14:00</span>
+            <span class="appt-slot-status">Боломжтой</span>
+          </button>
+
+          <button class="appt-time-slot" type="button"
+                  data-time="15:00" onclick="selectApptTime(this)"
+                  aria-pressed="false" aria-label="15:00 боломжтой">
+            <span class="appt-slot-hour">15:00</span>
+            <span class="appt-slot-status">Боломжтой</span>
+          </button>
+
+          <button class="appt-time-slot" type="button"
+                  data-time="16:00" onclick="selectApptTime(this)"
+                  aria-pressed="false" aria-label="16:00 боломжтой">
+            <span class="appt-slot-hour">16:00</span>
+            <span class="appt-slot-status">Боломжтой</span>
+          </button>
+
+        </div><!-- /appt-time-grid -->
+      </div><!-- /time picker card -->
+
+      <!-- ══════════════════════════════════════════════
+           3. BOOKING SUMMARY
+      ══════════════════════════════════════════════════ -->
+      <div class="section-card" id="apptSummaryCard">
+        <div class="appt-sec-head">
+          <span class="appt-sec-bar" aria-hidden="true"></span>
+          <h2 class="appt-sec-title">Захиалгын хураангуй</h2>
+        </div>
+
+        <!-- Service name + price -->
+        <div class="appt-sum-service">
+          <div>
+            <div class="appt-sum-label">Сонгосон үйлчилгээ</div>
+            <div class="appt-sum-service-name" id="apptSumSvcName">Бүтэн угаалга</div>
+          </div>
+          <span class="appt-sum-service-price" id="apptSumSvcPrice">45,000₮</span>
+        </div>
+
+        <!-- Date + time display -->
+        <div class="appt-datetime-card">
+          <div class="appt-datetime-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8"  y1="2" x2="8"  y2="6"/>
+              <line x1="3"  y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <div>
+            <div class="appt-datetime-lbl">Огноо &amp; цаг</div>
+            <div class="appt-datetime-val" id="apptSumDatetime">6-р сарын 24, 11:00</div>
+          </div>
+        </div>
+
+        <!-- Cost breakdown -->
+        <div class="appt-cost-row">
+          <span>Үйлчилгээний төлбөр</span>
+          <span id="apptCostSvc">45,000₮</span>
+        </div>
+        <div class="appt-cost-row">
+          <span>НӨАТ (10%)</span>
+          <span id="apptCostVat">4,500₮</span>
+        </div>
+
+        <div class="appt-divider"></div>
+
+        <!-- Total -->
+        <div class="appt-total-row">
+          <div>
+            <div class="appt-total-lbl">Нийт</div>
+            <div class="appt-total-sub">төлбөр</div>
+          </div>
+          <span class="appt-total-num" id="apptCostTotal">49,500₮</span>
+        </div>
+
+        <!-- Payment CTA -->
+        <button class="btn-full" id="apptPayBtn"
+                onclick="submitApptBooking()" style="margin-top:18px;"
+                aria-label="Төлбөр төлөхөд шилжих">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          Төлбөр төлөхөд шилжих
+        </button>
+
+        <p class="appt-terms">
+          Захиалга баталгаажуулснаар та манай үйлчилгээний нөхцөл, зөвшөөрөх буй хэрэг юм.
+        </p>
+      </div><!-- /summary card -->
+
+      <!-- ══════════════════════════════════════════════
+           4. HELP CARD
+      ══════════════════════════════════════════════════ -->
+      <div class="appt-help-card">
+        <div class="appt-help-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="appt-help-title">Тусламж хэрэгтэй юу?</h3>
+          <p class="appt-help-phone">
+            <a href="tel:77110000">7711-XXXX</a> дугаараар холбогдоно уу.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /book-content -->
+  </main>
+
+  <!-- ── BOTTOM NAV ────────────────────────────────────── -->
+  <nav class="bottom-nav booking-bottom-nav" id="bottomNav" aria-label="Доод навигац">
+    <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Нүүр
+    </a>
+    <a class="bottom-nav-item" href="findPark.html" aria-label="Хайх">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Хайх
+    </a>
+    <a class="bottom-nav-item active" href="nearby_washing.html" aria-label="Үйлчилгээ">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Үйлчилгээ
+    </a>
+    <a class="bottom-nav-item" href="tips.html" aria-label="Зөвлөмж">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      Зөвлөмж
+    </a>
+    <a class="bottom-nav-item" href="profile.html" aria-label="Профайл">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Профайл
+    </a>
+  </nav>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

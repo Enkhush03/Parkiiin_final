@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Миний үнэлгээ — Parkiiin</title>
+  <meta name="description" content="Parkiiin — миний зогсоолын үнэлгээнүүд болон тайлбарууд.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+
+  <!-- ── TOP NAV ───────────────────────────────────────── -->
+  <nav class="top-nav" id="topNav" aria-label="Үндсэн навигац">
+    <a class="nav-logo" href="../parkiiin.html">Parkiiin</a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="../parkiiin.html">Нүүр</a>
+      <a class="nav-link" href="findPark.html">Зогсоол</a>
+      <a class="nav-link" href="nearby_washing.html">Үйлчилгээ</a>
+      <a class="nav-link" href="tips.html">Зөвлөмж</a>
+      <a class="nav-link active" href="profile.html">Профайл</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()"
+            aria-label="Цэс нээх" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE MENU ──────────────────────────────────── -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link" href="findPark.html"    onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html"    onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html"        onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html"     onclick="closeMenu()">👤 Профайл</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       MY RATES PAGE
+  ══════════════════════════════════════════════════════════ -->
+  <main class="book-main">
+    <div class="book-content">
+
+      <!-- ── Back + Title ─────────────────────────────── -->
+      <div class="book-header">
+        <a href="profile.html" class="back-btn" aria-label="Профайл руу буцах">←</a>
+        <h1 class="book-page-title">Миний үнэлгээ</h1>
+      </div>
+
+      <!-- ── Summary card: big stats + star chart ─────── -->
+      <div class="section-card rates-summary-card">
+
+        <!-- 2-column stat tiles -->
+        <div class="rates-stats-grid">
+          <div class="rates-stat-tile">
+            <span class="rates-stat-num" aria-label="Нийт 24 үнэлгээ">24</span>
+            <span class="rates-stat-lbl">Нийт үнэлгээ</span>
+          </div>
+          <div class="rates-stat-tile rates-stat-tile--accent">
+            <span class="rates-stat-num" aria-label="Дундаж оноо 4.9">
+              4.9
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="rates-star-inline">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </span>
+            <span class="rates-stat-lbl">Дундаж оноо</span>
+          </div>
+        </div>
+
+        <!-- Star distribution bar chart -->
+        <div class="star-chart" role="list" aria-label="Одны хуваарилалт">
+
+          <div class="star-chart-row" role="listitem" aria-label="5 одтой 70%">
+            <span class="star-chart-label">5
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </span>
+            <div class="star-chart-bar" aria-hidden="true">
+              <div class="star-chart-fill" style="width:70%;"></div>
+            </div>
+            <span class="star-chart-count">17</span>
+          </div>
+
+          <div class="star-chart-row" role="listitem" aria-label="4 одтой 17%">
+            <span class="star-chart-label">4
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </span>
+            <div class="star-chart-bar" aria-hidden="true">
+              <div class="star-chart-fill" style="width:17%;"></div>
+            </div>
+            <span class="star-chart-count">4</span>
+          </div>
+
+          <div class="star-chart-row" role="listitem" aria-label="3 одтой 8%">
+            <span class="star-chart-label">3
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </span>
+            <div class="star-chart-bar" aria-hidden="true">
+              <div class="star-chart-fill" style="width:8%;"></div>
+            </div>
+            <span class="star-chart-count">2</span>
+          </div>
+
+          <div class="star-chart-row" role="listitem" aria-label="2 одтой 4%">
+            <span class="star-chart-label">2
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </span>
+            <div class="star-chart-bar" aria-hidden="true">
+              <div class="star-chart-fill" style="width:4%;"></div>
+            </div>
+            <span class="star-chart-count">1</span>
+          </div>
+
+          <div class="star-chart-row" role="listitem" aria-label="1 одтой 0%">
+            <span class="star-chart-label">1
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </span>
+            <div class="star-chart-bar" aria-hidden="true">
+              <div class="star-chart-fill" style="width:0%;"></div>
+            </div>
+            <span class="star-chart-count">0</span>
+          </div>
+
+        </div><!-- /star-chart -->
+      </div><!-- /rates-summary-card -->
+
+      <!-- ── Reviews: section title ────────────────────── -->
+      <div class="subpage-card-header" style="padding:0 2px;">
+        <span class="subpage-card-title" style="font-size:15px;">Сүүлийн үнэлгээнүүд</span>
+        <span class="subpage-card-badge">Нийт 24</span>
+      </div>
+
+      <!-- ── Review cards ───────────────────────────────── -->
+      <article class="review-card" data-review-id="r1">
+        <div class="review-card-header">
+          <div class="review-avatar" aria-hidden="true">🅿️</div>
+          <div class="review-meta">
+            <div class="review-place">Зайсан Сквер</div>
+            <div class="review-date">2023.10.25</div>
+          </div>
+          <div class="review-score" aria-label="5.0 одтой үнэлгээ">
+            5.0
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+        </div>
+        <!-- SVG star row -->
+        <div class="review-stars" aria-label="5 одтой" role="img">
+          <span class="review-stars-row">★★★★★</span>
+        </div>
+        <div class="review-text">
+          <p>Маш тохилог, зай талбай ихтэй юм байна.</p>
+          <p>Автомат систем нь маш хурдан ажиллаж байна. Баярлалаа.</p>
+        </div>
+        <div class="review-actions">
+          <button class="review-like-btn" data-count="12"
+                  onclick="likeReview(this)" aria-label="Таалагдсан">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/>
+              <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+            </svg>
+            <span>12</span>
+          </button>
+          <div class="review-actions-divider" aria-hidden="true"></div>
+          <button class="review-edit-btn" onclick="editReview('r1')"
+                  aria-label="Үнэлгээг засах">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Засах
+          </button>
+        </div>
+      </article>
+
+      <article class="review-card" data-review-id="r2">
+        <div class="review-card-header">
+          <div class="review-avatar" aria-hidden="true">🅿️</div>
+          <div class="review-meta">
+            <div class="review-place">Шангри-Ла Төв</div>
+            <div class="review-date">2023.10.12</div>
+          </div>
+          <div class="review-score" aria-label="4.0 одтой үнэлгээ">
+            4.0
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+        </div>
+        <div class="review-stars" aria-label="4 одтой" role="img">
+          <span class="review-stars-row review-stars--four">★★★★☆</span>
+        </div>
+        <div class="review-text">
+          <p>Ороход жаахан дараалалтай байсан ч үйлчилгээ болон аюулгүй байдал маш сайн.</p>
+        </div>
+        <div class="review-actions">
+          <button class="review-like-btn" data-count="5"
+                  onclick="likeReview(this)" aria-label="Таалагдсан">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/>
+              <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+            </svg>
+            <span>5</span>
+          </button>
+          <div class="review-actions-divider" aria-hidden="true"></div>
+          <button class="review-edit-btn" onclick="editReview('r2')"
+                  aria-label="Үнэлгээг засах">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Засах
+          </button>
+        </div>
+      </article>
+
+      <article class="review-card" data-review-id="r3">
+        <div class="review-card-header">
+          <div class="review-avatar" aria-hidden="true">🅿️</div>
+          <div class="review-meta">
+            <div class="review-place">Улаанбаатар Галлериа</div>
+            <div class="review-date">2023.09.30</div>
+          </div>
+          <div class="review-score" aria-label="5.0 одтой үнэлгээ">
+            5.0
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+        </div>
+        <div class="review-stars" aria-label="5 одтой" role="img">
+          <span class="review-stars-row">★★★★★</span>
+        </div>
+        <div class="review-text">
+          <p>Төв талбайтай ойрхон болохоор их амар байдаг. Үнэ нь ч боломжийн.</p>
+        </div>
+        <div class="review-actions">
+          <button class="review-like-btn" data-count="8"
+                  onclick="likeReview(this)" aria-label="Таалагдсан">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/>
+              <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+            </svg>
+            <span>8</span>
+          </button>
+          <div class="review-actions-divider" aria-hidden="true"></div>
+          <button class="review-edit-btn" onclick="editReview('r3')"
+                  aria-label="Үнэлгээг засах">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Засах
+          </button>
+        </div>
+      </article>
+
+    </div><!-- /book-content -->
+  </main>
+
+  <!-- ── BOTTOM NAV ────────────────────────────────────── -->
+  <nav class="bottom-nav booking-bottom-nav" id="bottomNav" aria-label="Доод навигац">
+    <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Нүүр
+    </a>
+    <a class="bottom-nav-item" href="findPark.html" aria-label="Хайх">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Хайх
+    </a>
+    <a class="bottom-nav-item" href="activityFeed.html" aria-label="Явц">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Явц
+    </a>
+    <a class="bottom-nav-item active" href="myRates.html" aria-label="Үнэлгээ">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      Үнэлгээ
+    </a>
+    <a class="bottom-nav-item" href="profile.html" aria-label="Профайл">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Профайл
+    </a>
+  </nav>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

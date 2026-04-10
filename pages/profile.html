@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Профайл — Parkiiin</title>
+  <meta name="description" content="Таны Parkiiin профайл — оноо, захиалгын түүх, машины тохиргоо.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+
+  <!-- ── TOP NAV ───────────────────────────────────────── -->
+  <nav class="top-nav" id="topNav" aria-label="Үндсэн навигац">
+    <a class="nav-logo" href="../parkiiin.html">Parkiiin</a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="../parkiiin.html">Нүүр</a>
+      <a class="nav-link" href="findPark.html">Зогсоол</a>
+      <a class="nav-link" href="nearby_washing.html">Үйлчилгээ</a>
+      <a class="nav-link" href="tips.html">Зөвлөмж</a>
+      <a class="nav-link active" href="profile.html">Профайл</a>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Цэс нээх" aria-expanded="false" id="hamburgerBtn">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE MENU ──────────────────────────────────── -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Мобайл цэс">
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link" href="findPark.html"     onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html"    onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html"        onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html"     onclick="closeMenu()">👤 Профайл</a>
+    <a class="nav-link" href="login.html" style="color:var(--primary);font-weight:700;">Нэвтрэх →</a>
+  </div>
+
+  <!-- ── PROFILE PAGE ─────────────────────────────────── -->
+  <main id="profilePage" style="padding-top:64px; padding-bottom:80px;">
+
+    <!-- HERO BANNER -->
+    <div class="profile-hero">
+      <div class="profile-top">
+        <!-- Avatar -->
+        <div class="avatar" aria-label="Хэрэглэгчийн дүрс тэмдэг">E</div>
+
+        <!-- Name & email -->
+        <div class="profile-info">
+          <h1>Enkhush</h1>
+          <p>enkhush.c@gmail.com</p>
+        </div>
+
+        <!-- Settings -->
+        <button class="profile-settings-btn" aria-label="Тохиргоо" onclick="openSettings()">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STATS GRID  (3 quick-stat boxes) -->
+    <div class="profile-stats-wrap">
+      <div class="profile-stats-grid">
+        <div class="profile-stat-card">
+          <div class="profile-stat-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="profile-stat-num">24</div>
+          <div class="profile-stat-lbl">Зогсоол</div>
+        </div>
+        <div class="profile-stat-card profile-stat-card--accent">
+          <div class="profile-stat-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          </div>
+          <div class="profile-stat-num">1240</div>
+          <div class="profile-stat-lbl">Оноо</div>
+        </div>
+        <div class="profile-stat-card">
+          <div class="profile-stat-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="profile-stat-num">4.6</div>
+          <div class="profile-stat-lbl">Үнэлгээ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOYALTY POINTS CARD -->
+    <div class="points-wrap">
+      <div class="points-inner">
+        <div>
+          <div class="points-lbl">Зогсоолын оноо</div>
+          <div class="points-num">1,240</div>
+        </div>
+        <button class="points-badge" onclick="showSub('loyalty')" aria-label="Оноо дэлгэрэнгүй">
+          Дэлгэрэнгүй
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN MENU -->
+    <div class="menu-list" id="profileMenu">
+
+      <!-- Vehicles -->
+      <div class="menu-item" onclick="showSub('vehicles')" role="button" tabindex="0" aria-label="Машины төрөл">
+        <div class="menu-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v5"/><circle cx="15.5" cy="17.5" r="2.5"/><circle cx="5.5" cy="17.5" r="2.5"/><polyline points="3 13 3 9 9 9"/><polyline points="13 3 13 9 3 9"/></svg>
+        </div>
+        <div class="menu-text">
+          <div class="menu-title">Машины төрөл</div>
+          <div class="menu-sub">2 машин бүртгэлтэй</div>
+        </div>
+        <span class="menu-arrow" aria-hidden="true">›</span>
+      </div>
+
+      <!-- Booking history -->
+      <div class="menu-item" onclick="showSub('history')" role="button" tabindex="0" aria-label="Захиалгын түүх">
+        <div class="menu-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="menu-text">
+          <div class="menu-title">Захиалгын түүх</div>
+          <div class="menu-sub">Өнгөрсөн захиалгууд</div>
+        </div>
+        <span class="menu-arrow" aria-hidden="true">›</span>
+      </div>
+
+      <!-- Tips -->
+      <div class="menu-item" onclick="window.location.href='tips.html'" role="button" tabindex="0" aria-label="Parking Tips">
+        <div class="menu-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="menu-text">
+          <div class="menu-title">Parking Tips</div>
+          <div class="menu-sub">Зөвлөмж, мэдээлэл</div>
+        </div>
+        <span class="menu-arrow" aria-hidden="true">›</span>
+      </div>
+
+      <!-- Reviews -->
+      <div class="menu-item" onclick="showSub('reviews')" role="button" tabindex="0" aria-label="Миний үнэлгээ">
+        <div class="menu-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="menu-text">
+          <div class="menu-title">Миний үнэлгээ</div>
+          <div class="menu-sub">24 үнэлгээ • Дундаж 4.9</div>
+        </div>
+        <span class="menu-arrow" aria-hidden="true">›</span>
+      </div>
+
+      <!-- Sign out -->
+      <div class="menu-item menu-item--danger" onclick="handleSignOut()" role="button" tabindex="0" aria-label="Гарах">
+        <div class="menu-icon menu-icon--danger" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </div>
+        <div class="menu-text">
+          <div class="menu-title menu-title--danger">Sign Out</div>
+        </div>
+        <span class="menu-arrow menu-arrow--danger" aria-hidden="true">›</span>
+      </div>
+
+    </div><!-- /profileMenu -->
+
+    <!-- ── VEHICLES SUBPAGE ──────────────────────────── -->
+    <div id="sub-vehicles" class="subpage">
+      <div class="sub-header">
+        <button class="back-btn" onclick="hideSub('vehicles')" aria-label="Буцах">←</button>
+        <h2>Машины төрөл</h2>
+      </div>
+      <div class="section-card">
+        <div class="subpage-card-header">
+          <span class="subpage-card-title">Бүртгэлтэй машинууд</span>
+          <span class="subpage-card-badge">Нийт: 2</span>
+        </div>
+        <!-- Vehicle row 1 -->
+        <div class="vehicle-row">
+          <span class="vehicle-emoji" aria-hidden="true">🚗</span>
+          <div class="vehicle-info">
+            <div class="vehicle-plate">1234 ААУ</div>
+            <div class="vehicle-model">Toyota Prius 30</div>
+          </div>
+          <span class="menu-arrow" aria-hidden="true">›</span>
+        </div>
+        <!-- Vehicle row 2 -->
+        <div class="vehicle-row vehicle-row--last">
+          <span class="vehicle-emoji" aria-hidden="true">🚙</span>
+          <div class="vehicle-info">
+            <div class="vehicle-plate">5678 УББ</div>
+            <div class="vehicle-model">Hyundai Sonata</div>
+          </div>
+          <span class="menu-arrow" aria-hidden="true">›</span>
+        </div>
+      </div>
+      <button class="btn-full" onclick="alert('Машин нэмэх хуудас')">+ Машин нэмэх</button>
+    </div>
+
+    <!-- ── HISTORY SUBPAGE ───────────────────────────── -->
+    <div id="sub-history" class="subpage">
+      <div class="sub-header">
+        <button class="back-btn" onclick="hideSub('history')" aria-label="Буцах">←</button>
+        <h2>Захиалгын түүх</h2>
+      </div>
+      <div class="search-bar" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Хайх...">
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="ftab(this)">Бүгд</button>
+        <button class="filter-tab" onclick="ftab(this)">Төлсөн</button>
+        <button class="filter-tab" onclick="ftab(this)">Хүлээгдэж буй</button>
+      </div>
+      <!-- History cards -->
+      <div class="history-card">
+        <div class="history-card-icon c1" aria-hidden="true">🅿️</div>
+        <div class="history-card-body">
+          <div class="history-name">Сэнтрал Тауэр</div>
+          <div class="history-loc">Сүхбаатар дүүрэг, 8-р хороо</div>
+          <div class="history-price">3,000₮/цаг</div>
+        </div>
+        <div class="history-card-right">
+          <div class="p-rating" aria-label="4.8 одтой">4.8</div>
+        </div>
+      </div>
+      <div class="history-card">
+        <div class="history-card-icon c2" aria-hidden="true">🅿️</div>
+        <div class="history-card-body">
+          <div class="history-name">Shangri-La Зогсоол</div>
+          <div class="history-loc">Сүхбаатар дүүрэг, 1-р хороо</div>
+          <div class="history-price">5,000₮/цаг</div>
+        </div>
+        <div class="history-card-right">
+          <div class="p-rating" aria-label="4.9 одтой">4.9</div>
+        </div>
+      </div>
+      <div class="history-card">
+        <div class="history-card-icon c3" aria-hidden="true">🅿️</div>
+        <div class="history-card-body">
+          <div class="history-name">Blue Sky Граж</div>
+          <div class="history-loc">Сүхбаатар дүүрэг, Энхтайваны өргөн чөлөө</div>
+          <div class="history-price">4,000₮/цаг</div>
+        </div>
+        <div class="history-card-right">
+          <div class="p-rating" aria-label="4.7 одтой">4.7</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REVIEWS SUBPAGE ───────────────────────────── -->
+    <div id="sub-reviews" class="subpage">
+      <div class="sub-header">
+        <button class="back-btn" onclick="hideSub('reviews')" aria-label="Буцах">←</button>
+        <h2>Миний үнэлгээ</h2>
+      </div>
+      <!-- Summary card -->
+      <div class="section-card review-summary">
+        <div class="review-stat-block">
+          <div class="review-big-num">24</div>
+          <div class="review-big-lbl">Нийт үнэлгээ</div>
+        </div>
+        <div class="review-divider" aria-hidden="true"></div>
+        <div class="review-stat-block">
+          <div class="review-big-num review-big-num--gold">4.9</div>
+          <div class="review-big-lbl">Дундаж оноо ★</div>
+        </div>
+      </div>
+      <!-- Review item 1 -->
+      <article class="review-card">
+        <div class="review-card-header">
+          <div class="review-avatar" aria-hidden="true">P</div>
+          <div class="review-meta">
+            <div class="review-place">Зайсан Сквер</div>
+            <div class="review-date">2023.10.25</div>
+          </div>
+          <div class="review-score" aria-label="5 одтой">5.0 ★</div>
+        </div>
+        <p class="review-text">Маш тохилог, зай талбай ихтэй юм байна. Автомат систем маш хурдан ажилладаг байна.</p>
+        <div class="review-actions">
+          <span>👍 12</span>
+          <button class="review-edit-btn">✏️ Засах</button>
+        </div>
+      </article>
+      <!-- Review item 2 -->
+      <article class="review-card">
+        <div class="review-card-header">
+          <div class="review-avatar" aria-hidden="true">P</div>
+          <div class="review-meta">
+            <div class="review-place">Шангри-Ла Тев</div>
+            <div class="review-date">2023.10.12</div>
+          </div>
+          <div class="review-score" aria-label="4 одтой">4.0 ★</div>
+        </div>
+        <p class="review-text">Оройд жааxан дараалалтай байсан ч үйлчилгээ болон аюулгүй байдал маш сайн.</p>
+        <div class="review-actions">
+          <span>👍 5</span>
+          <button class="review-edit-btn">✏️ Засах</button>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── LOYALTY SUBPAGE ───────────────────────────── -->
+    <div id="sub-loyalty" class="subpage">
+      <div class="sub-header">
+        <button class="back-btn" onclick="hideSub('loyalty')" aria-label="Буцах">←</button>
+        <h2>Зогсоолын оноо</h2>
+      </div>
+      <div class="section-card loyalty-banner">
+        <div class="loyalty-banner-label">Нийт оноо</div>
+        <div class="loyalty-banner-num">1,240</div>
+        <div class="loyalty-banner-sub">Захиалга бүрээс 5% буцааж авна</div>
+        <button class="btn-full" style="margin-top:16px;">Онооны дэлгэрэнгүй</button>
+      </div>
+      <div class="section-card">
+        <div class="sc-title">Сүүлийн гүйлгээ</div>
+        <div class="sum-row"><span class="lbl">Central Tower (2 цаг)</span><span class="loyalty-earn">+40 оноо</span></div>
+        <div class="sum-row"><span class="lbl">Shangri-La (1 цаг)</span><span class="loyalty-earn">+50 оноо</span></div>
+        <div class="sum-row"><span class="lbl">Хөнгөлөлт ашигласан</span><span style="color:#ef4444;font-weight:600;">-200 оноо</span></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── BOTTOM NAV ────────────────────────────────────── -->
+  <nav class="bottom-nav" id="bottomNav" aria-label="Доод навигац">
+    <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Нүүр
+    </a>
+    <a class="bottom-nav-item" href="findPark.html" aria-label="Хайх">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Хайх
+    </a>
+    <a class="bottom-nav-item" href="nearby_washing.html" aria-label="Үйлчилгээ">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Үйлчилгээ
+    </a>
+    <a class="bottom-nav-item" href="tips.html" aria-label="Зөвлөмж">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Зөвлөмж
+    </a>
+    <a class="bottom-nav-item active" href="profile.html" aria-label="Профайл">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Профайл
+    </a>
+  </nav>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
