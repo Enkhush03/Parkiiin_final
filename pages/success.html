@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Амжилттай баталгаажлаа — Parkiiin</title>
+  <meta name="description" content="Parkiiin — таны захиалга амжилттай баталгаажлаа.">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+
+  <nav class="top-nav" id="topNav" aria-label="Үндсэн навигац">
+    <a class="nav-logo" href="../parkiiin.html">Parkiiin</a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="../parkiiin.html">Нүүр</a>
+      <a class="nav-link active" href="findPark.html">Зогсоол</a>
+      <a class="nav-link" href="nearby_washing.html">Үйлчилгээ</a>
+      <a class="nav-link" href="tips.html">Зөвлөмж</a>
+      <a class="nav-link" href="profile.html">Профайл</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()"
+            aria-label="Цэс нээх" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link active" href="findPark.html" onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html" onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html" onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html" onclick="closeMenu()">👤 Профайл</a>
+  </div>
+
+  <main class="book-main">
+    <div class="book-content success-page-content">
+      <div class="success-hero" role="status" aria-live="polite"
+           aria-label="Захиалга амжилттай баталгаажлаа">
+        <div class="success-ring success-ring--3" aria-hidden="true"></div>
+        <div class="success-ring success-ring--2" aria-hidden="true"></div>
+        <div class="success-ring success-ring--1" aria-hidden="true"></div>
+        <div class="success-check-circle" aria-hidden="true">
+          <svg viewBox="0 0 52 52" aria-hidden="true" class="success-check-svg">
+            <circle class="success-check-bg" cx="26" cy="26" r="25"/>
+            <polyline class="success-check-mark" points="14,27 22,35 38,17"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="success-title">Амжилттай!</h1>
+      <p class="success-subtitle">Таны зогсоолын захиалга<br>амжилттай баталгаажлаа</p>
+
+      <div class="section-card success-detail-card">
+        <div class="success-card-top">
+          <div>
+            <span class="success-eyebrow">Зогсоол</span>
+            <h2 class="success-service-name">Central Tower Parking</h2>
+          </div>
+          <span class="success-id-pill" aria-label="Захиалгын дугаар 88219">ID: #88219</span>
+        </div>
+
+        <div class="success-info-row">
+          <div class="success-info-col">
+            <span class="success-info-label">Байршил</span>
+            <div class="success-info-value">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <span>Сүхбаатар дүүрэг, УБ</span>
+            </div>
+          </div>
+          <div class="success-info-col">
+            <span class="success-info-label">Хугацаа</span>
+            <div class="success-info-value">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span>2 цаг | 12/24</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="success-qr-section">
+          <p class="success-qr-instruction">
+            Зогсоолд очихдоо энэхүү QR кодыг уншуулна уу
+          </p>
+
+          <div class="success-qr-frame" aria-label="QR код">
+            <span class="qr-corner qr-corner--tl" aria-hidden="true"></span>
+            <span class="qr-corner qr-corner--tr" aria-hidden="true"></span>
+            <span class="qr-corner qr-corner--bl" aria-hidden="true"></span>
+            <span class="qr-corner qr-corner--br" aria-hidden="true"></span>
+
+            <svg class="success-qr-svg" viewBox="0 0 100 100"
+                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="4" y="4" width="28" height="28" rx="2" fill="#1a2e2a"/>
+              <rect x="9" y="9" width="18" height="18" rx="1" fill="white"/>
+              <rect x="14" y="14" width="8" height="8" fill="#1a2e2a"/>
+              <rect x="68" y="4" width="28" height="28" rx="2" fill="#1a2e2a"/>
+              <rect x="73" y="9" width="18" height="18" rx="1" fill="white"/>
+              <rect x="78" y="14" width="8" height="8" fill="#1a2e2a"/>
+              <rect x="4" y="68" width="28" height="28" rx="2" fill="#1a2e2a"/>
+              <rect x="9" y="73" width="18" height="18" rx="1" fill="white"/>
+              <rect x="14" y="78" width="8" height="8" fill="#1a2e2a"/>
+              <rect x="36" y="4" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="44" y="4" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="52" y="4" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="60" y="4" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="36" y="12" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="44" y="12" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="36" y="20" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="60" y="12" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="52" y="20" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="4" y="36" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="12" y="36" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="24" y="36" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="36" y="36" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="44" y="36" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="60" y="36" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="68" y="36" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="80" y="36" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="88" y="36" width="8" height="4" fill="#2BBFA0"/>
+              <rect x="4" y="44" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="20" y="44" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="36" y="44" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="52" y="44" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="60" y="44" width="8" height="4" fill="#2BBFA0"/>
+              <rect x="76" y="44" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="88" y="44" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="4" y="52" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="16" y="52" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="32" y="52" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="44" y="52" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="56" y="52" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="68" y="52" width="8" height="4" fill="#2BBFA0"/>
+              <rect x="84" y="52" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="4" y="60" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="20" y="60" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="36" y="60" width="8" height="4" fill="#2BBFA0"/>
+              <rect x="52" y="60" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="64" y="60" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="76" y="60" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="88" y="60" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="36" y="76" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="44" y="76" width="8" height="4" fill="#2BBFA0"/>
+              <rect x="60" y="76" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="68" y="76" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="80" y="76" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="36" y="84" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="52" y="84" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="60" y="84" width="8" height="4" fill="#1a2e2a"/>
+              <rect x="76" y="84" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="84" y="84" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="36" y="92" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="48" y="92" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="60" y="92" width="4" height="4" fill="#1a2e2a"/>
+              <rect x="72" y="92" width="4" height="4" fill="#2BBFA0"/>
+              <rect x="84" y="92" width="8" height="4" fill="#1a2e2a"/>
+            </svg>
+          </div>
+
+          <div class="success-checkin-chip" role="status" aria-label="Check-in идэвхтэй">
+            <span class="success-checkin-dot" aria-hidden="true"></span>
+            CHECK-IN ИДЭВХТЭЙ
+          </div>
+
+          <div class="success-qr-actions">
+            <button class="success-qr-action-btn" onclick="shareBooking()"
+                    aria-label="Захиалгаа хуваалцах">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+              Хуваалцах
+            </button>
+            <button class="success-qr-action-btn" onclick="saveToGallery()"
+                    aria-label="Зурган дотор хадгалах">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Хадгалах
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <a href="activityFeed.html" class="btn-full success-history-btn"
+           aria-label="Захиалгын түүх харах">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="1 4 1 10 7 10"/>
+            <path d="M3.51 15a9 9 0 1 0 .49-4.5"/>
+          </svg>
+          Түүх харах
+        </a>
+
+        <a href="../parkiiin.html" class="btn-secondary success-home-btn"
+           aria-label="Нүүр хуудас руу буцах">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Нүүр хуудас руу
+        </a>
+
+        <p class="success-bottom-note">
+          Хэрэв та QR кодыг хугацаанаас нь өмнө ашиглахгүй бол
+          дахин мэдээллээ шалгана уу.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav booking-bottom-nav" id="bottomNav" aria-label="Доод навигац">
+    <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Нүүр
+    </a>
+    <a class="bottom-nav-item active" href="findPark.html" aria-label="Хайх">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Хайх
+    </a>
+    <a class="bottom-nav-item" href="nearby_washing.html" aria-label="Үйлчилгээ">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Үйлчилгээ
+    </a>
+    <a class="bottom-nav-item" href="tips.html" aria-label="Зөвлөмж">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      Зөвлөмж
+    </a>
+    <a class="bottom-nav-item" href="profile.html" aria-label="Профайл">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Профайл
+    </a>
+  </nav>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

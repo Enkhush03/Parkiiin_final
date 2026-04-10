@@ -6651,3 +6651,32 @@ a.vehicle-row:hover,
     padding-right: 16px;
   }
 }
+
+/* Focused page consistency fixes */
+.services-content {
+  max-width: 900px;
+  padding-bottom: 80px;
+}
+
+.services-content .service-tabs {
+  margin-bottom: 18px;
+}
+
+.services-content .parking-grid {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.services-content .service-img {
+  height: 150px;
+}
+
+.tips-content .tips-tabs,
+.tips-content .tips-cat-row {
+  border: 0;
+  box-shadow: none;
+}
+
+.tips-content .tips-cat-row {
+  margin-top: 0;
+}

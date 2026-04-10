@@ -615,10 +615,11 @@ function updateBookingSummary() {
   // Update DOM labels
   const fmtMNT = n => n.toLocaleString('mn-MN') + '₮';
 
-  const rowBase     = document.querySelector('.sum-row:nth-child(1) .sum-value');
-  const rowDiscount = document.querySelector('.sum-row:nth-child(2) .sum-discount');
+  const summaryRows = document.querySelectorAll('.sum-row');
+  const rowBase     = summaryRows[0]?.querySelector('.sum-value') || null;
+  const rowDiscount = summaryRows[1]?.querySelector('.sum-discount') || null;
   const rowTotal    = document.querySelector('.sum-total');
-  const rowBaseLabel = document.querySelector('.sum-row:nth-child(1) .lbl');
+  const rowBaseLabel = summaryRows[0]?.querySelector('.lbl') || null;
 
   if (rowBaseLabel) rowBaseLabel.textContent = `Зогсоол (${hours} цаг)`;
   if (rowBase)      rowBase.textContent      = fmtMNT(base);
@@ -626,7 +627,7 @@ function updateBookingSummary() {
   if (rowTotal)     rowTotal.textContent     = fmtMNT(total);
 
   // Show/hide discount row gracefully
-  const discountRow = document.querySelector('.sum-row:nth-child(2)');
+  const discountRow = summaryRows[1] || null;
   if (discountRow) discountRow.style.opacity = loyaltyOn ? '1' : '0.35';
 }
 
@@ -1660,4 +1661,3 @@ function openTipVideo(videoId) {
   console.log('Open video:', videoId);
   alert('Видео: ' + videoId + '\n(Бодит тоглогчтой холбогдох боломжтой)');
 }
-
