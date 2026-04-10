@@ -55,6 +55,38 @@ function closeMenu() {
   document.getElementById('mobileMenu')?.classList.remove('open');
 }
 
+/* ── AUTH UI STATE ─────────────────────────────────────── */
+
+const AUTH_STATE_KEY = 'parkiiin:isAuthenticated';
+
+function setAuthState(isAuthenticated) {
+  try {
+    if (isAuthenticated) localStorage.setItem(AUTH_STATE_KEY, 'true');
+    else localStorage.removeItem(AUTH_STATE_KEY);
+  } catch (error) {
+    console.warn('Failed to save authentication state to localStorage.', error);
+  }
+}
+
+function isAuthenticated() {
+  try {
+    return localStorage.getItem(AUTH_STATE_KEY) === 'true';
+  } catch (error) {
+    console.warn('Failed to read authentication state from localStorage.', error);
+    return false;
+  }
+}
+
+function syncAuthUI() {
+  const loggedIn = isAuthenticated();
+  document.querySelectorAll('[data-auth-visible]').forEach(el => {
+    const mode = el.getAttribute('data-auth-visible');
+    const show = (mode === 'logged-in' && loggedIn) || (mode === 'logged-out' && !loggedIn);
+    if (show) el.style.removeProperty('display');
+    else el.style.display = 'none';
+  });
+}
+
 /* ── AUTH TABS  (Login ↔ Signup) ─────────────────────── */
 
 /**
@@ -251,6 +283,7 @@ function handleSignup(e) {
 function handleSignOut() {
   const confirmed = confirm('Та нэвтрэх хэсгээс гарахдаа итгэлтэй байна уу?');
   if (!confirmed) return;
+  setAuthState(false);
 
   // SPA: navigate to login page section
   if (typeof nav === 'function' && document.getElementById('login')) {
@@ -291,6 +324,7 @@ function openSettings() {
 /* ── INIT ─────────────────────────────────────────────── */
 
 document.addEventListener('DOMContentLoaded', () => {
+  syncAuthUI();
   // Mark bottom-nav current page as active for standalone pages
   const currentFile = window.location.pathname.split('/').pop();
   document.querySelectorAll('.bottom-nav-item').forEach(item => {
@@ -463,10 +497,8 @@ function dismissCard() {
 function mapCat(btn) {
   document.querySelectorAll('.map-cat').forEach(b => {
     b.classList.remove('active');
-    b.setAttribute('aria-selected', 'false');
   });
   btn.classList.add('active');
-  btn.setAttribute('aria-selected', 'true');
 }
 
 /**
@@ -1452,6 +1484,7 @@ function handleLogin(e) {
 
   const btn = document.getElementById('login-submit-btn');
   if (btn) { btn.textContent = 'Нэвтэрч байна...'; btn.disabled = true; }
+  setAuthState(true);
   setTimeout(() => { window.location.href = 'profile.html'; }, 800);
 }
 
@@ -1499,6 +1532,7 @@ function handleSignup(e) {
   if (btn) { btn.textContent = 'Бүртгэж байна...'; btn.disabled = true; }
   setTimeout(() => {
     showAuthAlert('Бүртгэл амжилттай! Тавтай морил 🎉', 'success');
+    setAuthState(true);
     setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
   }, 900);
 }

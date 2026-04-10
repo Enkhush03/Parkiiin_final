@@ -10,6 +10,30 @@
 </head>
 <body class="map-body">
 
+  <!-- ── TOP NAV ───────────────────────────────────────── -->
+  <nav class="top-nav" id="topNav" aria-label="Үндсэн навигац">
+    <a class="nav-logo" href="../parkiiin.html">Parkiiin</a>
+    <div class="nav-links" id="navLinks">
+      <a class="nav-link" href="../parkiiin.html">Нүүр</a>
+      <a class="nav-link active" href="findPark.html">Зогсоол</a>
+      <a class="nav-link" href="nearby_washing.html">Үйлчилгээ</a>
+      <a class="nav-link" href="tips.html">Зөвлөмж</a>
+      <a class="nav-link" href="profile.html">Профайл</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Цэс нээх" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── MOBILE MENU ──────────────────────────────────── -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link active" href="findPark.html" onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html" onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html" onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html" onclick="closeMenu()">👤 Профайл</a>
+  </div>
+
   <!-- ══════════════════════════════════════════════════════
        FIND PARKING PAGE  (extracted from parkiiin.html #parking)
   ══════════════════════════════════════════════════════════ -->
@@ -62,8 +86,8 @@
       </div>
 
       <!-- Category + service tabs (from PARKING section) -->
-      <div class="map-cats" role="tablist" aria-label="Ангилал">
-        <button class="map-cat active" role="tab" aria-selected="true"
+      <div class="map-cats" role="navigation" aria-label="Ангилал">
+        <button class="map-cat active"
                 onclick="mapCat(this)" data-cat="parking">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <rect x="1" y="3" width="15" height="13" rx="2"/>
@@ -72,20 +96,18 @@
           </svg>
           Зогсоол
         </button>
-        <button class="map-cat map-cat--blue" role="tab" aria-selected="false"
-                onclick="mapCat(this); location.href='src/pages/nearby_washing.html'" data-cat="wash">
+        <a class="map-cat map-cat--blue" href="nearby_washing.html">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
           </svg>
           Угаалга
-        </button>
-        <button class="map-cat map-cat--orange" role="tab" aria-selected="false"
-                onclick="mapCat(this); location.href='src/pages/nearby_repairing.html'" data-cat="repair">
+        </a>
+        <a class="map-cat map-cat--orange" href="nearby_repairing.html">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
           </svg>
           Засвар
-        </button>
+        </a>
       </div>
 
       <!-- Sort filter pills (from PARKING section: Бүгд/Ойрхон/Хямд/Чөлөөтэй) -->
@@ -243,10 +265,9 @@
             </svg>
             Ойролцоох угаалга — 200м
           </span>
-          <button class="map-sub-service-btn"
-                  onclick="location.href='src/pages/nearby_washing.html'" aria-label="Угаалга харах">
+          <a class="map-sub-service-btn" href="nearby_washing.html" aria-label="Угаалга харах">
             Үзэх
-          </button>
+          </a>
         </div>
         <div class="map-sub-service-row">
           <span class="map-sub-service-label">
@@ -255,10 +276,9 @@
             </svg>
             Ойролцоох засвар — 300м
           </span>
-          <button class="map-sub-service-btn"
-                  onclick="location.href='src/pages/nearby_repairing.html'" aria-label="Засвар харах">
+          <a class="map-sub-service-btn" href="nearby_repairing.html" aria-label="Засвар харах">
             Үзэх
-          </button>
+          </a>
         </div>
       </div>
 

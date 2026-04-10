@@ -38,6 +38,11 @@
       min-height: 100vh;
     }
 
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -1824,7 +1829,8 @@
       <a class="nav-link" href="pages/findPark.html">Зогсоол</a>
       <a class="nav-link" href="pages/nearby_washing.html">Үйлчилгээ</a>
       <a class="nav-link" href="pages/tips.html">Зөвлөмж</a>
-      <button class="nav-btn" onclick="location.href='pages/login.html'">Нэвтрэх</button>
+      <button class="nav-btn" onclick="location.href='pages/login.html'" data-auth-visible="logged-out">Нэвтрэх</button>
+      <button class="nav-btn" onclick="location.href='pages/profile.html'" data-auth-visible="logged-in" style="display:none;">Профайл</button>
     </div>
     <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </nav>
@@ -1836,7 +1842,7 @@
     <button class="nav-link" onclick="location.href='pages/nearby_washing.html';closeMenu()"> Үйлчилгээ</button>
     <button class="nav-link" onclick="location.href='pages/tips.html';closeMenu()"> Зөвлөмж</button>
     <button class="nav-link" onclick="location.href='pages/profile.html';closeMenu()"> Профайл</button>
-    <button class="nav-link" onclick="location.href='pages/login.html';closeMenu()" style="color:var(--primary);font-weight:700;">Нэвтрэх →</button>
+    <button class="nav-link" onclick="location.href='pages/login.html';closeMenu()" style="color:var(--primary);font-weight:700;" data-auth-visible="logged-out">Нэвтрэх →</button>
   </div>
 
   <!-- BOTTOM NAV -->
@@ -1881,7 +1887,8 @@
       <p>Улаанбаатарын хамгийн том зогсоолын платформ. Бодит цагийн мэдээлэл, онлайн захиалга.</p>
       <div class="hero-btns">
         <a class="btn-primary" href="pages/findPark.html">🅿️ Зогсоол хайх</a>
-        <a class="btn-outline" href="pages/login.html">Нэвтрэх</a>
+        <a class="btn-outline" href="pages/login.html" data-auth-visible="logged-out">Нэвтрэх</a>
+        <a class="btn-outline" href="pages/profile.html" data-auth-visible="logged-in" style="display:none;">Профайл</a>
       </div>
     </div>
 
