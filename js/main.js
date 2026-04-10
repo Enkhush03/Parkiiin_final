@@ -82,7 +82,8 @@ function syncAuthUI() {
   document.querySelectorAll('[data-auth-visible]').forEach(el => {
     const mode = el.getAttribute('data-auth-visible');
     const show = (mode === 'logged-in' && loggedIn) || (mode === 'logged-out' && !loggedIn);
-    el.style.display = show ? '' : 'none';
+    if (show) el.style.removeProperty('display');
+    else el.style.display = 'none';
   });
 }
 
