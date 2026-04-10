@@ -1163,7 +1163,7 @@ function submitApptBooking() {
   const btn = document.getElementById('apptPayBtn');
   if (btn) { btn.disabled = true; btn.textContent = 'Боловсруулж байна…'; }
   // TODO: replace with real API call
-  setTimeout(() => { window.location.href = '../booking.html'; }, 900);
+  setTimeout(() => { window.location.href = 'wash_repair_success.html'; }, 900);
 }
 
 /* ── WASH / REPAIR SUCCESS PAGE ───────────────────────── */
