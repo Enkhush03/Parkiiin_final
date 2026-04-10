@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="mn">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Захиалга — Parkiiin</title>
   <meta name="description" content="Parkiiin — зогсоолын захиалга хийж, төлбөрөө баталгаажуулна уу.">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../styles/main.css">
 </head>
+
 <body>
 
   <!-- ── TOP NAV ───────────────────────────────────────── -->
@@ -20,8 +24,7 @@
       <a class="nav-link" href="tips.html">Зөвлөмж</a>
       <a class="nav-link" href="profile.html">Профайл</a>
     </div>
-    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()"
-            aria-label="Цэс нээх" aria-expanded="false">
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Цэс нээх" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </nav>
@@ -29,10 +32,10 @@
   <!-- ── MOBILE MENU ──────────────────────────────────── -->
   <div class="mobile-menu" id="mobileMenu" role="navigation">
     <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
-    <a class="nav-link active" href="findPark.html"    onclick="closeMenu()">🅿️ Зогсоол</a>
-    <a class="nav-link" href="nearby_washing.html"   onclick="closeMenu()">🔧 Үйлчилгээ</a>
-    <a class="nav-link" href="tips.html"       onclick="closeMenu()">💡 Зөвлөмж</a>
-    <a class="nav-link" href="profile.html"    onclick="closeMenu()">👤 Профайл</a>
+    <a class="nav-link active" href="findPark.html" onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html" onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html" onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html" onclick="closeMenu()">👤 Профайл</a>
   </div>
 
   <!-- ══════════════════════════════════════════════════════
@@ -55,8 +58,8 @@
             <div class="booking-park-name">Central Tower Parking</div>
             <div class="booking-park-loc">
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                <circle cx="12" cy="10" r="3"/>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
               </svg>
               Сүхбаатар дүүрэг, УБ
             </div>
@@ -92,8 +95,7 @@
             <div class="booking-vehicle-model">Toyota Prius</div>
             <div class="booking-vehicle-plate">1234 УБА</div>
           </div>
-          <button class="car-change-btn" onclick="changeVehicle()"
-                  aria-label="Машин өөрчлөх">Өөрчлөх</button>
+          <button class="car-change-btn" onclick="changeVehicle()" aria-label="Машин өөрчлөх">Өөрчлөх</button>
         </div>
       </div>
 
@@ -105,10 +107,8 @@
             <div class="loyalty-title">200 оноо ашиглах</div>
             <div class="loyalty-desc">Захиалгын дүнгээс 5% буцааж авна</div>
           </div>
-          <button class="toggle on" id="loyaltyToggle"
-                  onclick="toggleLoyalty(this)"
-                  aria-label="Loyalty оноо идэвхжүүлэх"
-                  aria-pressed="true">
+          <button class="toggle on" id="loyaltyToggle" onclick="toggleLoyalty(this)"
+            aria-label="Loyalty оноо идэвхжүүлэх" aria-pressed="true">
           </button>
         </div>
       </div>
@@ -133,8 +133,7 @@
       <!-- ── Payment method ────────────────────────────── -->
       <div class="section-card">
         <div class="sc-title">Төлбөрийн хэрэгсэл</div>
-        <div class="payment-grid payment-grid--single" id="payGrid"
-             role="group" aria-label="Төлбөрийн хэрэгсэл">
+        <div class="payment-grid payment-grid--single" id="payGrid" role="group" aria-label="Төлбөрийн хэрэгсэл">
 
           <button class="pay-opt active" onclick="selPay(this)" aria-pressed="true">
             <span class="pay-icon" aria-hidden="true">📱</span>
@@ -183,6 +182,46 @@
     </div><!-- /book-content -->
   </main>
 
+  <!-- ── BOTTOM NAV ────────────────────────────────────── -->
+  <nav class="bottom-nav booking-bottom-nav" id="bottomNav" aria-label="Доод навигац">
+    <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+      Нүүр
+    </a>
+    <a class="bottom-nav-item active" href="findPark.html" aria-label="Зогсоол">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+      Хайх
+    </a>
+    <a class="bottom-nav-item" href="nearby_washing.html" aria-label="Үйлчилгээ">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+      Үйлчилгээ
+    </a>
+    <a class="bottom-nav-item" href="tips.html" aria-label="Зөвлөмж">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+      </svg>
+      Зөвлөмж
+    </a>
+    <a class="bottom-nav-item" href="profile.html" aria-label="Профайл">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      Профайл
+    </a>
+  </nav>
+
   <script src="../js/main.js"></script>
 </body>
+
 </html>

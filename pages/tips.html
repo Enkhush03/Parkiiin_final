@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="mn">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parking Tips — Parkiiin</title>
   <meta name="description" content="Parkiiin зогсоолын зөвлөмж — аюулгүй, зөв зогсоолд байрлуулах нийтлэл, видео.">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../styles/main.css">
 </head>
+
 <body>
 
   <!-- ── TOP NAV ───────────────────────────────────────── -->
@@ -20,8 +24,7 @@
       <a class="nav-link active" href="tips.html">Зөвлөмж</a>
       <a class="nav-link" href="profile.html">Профайл</a>
     </div>
-    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()"
-            aria-label="Цэс нээх" aria-expanded="false">
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Цэс нээх" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </nav>
@@ -29,10 +32,10 @@
   <!-- ── MOBILE MENU ──────────────────────────────────── -->
   <div class="mobile-menu" id="mobileMenu" role="navigation">
     <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
-    <a class="nav-link" href="findPark.html"    onclick="closeMenu()">🅿️ Зогсоол</a>
-    <a class="nav-link" href="nearby_washing.html"    onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="findPark.html" onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html" onclick="closeMenu()">🔧 Үйлчилгээ</a>
     <a class="nav-link active" href="tips.html" onclick="closeMenu()">💡 Зөвлөмж</a>
-    <a class="nav-link" href="profile.html"     onclick="closeMenu()">👤 Профайл</a>
+    <a class="nav-link" href="profile.html" onclick="closeMenu()">👤 Профайл</a>
   </div>
 
   <!-- ══════════════════════════════════════════════════════
@@ -50,34 +53,28 @@
     <!-- ── Search ────────────────────────────────────────── -->
     <div class="search-bar" style="margin-bottom:18px;" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
-      <input type="text" id="tipsSearchInput"
-             placeholder="Хайх..."
-             oninput="tipsSearch(this.value)"
-             autocomplete="off"
-             aria-label="Зөвлөмж хайх">
+      <input type="text" id="tipsSearchInput" placeholder="Хайх..." oninput="tipsSearch(this.value)" autocomplete="off"
+        aria-label="Зөвлөмж хайх">
     </div>
 
     <!-- ── Content type tabs: Нийтлал / Видео ──────────── -->
     <div class="tips-tabs" role="tablist" aria-label="Контентын төрөл">
-      <button class="tips-tab active"
-              id="tab-articles" role="tab" aria-selected="true"
-              aria-controls="tipsArticlesPanel"
-              onclick="ttab(this,'tipsArticlesPanel','tipsVideosPanel')">Нийтлэл</button>
-      <button class="tips-tab"
-              id="tab-videos" role="tab" aria-selected="false"
-              aria-controls="tipsVideosPanel"
-              onclick="ttab(this,'tipsVideosPanel','tipsArticlesPanel')">Видео</button>
+      <button class="tips-tab active" id="tab-articles" role="tab" aria-selected="true"
+        aria-controls="tipsArticlesPanel" onclick="ttab(this,'tipsArticlesPanel','tipsVideosPanel')">Нийтлэл</button>
+      <button class="tips-tab" id="tab-videos" role="tab" aria-selected="false" aria-controls="tipsVideosPanel"
+        onclick="ttab(this,'tipsVideosPanel','tipsArticlesPanel')">Видео</button>
     </div>
 
     <!-- ── Category filter pills ─────────────────────────── -->
     <div class="tips-cat-row" role="group" aria-label="Ангилал шүүлтүүр">
-      <button class="tips-cat-pill active" onclick="tipsCat(this,'all')"    data-cat="all">Бүгд</button>
-      <button class="tips-cat-pill"        onclick="tipsCat(this,'safety')" data-cat="safety">Аюулгүй байдал</button>
-      <button class="tips-cat-pill"        onclick="tipsCat(this,'signs')"  data-cat="signs">Тэмдэг</button>
-      <button class="tips-cat-pill"        onclick="tipsCat(this,'eco')"    data-cat="eco">Эко</button>
-      <button class="tips-cat-pill"        onclick="tipsCat(this,'night')"  data-cat="night">Шөнийн</button>
+      <button class="tips-cat-pill active" onclick="tipsCat(this,'all')" data-cat="all">Бүгд</button>
+      <button class="tips-cat-pill" onclick="tipsCat(this,'safety')" data-cat="safety">Аюулгүй байдал</button>
+      <button class="tips-cat-pill" onclick="tipsCat(this,'signs')" data-cat="signs">Тэмдэг</button>
+      <button class="tips-cat-pill" onclick="tipsCat(this,'eco')" data-cat="eco">Эко</button>
+      <button class="tips-cat-pill" onclick="tipsCat(this,'night')" data-cat="night">Шөнийн</button>
     </div>
 
     <!-- ════════════════════════════════════════════════════
@@ -94,8 +91,9 @@
       <!-- Article 1 — from parkiiin.html -->
       <div class="tip-article" data-cat="safety">
         <div class="tip-img" style="background:linear-gradient(135deg,#1a2e2a,#2BBFA0)">
-          <svg viewBox="0 0 24 24" aria-hidden="true" style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+            style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           </svg>
         </div>
         <div class="tip-body">
@@ -109,8 +107,11 @@
       <!-- Article 2 — from parkiiin.html -->
       <div class="tip-article" data-cat="signs">
         <div class="tip-img" style="background:linear-gradient(135deg,#0d5e52,#2BBFA0)">
-          <svg viewBox="0 0 24 24" aria-hidden="true" style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
-            <path d="M3 3h18v13H3z"/><path d="M12 16v5"/><path d="M8 21h8"/>
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+            style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
+            <path d="M3 3h18v13H3z" />
+            <path d="M12 16v5" />
+            <path d="M8 21h8" />
           </svg>
         </div>
         <div class="tip-body">
@@ -124,16 +125,19 @@
       <!-- Article 3 — extended -->
       <div class="tip-article" data-cat="eco">
         <div class="tip-img" style="background:linear-gradient(135deg,#134040,#1e9e85)">
-          <svg viewBox="0 0 24 24" aria-hidden="true" style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
-            <path d="M2 22c1.25-.987 2.27-1.975 3.9-2.975C7.45 18.05 9.7 17.5 12 17.5c2.3 0 4.55.55 6.1 1.525C19.73 20.025 20.75 21.013 22 22"/>
-            <path d="M12 17.5V2"/>
-            <path d="M7 7c1.5 1 3 1.5 5 1.5S14.5 8 16 7"/>
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+            style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
+            <path
+              d="M2 22c1.25-.987 2.27-1.975 3.9-2.975C7.45 18.05 9.7 17.5 12 17.5c2.3 0 4.55.55 6.1 1.525C19.73 20.025 20.75 21.013 22 22" />
+            <path d="M12 17.5V2" />
+            <path d="M7 7c1.5 1 3 1.5 5 1.5S14.5 8 16 7" />
           </svg>
         </div>
         <div class="tip-body">
           <span class="tip-tag">Эко • 4 мин унших</span>
           <div class="tip-title">Эко зогсоолд зогсох ёс</div>
-          <div class="tip-desc">Байгаль орчинд ээлтэй, цахилгаан тээвэр болон дугуйчдад зориулсан зогсоолын стандарт.</div>
+          <div class="tip-desc">Байгаль орчинд ээлтэй, цахилгаан тээвэр болон дугуйчдад зориулсан зогсоолын стандарт.
+          </div>
           <div class="tip-read">Унших →</div>
         </div>
       </div>
@@ -141,8 +145,9 @@
       <!-- Article 4 — extended -->
       <div class="tip-article" data-cat="night">
         <div class="tip-img" style="background:linear-gradient(135deg,#0a1a2a,#1a3a5a)">
-          <svg viewBox="0 0 24 24" aria-hidden="true" style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+            style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         </div>
         <div class="tip-body">
@@ -169,33 +174,29 @@
       <!-- Horizontal scroll row — exactly parkiiin.html design -->
       <div class="video-row" role="list" aria-label="Видео жагсаалт">
 
-        <div class="video-thumb" style="background:linear-gradient(135deg,#1a2e2a,#2BBFA0)"
-             role="listitem" tabindex="0" aria-label="Зогсоолд хэрхэн зөв байрлуулах вэ видео тоглуулах"
-             onclick="openTipVideo('park-1')">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1a2e2a,#2BBFA0)" role="listitem" tabindex="0"
+          aria-label="Зогсоолд хэрхэн зөв байрлуулах вэ видео тоглуулах" onclick="openTipVideo('park-1')">
           <div class="video-play" aria-hidden="true">▶</div>
           <div class="video-duration">2:14</div>
           <div class="video-label">Зогсоолд хэрхэн зөв байрлуулах вэ?</div>
         </div>
 
-        <div class="video-thumb" style="background:linear-gradient(135deg,#0d5e52,#2BBFA0)"
-             role="listitem" tabindex="0" aria-label="Шөнийн цагаар аюулгүй зүйлс видео тоглуулах"
-             onclick="openTipVideo('night-1')">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#0d5e52,#2BBFA0)" role="listitem" tabindex="0"
+          aria-label="Шөнийн цагаар аюулгүй зүйлс видео тоглуулах" onclick="openTipVideo('night-1')">
           <div class="video-play" aria-hidden="true">▶</div>
           <div class="video-duration">3:45</div>
           <div class="video-label">Шөнийн цагаар аюулгүй зүйлс</div>
         </div>
 
-        <div class="video-thumb" style="background:linear-gradient(135deg,#134040,#1e9e85)"
-             role="listitem" tabindex="0" aria-label="Эко зогсоолд зогсох зүйлс видео тоглуулах"
-             onclick="openTipVideo('eco-1')">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#134040,#1e9e85)" role="listitem" tabindex="0"
+          aria-label="Эко зогсоолд зогсох зүйлс видео тоглуулах" onclick="openTipVideo('eco-1')">
           <div class="video-play" aria-hidden="true">▶</div>
           <div class="video-duration">1:58</div>
           <div class="video-label">Эко зогсоолд зогсох зүйлс</div>
         </div>
 
-        <div class="video-thumb" style="background:linear-gradient(135deg,#0a2a4a,#1a5a80)"
-             role="listitem" tabindex="0" aria-label="Зогсоолын тэмдгүүд видео тоглуулах"
-             onclick="openTipVideo('signs-1')">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#0a2a4a,#1a5a80)" role="listitem" tabindex="0"
+          aria-label="Зогсоолын тэмдгүүд видео тоглуулах" onclick="openTipVideo('signs-1')">
           <div class="video-play" aria-hidden="true">▶</div>
           <div class="video-duration">4:02</div>
           <div class="video-label">Зогсоолын тэмдгүүд</div>
@@ -207,12 +208,13 @@
       <div style="margin-top:20px;">
         <h3 style="font-size:15px;font-weight:700;margin-bottom:12px;">Онцлох видео</h3>
         <div class="video-thumb video-thumb--wide"
-             style="background:linear-gradient(135deg,#1a2e2a,#2BBFA0);width:100%;height:160px;border-radius:16px;position:relative;"
-             tabindex="0" aria-label="Зогсоолын аюулгүй байдлын бүрэн гарын авлага видео тоглуулах"
-             onclick="openTipVideo('featured-1')">
+          style="background:linear-gradient(135deg,#1a2e2a,#2BBFA0);width:100%;height:160px;border-radius:16px;position:relative;"
+          tabindex="0" aria-label="Зогсоолын аюулгүй байдлын бүрэн гарын авлага видео тоглуулах"
+          onclick="openTipVideo('featured-1')">
           <div class="video-play" style="font-size:28px;" aria-hidden="true">▶</div>
           <div class="video-duration" style="font-size:13px;">12:30</div>
-          <div class="video-label" style="font-size:14px;font-weight:700;">Зогсоолын аюулгүй байдлын бүрэн гарын авлага</div>
+          <div class="video-label" style="font-size:14px;font-weight:700;">Зогсоолын аюулгүй байдлын бүрэн гарын авлага
+          </div>
         </div>
       </div>
 
@@ -224,33 +226,36 @@
   <nav class="bottom-nav" id="bottomNav" aria-label="Доод навигац">
     <a class="bottom-nav-item" href="../parkiiin.html" aria-label="Нүүр">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
       </svg>
       Нүүр
     </a>
     <a class="bottom-nav-item" href="findPark.html" aria-label="Хайх">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
       Хайх
     </a>
     <a class="bottom-nav-item" href="nearby_washing.html" aria-label="Үйлчилгээ">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
       </svg>
       Үйлчилгээ
     </a>
     <a class="bottom-nav-item active" href="tips.html" aria-label="Зөвлөмж">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        <path
+          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
       </svg>
       Зөвлөмж
     </a>
     <a class="bottom-nav-item" href="profile.html" aria-label="Профайл">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
       </svg>
       Профайл
     </a>
@@ -258,4 +263,5 @@
 
   <script src="../js/main.js"></script>
 </body>
+
 </html>

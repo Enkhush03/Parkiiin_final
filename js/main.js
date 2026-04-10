@@ -25,9 +25,9 @@ function nav(id) {
   // nav visibility rules
   const hideNav = ['login', 'forgot'];
   const shouldHide = hideNav.includes(id);
-  const topNav    = document.getElementById('topNav');
+  const topNav = document.getElementById('topNav');
   const bottomNav = document.getElementById('bottomNav');
-  if (topNav)    topNav.style.display    = shouldHide ? 'none' : '';
+  if (topNav) topNav.style.display = shouldHide ? 'none' : '';
   if (bottomNav) bottomNav.style.display = shouldHide ? 'none' : '';
 }
 
@@ -174,9 +174,9 @@ function tipsCat(btn, cat) {
 function svcTab(btn, type) {
   document.querySelectorAll('.service-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const wash   = document.getElementById('svcWash');
+  const wash = document.getElementById('svcWash');
   const repair = document.getElementById('svcRepair');
-  if (wash)   wash.style.display   = type === 'wash'   ? '' : 'none';
+  if (wash) wash.style.display = type === 'wash' ? '' : 'none';
   if (repair) repair.style.display = type === 'repair' ? '' : 'none';
 }
 
@@ -207,13 +207,13 @@ function showSub(name) {
   const profileMenu = document.getElementById('profileMenu');
   const sub = document.getElementById('sub-' + name);
   if (profileMenu) profileMenu.style.display = 'none';
-  if (sub)         sub.style.display = 'block';
+  if (sub) sub.style.display = 'block';
 }
 
 function hideSub(name) {
   const profileMenu = document.getElementById('profileMenu');
   const sub = document.getElementById('sub-' + name);
-  if (sub)         sub.style.display = 'none';
+  if (sub) sub.style.display = 'none';
   if (profileMenu) profileMenu.style.display = '';
 }
 
@@ -246,7 +246,7 @@ function togglePassword(inputId, btn) {
  */
 function handleLogin(e) {
   e.preventDefault();
-  const email    = document.getElementById('login-email')?.value.trim();
+  const email = document.getElementById('login-email')?.value.trim();
   const password = document.getElementById('login-password')?.value;
 
   if (!email || !password) {
@@ -338,11 +338,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const firstPage = document.querySelector('.page.active');
   if (!firstPage) return;
 
-  const activeId  = firstPage.id;
-  const hideNav   = ['login', 'forgot'];
-  const topNav    = document.getElementById('topNav');
+  const activeId = firstPage.id;
+  const hideNav = ['login', 'forgot'];
+  const topNav = document.getElementById('topNav');
   const bottomNav = document.getElementById('bottomNav');
-  if (topNav    && hideNav.includes(activeId)) topNav.style.display    = 'none';
+  if (topNav && hideNav.includes(activeId)) topNav.style.display = 'none';
   if (bottomNav && hideNav.includes(activeId)) bottomNav.style.display = 'none';
 });
 
@@ -437,10 +437,10 @@ function handleForgotPassword(e) {
  * Extend this object as new locations are added.
  */
 const MARKER_DATA = {
-  central:  { emoji:'🏢', name:'Central Tower Parking', loc:'Сүхбаатар дүүрэг, УБ',       price:'2,000₮', slots:'12 зогсоол', rating:'4.8' },
-  shangri:  { emoji:'🏬', name:'Shangri-La Зогсоол',    loc:'Сүхбаатар дүүрэг, 1-р хороо', price:'5,000₮', slots:'Нээлттэй',   rating:'4.9' },
-  cleanmax: { emoji:'🚿', name:'CleanMax Auto Wash',     loc:'Сүхбаатар дүүрэг, 1.2км',    price:'25,000₮',slots:'Үйлчилгээ', rating:'4.8' },
-  autodoc:  { emoji:'🔧', name:'Auto Doc Repair',        loc:'Баянзүрх дүүрэг, 1.2км',     price:'Тохиролцоно', slots:'Засвар', rating:'4.9' },
+  central: { emoji: '🏢', name: 'Central Tower Parking', loc: 'Сүхбаатар дүүрэг, УБ', price: '2,000₮', slots: '12 зогсоол', rating: '4.8' },
+  shangri: { emoji: '🏬', name: 'Shangri-La Зогсоол', loc: 'Сүхбаатар дүүрэг, 1-р хороо', price: '5,000₮', slots: 'Нээлттэй', rating: '4.9' },
+  cleanmax: { emoji: '🚿', name: 'CleanMax Auto Wash', loc: 'Сүхбаатар дүүрэг, 1.2км', price: '25,000₮', slots: 'Үйлчилгээ', rating: '4.8' },
+  autodoc: { emoji: '🔧', name: 'Auto Doc Repair', loc: 'Баянзүрх дүүрэг, 1.2км', price: 'Тохиролцоно', slots: 'Засвар', rating: '4.9' },
 };
 
 /** Currently selected marker id */
@@ -465,26 +465,26 @@ function selectMarker(markerEl, id) {
       if (!el) return;
       if (isHTML) el.innerHTML = html; else el.textContent = html;
     };
-    set('detailImg',    data.emoji);
-    set('detailName',   data.name);
-    set('detailLoc',    `<svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"
+    set('detailImg', data.emoji);
+    set('detailName', data.name);
+    set('detailLoc', `<svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"
       style="fill:none;stroke:currentColor;stroke-width:2;display:inline;vertical-align:middle;margin-right:2px;">
       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
       <circle cx="12" cy="10" r="3"/></svg>${data.loc}`, true);
-    set('detailPrice',  `${data.price}<span style="font-size:11px;font-weight:400;color:var(--text-muted);">/цаг</span>`, true);
-    set('detailSlots',  data.slots);
+    set('detailPrice', `${data.price}<span style="font-size:11px;font-weight:400;color:var(--text-muted);">/цаг</span>`, true);
+    set('detailSlots', data.slots);
     set('detailRating', data.rating);
   }
 
   const card = document.getElementById('parkingDetailCard');
-  if (card) { card.classList.add('show'); card.setAttribute('aria-hidden','false'); }
+  if (card) { card.classList.add('show'); card.setAttribute('aria-hidden', 'false'); }
   document.getElementById('mapControls')?.classList.add('card-open');
 }
 
 /** Dismiss the detail card and deselect all markers. */
 function dismissCard() {
   const card = document.getElementById('parkingDetailCard');
-  if (card) { card.classList.remove('show'); card.setAttribute('aria-hidden','true'); }
+  if (card) { card.classList.remove('show'); card.setAttribute('aria-hidden', 'true'); }
   document.querySelectorAll('.map-marker').forEach(m => m.classList.remove('selected'));
   document.getElementById('mapControls')?.classList.remove('card-open');
   _activeMarkerId = null;
@@ -535,7 +535,7 @@ function toggleLayers(btn) { btn.classList.toggle('map-control-btn--active'); }
 function centerLocation(btn) {
   btn.classList.add('map-control-btn--active');
   btn.style.transition = 'transform 0.6s ease';
-  btn.style.transform  = 'rotate(360deg)';
+  btn.style.transform = 'rotate(360deg)';
   setTimeout(() => { btn.style.transform = ''; }, 650);
 }
 
@@ -640,23 +640,23 @@ function updateBookingSummary() {
   }
 
   const loyaltyOn = document.getElementById('loyaltyToggle')?.classList.contains('on');
-  const base      = RATE_PER_HOUR * hours;
-  const discount  = loyaltyOn ? LOYALTY_DISCOUNT : 0;
-  const total     = base - discount;
+  const base = RATE_PER_HOUR * hours;
+  const discount = loyaltyOn ? LOYALTY_DISCOUNT : 0;
+  const total = base - discount;
 
   // Update DOM labels
   const fmtMNT = n => n.toLocaleString('mn-MN') + '₮';
 
   const summaryRows = document.querySelectorAll('.sum-row');
-  const rowBase     = summaryRows[0]?.querySelector('.sum-value') || null;
+  const rowBase = summaryRows[0]?.querySelector('.sum-value') || null;
   const rowDiscount = summaryRows[1]?.querySelector('.sum-discount') || null;
-  const rowTotal    = document.querySelector('.sum-total');
+  const rowTotal = document.querySelector('.sum-total');
   const rowBaseLabel = summaryRows[0]?.querySelector('.lbl') || null;
 
   if (rowBaseLabel) rowBaseLabel.textContent = `Зогсоол (${hours} цаг)`;
-  if (rowBase)      rowBase.textContent      = fmtMNT(base);
-  if (rowDiscount)  rowDiscount.textContent  = discount ? `−${fmtMNT(discount)}` : '−';
-  if (rowTotal)     rowTotal.textContent     = fmtMNT(total);
+  if (rowBase) rowBase.textContent = fmtMNT(base);
+  if (rowDiscount) rowDiscount.textContent = discount ? `−${fmtMNT(discount)}` : '−';
+  if (rowTotal) rowTotal.textContent = fmtMNT(total);
 
   // Show/hide discount row gracefully
   const discountRow = summaryRows[1] || null;
@@ -732,10 +732,10 @@ function selectCarType(btn) {
 function submitAddCar(e) {
   e.preventDefault();
 
-  const plate  = document.getElementById('newPlate')?.value.trim();
-  const model  = document.getElementById('newModel')?.value.trim();
+  const plate = document.getElementById('newPlate')?.value.trim();
+  const model = document.getElementById('newModel')?.value.trim();
   const typeBtn = document.querySelector('#carTypeGrid .car-type-btn.active');
-  const emoji  = typeBtn?.dataset.emoji || '🚗';
+  const emoji = typeBtn?.dataset.emoji || '🚗';
 
   if (!plate || !model) {
     alert('Улсын дугаар болон маркийн нэрийг оруулна уу.');
@@ -794,10 +794,10 @@ function tipsTabSwitch(btn, type) {
   ttab(btn); // reuse existing active-state logic
 
   const articlesSection = document.getElementById('tipsArticlesSection');
-  const videosSection   = document.getElementById('tipsVideosSection');
+  const videosSection = document.getElementById('tipsVideosSection');
 
   if (articlesSection) articlesSection.style.display = type === 'article' ? '' : 'none';
-  if (videosSection)   videosSection.style.display   = type === 'video'   ? '' : 'none';
+  if (videosSection) videosSection.style.display = type === 'video' ? '' : 'none';
 
   // Sync aria-selected
   document.querySelectorAll('.tips-tab').forEach(t => {
@@ -815,7 +815,7 @@ function filterTips(query) {
 
   document.querySelectorAll('.article-card').forEach(card => {
     const title = card.querySelector('.article-title')?.textContent.toLowerCase() ?? '';
-    const desc  = card.querySelector('.article-desc')?.textContent.toLowerCase()  ?? '';
+    const desc = card.querySelector('.article-desc')?.textContent.toLowerCase() ?? '';
     card.style.display = (!q || title.includes(q) || desc.includes(q)) ? '' : 'none';
   });
 
@@ -920,7 +920,7 @@ function _fmtMSS(secs) {
   const m = Math.floor(Math.abs(secs) / 60);
   const s = Math.floor(Math.abs(secs) % 60);
   const sign = secs < 0 ? '-' : '';
-  return `${sign}${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return `${sign}${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
 /**
@@ -929,10 +929,10 @@ function _fmtMSS(secs) {
  */
 function initActivityFeed() {
   const remaining = document.getElementById('activityRemaining');
-  const bar       = document.getElementById('activityProgressBar');
+  const bar = document.getElementById('activityProgressBar');
   if (!remaining) return;
 
-  const endTime   = window.ACTIVITY_END_TIME   ? new Date(window.ACTIVITY_END_TIME)   : null;
+  const endTime = window.ACTIVITY_END_TIME ? new Date(window.ACTIVITY_END_TIME) : null;
   const startTime = window.ACTIVITY_START_TIME ? new Date(window.ACTIVITY_START_TIME) : null;
 
   if (!endTime) return;
@@ -940,7 +940,7 @@ function initActivityFeed() {
   clearInterval(_activityTimerInterval);
 
   _activityTimerInterval = setInterval(() => {
-    const now  = new Date();
+    const now = new Date();
     const secsLeft = Math.round((endTime - now) / 1000);
 
     remaining.textContent = _fmtMSS(Math.max(secsLeft, 0));
@@ -955,9 +955,9 @@ function initActivityFeed() {
 
     // Update progress bar
     if (bar && startTime) {
-      const total   = (endTime - startTime) / 1000;
+      const total = (endTime - startTime) / 1000;
       const elapsed = (now - startTime) / 1000;
-      const pct     = Math.min((elapsed / total) * 100, 100);
+      const pct = Math.min((elapsed / total) * 100, 100);
       bar.style.width = `${pct.toFixed(1)}%`;
     }
   }, 1000);
@@ -974,10 +974,10 @@ function extendSession() {
   window.ACTIVITY_END_TIME = newEnd.toISOString();
 
   // Update display label
-  const hhmm = newEnd.toLocaleTimeString('mn-MN', { hour:'2-digit', minute:'2-digit' });
-  const endEl   = document.getElementById('activityEndTime');
+  const hhmm = newEnd.toLocaleTimeString('mn-MN', { hour: '2-digit', minute: '2-digit' });
+  const endEl = document.getElementById('activityEndTime');
   const labelEl = document.getElementById('activityEndLabel');
-  if (endEl)   endEl.textContent   = hhmm;
+  if (endEl) endEl.textContent = hhmm;
   if (labelEl) labelEl.textContent = `${hhmm} дуусна`;
 
   // Restart the timer with new end time
@@ -1030,8 +1030,8 @@ function likeReview(btn) {
 
   if (countEl) {
     const dataCount = parseInt(btn.dataset.count ?? '0', 10);
-    const current   = parseInt(countEl.textContent, 10);
-    const next      = isLiked ? dataCount + 1 : dataCount;
+    const current = parseInt(countEl.textContent, 10);
+    const next = isLiked ? dataCount + 1 : dataCount;
     countEl.textContent = next;
 
     // Brief scale micro-animation
@@ -1090,15 +1090,15 @@ function _fmtApptPrice(n) {
  * Recalculate and push all summary DOM elements from apptState.
  */
 function _updateApptSummary() {
-  const vat   = Math.round(apptState.svcPrice * 0.10);
+  const vat = Math.round(apptState.svcPrice * 0.10);
   const total = apptState.svcPrice + vat;
   const q = id => document.getElementById(id);
-  if (q('apptSumSvcName'))  q('apptSumSvcName').textContent  = apptState.svcName;
+  if (q('apptSumSvcName')) q('apptSumSvcName').textContent = apptState.svcName;
   if (q('apptSumSvcPrice')) q('apptSumSvcPrice').textContent = _fmtApptPrice(apptState.svcPrice);
   if (q('apptSumDatetime')) q('apptSumDatetime').textContent = `${apptState.date}, ${apptState.time}`;
-  if (q('apptCostSvc'))     q('apptCostSvc').textContent     = _fmtApptPrice(apptState.svcPrice);
-  if (q('apptCostVat'))     q('apptCostVat').textContent     = _fmtApptPrice(vat);
-  if (q('apptCostTotal'))   q('apptCostTotal').textContent   = _fmtApptPrice(total);
+  if (q('apptCostSvc')) q('apptCostSvc').textContent = _fmtApptPrice(apptState.svcPrice);
+  if (q('apptCostVat')) q('apptCostVat').textContent = _fmtApptPrice(vat);
+  if (q('apptCostTotal')) q('apptCostTotal').textContent = _fmtApptPrice(total);
 }
 
 /**
@@ -1112,7 +1112,7 @@ function selectSvc(card) {
   });
   card.classList.add('svc-card--selected');
   card.setAttribute('aria-checked', 'true');
-  apptState.svcName  = card.querySelector('.svc-title')?.textContent.trim() ?? '';
+  apptState.svcName = card.querySelector('.svc-title')?.textContent.trim() ?? '';
   apptState.svcPrice = parseInt(card.dataset.price ?? '0', 10);
   _updateApptSummary();
 }
@@ -1198,10 +1198,10 @@ function saveToGallery() {
 
   const serialized = new XMLSerializer().serializeToString(svg);
   const blob = new Blob([serialized], { type: 'image/svg+xml' });
-  const url  = URL.createObjectURL(blob);
+  const url = URL.createObjectURL(blob);
 
-  const a    = document.createElement('a');
-  a.href     = url;
+  const a = document.createElement('a');
+  a.href = url;
   a.download = 'parkiiin-qr-88219.svg';
   a.click();
 
@@ -1392,14 +1392,14 @@ function validateEmail(input) {
 
 function validatePhone(input) {
   const digits = input.value.replace(/\D/g, '');
-  if (!digits)    return _setFieldState(input, input.id + '-err', 'Утасны дугаар оруулна уу');
+  if (!digits) return _setFieldState(input, input.id + '-err', 'Утасны дугаар оруулна уу');
   if (digits.length < 8) return _setFieldState(input, input.id + '-err', 'Дугаар хэт богино');
   return _setFieldState(input, input.id + '-err', '');
 }
 
 /** Score password and update the strength meter. */
 function onPasswordInput(input) {
-  const val  = input.value;
+  const val = input.value;
   const wrap = document.getElementById('pwStrengthWrap');
   if (!val) {
     if (wrap) wrap.style.display = 'none';
@@ -1408,24 +1408,24 @@ function onPasswordInput(input) {
   if (wrap) wrap.style.display = 'flex';
 
   let score = 0;
-  if (val.length >= 8)  score++;
+  if (val.length >= 8) score++;
   if (val.length >= 12) score++;
   if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
-  if (/\d/.test(val))             score++;
-  if (/[^A-Za-z0-9]/.test(val))  score++;
+  if (/\d/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
 
   const levels = [
-    { key: 'weak',   lbl: 'Маш сул' },
-    { key: 'weak',   lbl: 'Сул' },
-    { key: 'fair',   lbl: 'Дунд' },
-    { key: 'good',   lbl: 'Хүчтэй' },
+    { key: 'weak', lbl: 'Маш сул' },
+    { key: 'weak', lbl: 'Сул' },
+    { key: 'fair', lbl: 'Дунд' },
+    { key: 'good', lbl: 'Хүчтэй' },
     { key: 'strong', lbl: 'Маш хүчтэй' },
   ];
-  const lvl  = levels[Math.min(score, 4)];
+  const lvl = levels[Math.min(score, 4)];
   const fill = document.getElementById('pwStrengthFill');
-  const lbl  = document.getElementById('pwStrengthLbl');
+  const lbl = document.getElementById('pwStrengthLbl');
   if (fill) fill.className = 'pw-strength-fill pw-strength-fill--' + lvl.key;
-  if (lbl)  { lbl.className = 'pw-strength-lbl pw-strength-lbl--' + lvl.key; lbl.textContent = lvl.lbl; }
+  if (lbl) { lbl.className = 'pw-strength-lbl pw-strength-lbl--' + lvl.key; lbl.textContent = lvl.lbl; }
 
   return _setFieldState(input, input.id + '-err',
     val.length < 8 ? 'Хамгийн багадаа 8 тэмдэгт' : '');
@@ -1467,7 +1467,7 @@ function handleLogin(e) {
   clearAuthError();
 
   const emailInput = document.getElementById('login-email');
-  const pwInput    = document.getElementById('login-password');
+  const pwInput = document.getElementById('login-password');
   let ok = true;
 
   if (!emailInput.value.trim()) {
@@ -1499,20 +1499,20 @@ function handleSignup(e) {
   clearAuthError();
 
   const f = {
-    lastname:  document.getElementById('signup-lastname'),
+    lastname: document.getElementById('signup-lastname'),
     firstname: document.getElementById('signup-firstname'),
-    phone:     document.getElementById('signup-phone'),
-    email:     document.getElementById('signup-email'),
-    password:  document.getElementById('signup-password'),
+    phone: document.getElementById('signup-phone'),
+    email: document.getElementById('signup-email'),
+    password: document.getElementById('signup-password'),
     password2: document.getElementById('signup-password2'),
-    terms:     document.getElementById('terms-check'),
+    terms: document.getElementById('terms-check'),
   };
 
   let ok = true;
-  if (!validateField(f.lastname))  ok = false;
+  if (!validateField(f.lastname)) ok = false;
   if (!validateField(f.firstname)) ok = false;
-  if (!validatePhone(f.phone))     ok = false;
-  if (!validateEmail(f.email))     ok = false;
+  if (!validatePhone(f.phone)) ok = false;
+  if (!validateEmail(f.email)) ok = false;
 
   if (!f.password.value || f.password.value.length < 8) {
     _setFieldState(f.password, 'signup-password-err', 'Хамгийн багадаа 8 тэмдэгт оруулна уу');
@@ -1681,7 +1681,7 @@ function tipsSearch(query) {
   const q = (query || '').toLowerCase().trim();
   document.querySelectorAll('.tip-article').forEach(card => {
     const title = (card.querySelector('.tip-title')?.textContent || '').toLowerCase();
-    const desc  = (card.querySelector('.tip-desc')?.textContent  || '').toLowerCase();
+    const desc = (card.querySelector('.tip-desc')?.textContent || '').toLowerCase();
     card.style.display = (!q || title.includes(q) || desc.includes(q)) ? '' : 'none';
   });
 }
