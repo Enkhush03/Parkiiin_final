@@ -6694,11 +6694,6 @@ a.vehicle-row:hover,
   margin-top: 0;
 }
 
-.auth-sw a:hover,
-.check-row a:hover {
-  text-decoration: none;
-}
-
 /* Match Tips switch with Services switch sizing/rhythm */
 .tips-content .tips-tabs {
   gap: 8px;

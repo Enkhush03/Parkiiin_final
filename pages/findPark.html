@@ -96,20 +96,20 @@
           </svg>
           Зогсоол
         </button>
-        <button class="map-cat map-cat--blue" role="tab" aria-selected="false"
-                onclick="mapCat(this); location.href='nearby_washing.html'" data-cat="wash">
+        <a class="map-cat map-cat--blue" role="tab" aria-selected="false"
+                onclick="mapCat(this)" data-cat="wash" href="nearby_washing.html">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
           </svg>
           Угаалга
-        </button>
-        <button class="map-cat map-cat--orange" role="tab" aria-selected="false"
-                onclick="mapCat(this); location.href='nearby_repairing.html'" data-cat="repair">
+        </a>
+        <a class="map-cat map-cat--orange" role="tab" aria-selected="false"
+                onclick="mapCat(this)" data-cat="repair" href="nearby_repairing.html">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
           </svg>
           Засвар
-        </button>
+        </a>
       </div>
 
       <!-- Sort filter pills (from PARKING section: Бүгд/Ойрхон/Хямд/Чөлөөтэй) -->
@@ -267,10 +267,9 @@
             </svg>
             Ойролцоох угаалга — 200м
           </span>
-          <button class="map-sub-service-btn"
-                  onclick="location.href='nearby_washing.html'" aria-label="Угаалга харах">
+          <a class="map-sub-service-btn" href="nearby_washing.html" aria-label="Угаалга харах">
             Үзэх
-          </button>
+          </a>
         </div>
         <div class="map-sub-service-row">
           <span class="map-sub-service-label">
@@ -279,10 +278,9 @@
             </svg>
             Ойролцоох засвар — 300м
           </span>
-          <button class="map-sub-service-btn"
-                  onclick="location.href='nearby_repairing.html'" aria-label="Засвар харах">
+          <a class="map-sub-service-btn" href="nearby_repairing.html" aria-label="Засвар харах">
             Үзэх
-          </button>
+          </a>
         </div>
       </div>
 
