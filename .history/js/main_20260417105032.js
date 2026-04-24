@@ -620,4 +620,78 @@ function showRepairMap() {
    FIND PARK PAGE  (pages/findPark.html)
    ═══════════════════════════════════════════════════════════ */
 
+/**
+ * Live-filter parking cards by name (data-name attribute).
+ * Updates the sheet count badge.
+ * @param {string} query
+ */
+function filterParkingCards(query) {
+  const q = (query || '').toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll('#parkingCardList .parking-card').forEach(card => {
+    const name = (card.dataset.name || '').toLowerCase();
+    const show = !q || name.includes(q);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const badge = document.getElementById('sheetCount');
+  if (badge) badge.textContent = visible;
+}
+
+/**
+ * Sort parking card list.
+ * @param {HTMLElement} btn - the clicked sort pill
+ * @param {'all'|'near'|'cheap'|'free'} key
+ */
+function parkingSort(btn, key) {
+  // Update active pill
+  document.querySelectorAll('.map-sort-tabs .filter-tab').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+
+  const list = document.getElementById('parkingCardList');
+  if (!list) return;
+
+  const cards = [...list.querySelectorAll('.parking-card')];
+
+  if (key === 'free') {
+    // Show only cards with data-slots > 0
+    cards.forEach(c => {
+      const slots = parseInt(c.dataset.slots || '1');
+      c.style.display = slots > 0 ? '' : 'none';
+    });
+    return;
+  }
+
+  // Reset display
+  cards.forEach(c => c.style.display = '');
+
+  if (key === 'near') {
+    cards.sort((a, b) => parseFloat(a.dataset.dist || '0') - parseFloat(b.dataset.dist || '0'));
+  } else if (key === 'cheap') {
+    cards.sort((a, b) => parseInt(a.dataset.price || '0') - parseInt(b.dataset.price || '0'));
+  }
+  // 'all' = no sort, just reset display
+
+  cards.forEach(c => list.appendChild(c));
+
+  const badge = document.getElementById('sheetCount');
+  if (badge) badge.textContent = cards.length;
+}
+
+/**
+ * Toggle the parking card list bottom sheet open/collapsed.
+ * @param {HTMLElement} btn
+ */
+function toggleListSheet(btn) {
+  const sheet = document.getElementById('parkingListSheet');
+  if (!sheet) return;
+  sheet.classList.toggle('collapsed');
+  const isCollapsed = sheet.classList.contains('collapsed');
+  btn.setAttribute('aria-label', isCollapsed ? 'Жагсаалт харуулах' : 'Жагсаалт нуух');
+}
+
 

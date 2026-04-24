@@ -31,11 +31,11 @@
 
   <!-- ── MOBILE MENU ──────────────────────────────────── -->
   <div class="mobile-menu" id="mobileMenu" role="navigation">
-    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">Нүүр</a>
-    <a class="nav-link active" href="findPark.html" onclick="closeMenu()">Зогсоол</a>
-    <a class="nav-link" href="nearby_washing.html" onclick="closeMenu()">Үйлчилгээ</a>
-    <a class="nav-link" href="tips.html" onclick="closeMenu()">Зөвлөмж</a>
-    <a class="nav-link" href="profile.html" onclick="closeMenu()">Профайл</a>
+    <a class="nav-link" href="../parkiiin.html" onclick="closeMenu()">🏠 Нүүр</a>
+    <a class="nav-link active" href="findPark.html" onclick="closeMenu()">🅿️ Зогсоол</a>
+    <a class="nav-link" href="nearby_washing.html" onclick="closeMenu()">🔧 Үйлчилгээ</a>
+    <a class="nav-link" href="tips.html" onclick="closeMenu()">💡 Зөвлөмж</a>
+    <a class="nav-link" href="profile.html" onclick="closeMenu()">👤 Профайл</a>
   </div>
 
   <!-- ══════════════════════════════════════════════════════
@@ -53,7 +53,7 @@
       <!-- ── Parking summary ───────────────────────────── -->
       <div class="section-card">
         <div class="booking-park-row">
-          <div class="booking-park-icon" aria-hidden="true"></div>
+          <div class="booking-park-icon" aria-hidden="true">🅿️</div>
           <div class="booking-park-info">
             <div class="booking-park-name">Central Tower Parking</div>
             <div class="booking-park-loc">
@@ -76,13 +76,13 @@
       <div class="section-card">
         <div class="sc-title">Хугацаа сонгох</div>
         <div class="hours-grid" id="hoursGrid" role="group" aria-label="Цаг сонгох">
-          <button class="hour-btn" onclick="bookingSelectHour(this)">1 цаг</button>
-          <button class="hour-btn active" onclick="bookingSelectHour(this)" aria-pressed="true">2 цаг</button>
-          <button class="hour-btn" onclick="bookingSelectHour(this)">3 цаг</button>
-          <button class="hour-btn" onclick="bookingSelectHour(this)">4 цаг</button>
-          <button class="hour-btn" onclick="bookingSelectHour(this)">6 цаг</button>
-          <button class="hour-btn" onclick="bookingSelectHour(this)">8 цаг</button>
-          <button class="hour-btn hour-btn--span2" onclick="bookingSelectHour(this)">Өдрийн</button>
+          <button class="hour-btn" onclick="selectHour(this)">1 цаг</button>
+          <button class="hour-btn active" onclick="selectHour(this)" aria-pressed="true">2 цаг</button>
+          <button class="hour-btn" onclick="selectHour(this)">3 цаг</button>
+          <button class="hour-btn" onclick="selectHour(this)">4 цаг</button>
+          <button class="hour-btn" onclick="selectHour(this)">6 цаг</button>
+          <button class="hour-btn" onclick="selectHour(this)">8 цаг</button>
+          <button class="hour-btn hour-btn--span2" onclick="selectHour(this)">Өдрийн</button>
         </div>
       </div>
 
@@ -90,7 +90,7 @@
       <div class="section-card">
         <div class="sc-title">Машины мэдээлэл</div>
         <div class="booking-vehicle-row">
-          <span class="booking-vehicle-emoji" aria-hidden="true"></span>
+          <span class="booking-vehicle-emoji" aria-hidden="true">🚗</span>
           <div class="booking-vehicle-info">
             <div class="booking-vehicle-model">Toyota Prius</div>
             <div class="booking-vehicle-plate">1234 УБА</div>
@@ -135,8 +135,8 @@
         <div class="sc-title">Төлбөрийн хэрэгсэл</div>
         <div class="payment-grid payment-grid--single" id="payGrid" role="group" aria-label="Төлбөрийн хэрэгсэл">
 
-          <button class="pay-opt active" onclick="bookingSelectPayment(this)" aria-pressed="true">
-            <span class="pay-icon" aria-hidden="true"></span>
+          <button class="pay-opt active" onclick="selPay(this)" aria-pressed="true">
+            <span class="pay-icon" aria-hidden="true">📱</span>
             <div class="pay-opt-detail">
               <div class="pay-opt-name">QPay</div>
               <div class="pay-opt-sub">Цахим хэтэвч</div>
@@ -144,8 +144,8 @@
             <span class="pay-check" aria-hidden="true"></span>
           </button>
 
-          <button class="pay-opt" onclick="bookingSelectPayment(this)" aria-pressed="false">
-            <span class="pay-icon" aria-hidden="true"></span>
+          <button class="pay-opt" onclick="selPay(this)" aria-pressed="false">
+            <span class="pay-icon" aria-hidden="true">💚</span>
             <div class="pay-opt-detail">
               <div class="pay-opt-name">Social Pay</div>
               <div class="pay-opt-sub">Голомт банк</div>
@@ -153,8 +153,8 @@
             <span class="pay-check" aria-hidden="true"></span>
           </button>
 
-          <button class="pay-opt" onclick="bookingSelectPayment(this)" aria-pressed="false">
-            <span class="pay-icon" aria-hidden="true"></span>
+          <button class="pay-opt" onclick="selPay(this)" aria-pressed="false">
+            <span class="pay-icon" aria-hidden="true">💜</span>
             <div class="pay-opt-detail">
               <div class="pay-opt-name">Toki Pay</div>
               <div class="pay-opt-sub">Цахим хэтэвч</div>
@@ -162,8 +162,8 @@
             <span class="pay-check" aria-hidden="true"></span>
           </button>
 
-          <button class="pay-opt" onclick="bookingSelectPayment(this)" aria-pressed="false">
-            <span class="pay-icon" aria-hidden="true"></span>
+          <button class="pay-opt" onclick="selPay(this)" aria-pressed="false">
+            <span class="pay-icon" aria-hidden="true">💳</span>
             <div class="pay-opt-detail">
               <div class="pay-opt-name">Банкны карт</div>
               <div class="pay-opt-sub">Visa / Mastercard</div>
@@ -176,7 +176,7 @@
 
       <!-- ── Confirm button ────────────────────────────── -->
       <button class="btn-full" id="booking-confirm-btn" onclick="confirmBooking()">
-        Төлбөр баталгаажуулах 
+        Төлбөр баталгаажуулах 💳
       </button>
 
     </div><!-- /book-content -->
@@ -222,7 +222,6 @@
   </nav>
 
   <script src="../js/main.js"></script>
-  <script src="../js/booking.js"></script>
 </body>
 
 </html>

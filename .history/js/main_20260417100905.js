@@ -99,6 +99,22 @@ function ftab(btn) {
   btn.classList.add('active');
 }
 
+/* Tips page aliases */
+
+function ttab(btn, showPanelId, hidePanelId) {
+  return switchTipsTab(btn, showPanelId, hidePanelId);
+}
+
+/**
+ * Filter tip articles by category.
+ * Articles use data-cat attribute matching pill data-cat.
+ * @param {HTMLElement} btn  The clicked pill button
+ * @param {string} cat       Category key or 'all'
+ */
+function tipsCat(btn, cat) {
+  return filterTipsByCategory(btn, cat);
+}
+
 /* ── SERVICE TABS ─────────────────────────────────────── */
 
 function svcTab(btn, type) {
@@ -108,6 +124,72 @@ function svcTab(btn, type) {
   const repair = document.getElementById('svcRepair');
   if (wash) wash.style.display = type === 'wash' ? '' : 'none';
   if (repair) repair.style.display = type === 'repair' ? '' : 'none';
+}
+
+/* Booking page aliases */
+
+function selectHour(btn) {
+  return bookingSelectHour(btn);
+}
+
+/* ── BOOKING — VEHICLE TYPE ───────────────────────────── */
+
+function selV(btn) {
+  document.querySelectorAll('#vOpts .v-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* Booking page aliases continued */
+
+function selPay(btn) {
+  return bookingSelectPayment(btn);
+}
+
+/* ── PROFILE SUBPAGES ─────────────────────────────────── */
+
+function showSub(name) {
+  const profileMenu = document.getElementById('profileMenu');
+  const sub = document.getElementById('sub-' + name);
+  if (profileMenu) profileMenu.style.display = 'none';
+  if (sub) sub.style.display = 'block';
+}
+
+function hideSub(name) {
+  const profileMenu = document.getElementById('profileMenu');
+  const sub = document.getElementById('sub-' + name);
+  if (sub) sub.style.display = 'none';
+  if (profileMenu) profileMenu.style.display = '';
+}
+
+/* ── PROFILE — SIGN OUT ───────────────────────────────── */
+
+/**
+ * Confirm and then redirect to login.
+ * In an SPA context, call nav('login') instead of href redirect.
+ */
+function handleSignOut() {
+  const confirmed = confirm('Та нэвтрэх хэсгээс гарахдаа итгэлтэй байна уу?');
+  if (!confirmed) return;
+  setAuthState(false);
+
+  // SPA: navigate to login page section
+  if (typeof nav === 'function' && document.getElementById('login')) {
+    nav('login');
+    return;
+  }
+  // Multi-page: redirect
+  window.location.href = 'login.html';
+}
+
+/* ── PROFILE — SETTINGS ───────────────────────────────── */
+
+/**
+ * Open the settings sub-panel (or navigate to settings page).
+ * Extend this once a settings page is provided.
+ */
+function openSettings() {
+  // TODO: replace with showSub('settings') once settings page is built
+  alert('Тохиргоо хуудас удахгүй нэмэгдэнэ.');
 }
 
 /* ── HAMBURGER ARIA STATE ─────────────────────────────── */
@@ -149,6 +231,272 @@ document.addEventListener('DOMContentLoaded', () => {
   const bottomNav = document.getElementById('bottomNav');
   if (topNav && hideNav.includes(activeId)) topNav.style.display = 'none';
   if (bottomNav && hideNav.includes(activeId)) bottomNav.style.display = 'none';
+});
+
+/* ── FIND PARK MAP PAGE ───────────────────────────────── */
+
+/**
+ * Marker data table — maps markerId → detail card content.
+ * Extend this object as new locations are added.
+ */
+const MARKER_DATA = {
+  central: { emoji: '🏢', name: 'Central Tower Parking', loc: 'Сүхбаатар дүүрэг, УБ', price: '2,000₮', slots: '12 зогсоол', rating: '4.8' },
+  shangri: { emoji: '🏬', name: 'Shangri-La Зогсоол', loc: 'Сүхбаатар дүүрэг, 1-р хороо', price: '5,000₮', slots: 'Нээлттэй', rating: '4.9' },
+  cleanmax: { emoji: '🚿', name: 'CleanMax Auto Wash', loc: 'Сүхбаатар дүүрэг, 1.2км', price: '25,000₮', slots: 'Үйлчилгээ', rating: '4.8' },
+  autodoc: { emoji: '🔧', name: 'Auto Doc Repair', loc: 'Баянзүрх дүүрэг, 1.2км', price: 'Тохиролцоно', slots: 'Засвар', rating: '4.9' },
+};
+
+/** Currently selected marker id */
+let _activeMarkerId = null;
+
+/**
+ * Select a marker, populate the detail card, and slide it up.
+ * @param {HTMLElement} markerEl  The .map-marker element
+ * @param {string}      id        Key in MARKER_DATA
+ */
+function selectMarker(markerEl, id) {
+  if (window.event) window.event.stopPropagation();
+
+  document.querySelectorAll('.map-marker').forEach(m => m.classList.remove('selected'));
+  markerEl.classList.add('selected');
+  _activeMarkerId = id;
+
+  const data = MARKER_DATA[id];
+  if (data) {
+    const set = (elId, html, isHTML) => {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      if (isHTML) el.innerHTML = html; else el.textContent = html;
+    };
+    set('detailImg', data.emoji);
+    set('detailName', data.name);
+    set('detailLoc', `<svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"
+      style="fill:none;stroke:currentColor;stroke-width:2;display:inline;vertical-align:middle;margin-right:2px;">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+      <circle cx="12" cy="10" r="3"/></svg>${data.loc}`, true);
+    set('detailPrice', `${data.price}<span style="font-size:11px;font-weight:400;color:var(--text-muted);">/цаг</span>`, true);
+    set('detailSlots', data.slots);
+    set('detailRating', data.rating);
+  }
+
+  const card = document.getElementById('parkingDetailCard');
+  if (card) { card.classList.add('show'); card.setAttribute('aria-hidden', 'false'); }
+  document.getElementById('mapControls')?.classList.add('card-open');
+}
+
+/** Dismiss the detail card and deselect all markers. */
+function dismissCard() {
+  const card = document.getElementById('parkingDetailCard');
+  if (card) { card.classList.remove('show'); card.setAttribute('aria-hidden', 'true'); }
+  document.querySelectorAll('.map-marker').forEach(m => m.classList.remove('selected'));
+  document.getElementById('mapControls')?.classList.remove('card-open');
+  _activeMarkerId = null;
+}
+
+/**
+ * Switch the active category pill.
+ * @param {HTMLElement} btn
+ */
+function mapCat(btn) {
+  document.querySelectorAll('.map-cat').forEach(b => {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+}
+
+/**
+ * Switch category and highlight the nearest matching marker.
+ * Called from the "Үзэх" buttons inside the detail card.
+ * @param {'wash'|'repair'} catType
+ */
+function mapCatAndSelect(catType) {
+  const catMap = { wash: 'cleanmax', repair: 'autodoc' };
+  const targetId = catMap[catType];
+  if (!targetId) return;
+
+  const catBtn = document.querySelector(`.map-cat[data-cat="${catType}"]`);
+  if (catBtn) mapCat(catBtn);
+
+  dismissCard();
+  setTimeout(() => {
+    const cap = targetId.charAt(0).toUpperCase() + targetId.slice(1);
+    const targetMarker = document.getElementById('marker' + cap);
+    if (targetMarker) selectMarker(targetMarker, targetId);
+  }, 80);
+}
+
+/** Toggle the filter button active state. */
+function toggleMapFilter(btn) {
+  btn.classList.toggle('active');
+  btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+}
+
+/** Toggle the layers control button. */
+function toggleLayers(btn) { btn.classList.toggle('map-control-btn--active'); }
+
+/** Simulate centering on user location with a brief spin. */
+function centerLocation(btn) {
+  btn.classList.add('map-control-btn--active');
+  btn.style.transition = 'transform 0.6s ease';
+  btn.style.transform = 'rotate(360deg)';
+  setTimeout(() => { btn.style.transform = ''; }, 650);
+}
+
+/** Navigate to the booking page for the selected marker. */
+function bookParking() {
+  if (typeof nav === 'function' && document.getElementById('book')) {
+    nav('book');
+  } else {
+    window.location.href = 'booking.html';
+  }
+}
+
+/**
+ * Initialise all find-park interactions.
+ * Safe to call even when map elements are absent (other pages).
+ */
+function initFindPark() {
+  const mapPage = document.getElementById('mapPage');
+  if (!mapPage) return;
+
+  // Tap on map background → dismiss detail card
+  mapPage.addEventListener('click', () => dismissCard());
+
+  // Prevent card clicks from bubbling to the map
+  const card = document.getElementById('parkingDetailCard');
+  if (card) card.addEventListener('click', e => e.stopPropagation());
+
+  // Keyboard: Escape closes card
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') dismissCard(); });
+
+  // Keyboard: Enter / Space activates focused marker
+  document.querySelectorAll('.map-marker').forEach(marker => {
+    marker.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); marker.click(); }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initFindPark);
+
+
+/* ── BOOKING PAGE ─────────────────────────────────────── */
+
+/**
+ * Select a booking hour button and update aria-pressed on all siblings.
+ * @param {HTMLElement} btn
+ */
+function bookingSelectHour(btn) {
+  const grid = document.getElementById('hoursGrid');
+  if (!grid) return;
+  grid.querySelectorAll('.hour-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+  updateBookingSummary();
+}
+
+/**
+ * Select a payment option and update aria-pressed on all siblings.
+ * @param {HTMLElement} btn
+ */
+function bookingSelectPayment(btn) {
+  const grid = document.getElementById('payGrid');
+  if (!grid) return;
+  grid.querySelectorAll('.pay-opt').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+}
+
+/**
+ * Toggle the loyalty points switch and recalculate the summary.
+ * @param {HTMLElement} toggleEl
+ */
+function toggleLoyalty(toggleEl) {
+  toggleEl.classList.toggle('on');
+  const isOn = toggleEl.classList.contains('on');
+  toggleEl.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+  updateBookingSummary();
+}
+
+/**
+ * Recalculate displayed totals based on selected hour + loyalty state.
+ * Extend / replace with real pricing logic as needed.
+ */
+function updateBookingSummary() {
+  const RATE_PER_HOUR = 2000;   // ₮ / цаг
+  const LOYALTY_DISCOUNT = 200; // fixed ₮ discount
+
+  // Determine selected hours from active button label
+  const activeBtn = document.querySelector('#hoursGrid .hour-btn.active');
+  let hours = 2; // default
+  if (activeBtn) {
+    const match = activeBtn.textContent.match(/\d+/);
+    if (match) hours = parseInt(match[0], 10);
+    if (activeBtn.textContent.includes('Өдрийн')) hours = 10;
+  }
+
+  const loyaltyOn = document.getElementById('loyaltyToggle')?.classList.contains('on');
+  const base = RATE_PER_HOUR * hours;
+  const discount = loyaltyOn ? LOYALTY_DISCOUNT : 0;
+  const total = base - discount;
+
+  // Update DOM labels
+  const fmtMNT = n => n.toLocaleString('mn-MN') + '₮';
+
+  const summaryRows = document.querySelectorAll('.sum-row');
+  const rowBase = summaryRows[0]?.querySelector('.sum-value') || null;
+  const rowDiscount = summaryRows[1]?.querySelector('.sum-discount') || null;
+  const rowTotal = document.querySelector('.sum-total');
+  const rowBaseLabel = summaryRows[0]?.querySelector('.lbl') || null;
+
+  if (rowBaseLabel) rowBaseLabel.textContent = `Зогсоол (${hours} цаг)`;
+  if (rowBase) rowBase.textContent = fmtMNT(base);
+  if (rowDiscount) rowDiscount.textContent = discount ? `−${fmtMNT(discount)}` : '−';
+  if (rowTotal) rowTotal.textContent = fmtMNT(total);
+
+  // Show/hide discount row gracefully
+  const discountRow = summaryRows[1] || null;
+  if (discountRow) discountRow.style.opacity = loyaltyOn ? '1' : '0.35';
+}
+
+/** Navigate to vehicle-selection page (stub). */
+function changeVehicle() {
+  alert('Машин солих хуудас удахгүй нэмэгдэнэ.');
+}
+
+/**
+ * Confirm booking: validate, show loading, then redirect to success.
+ */
+function confirmBooking() {
+  const active = document.querySelector('#payGrid .pay-opt.active');
+  if (!active) {
+    alert('Төлбөрийн хэрэгслээ сонгоно уу.');
+    return;
+  }
+
+  const btn = document.getElementById('booking-confirm-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Баталгаажуулж байна...';
+  }
+
+  // TODO: replace with real API call
+  setTimeout(() => {
+    if (btn) { btn.disabled = false; btn.textContent = 'Төлбөр баталгаажуулах 💳'; }
+    // Multi-page: redirect to success page
+    window.location.href = 'success.html';
+  }, 900);
+}
+
+// Init summary on page load
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('hoursGrid')) updateBookingSummary();
 });
 
 /* ── CAR TYPES PAGE ───────────────────────────────────── */
@@ -239,7 +587,146 @@ function submitAddCar(e) {
 /* ── TIPS PAGE ────────────────────────────────────────── */
 
 /**
+ * Switch between the Нийтлал (article) and Видео panels.
+ * Extends the existing ttab() with content-panel show/hide.
+ * @param {HTMLElement} btn   The clicked tab button
+ * @param {'article'|'video'} type
+ */
+function tipsTabSwitch(btn, type) {
+  switchTipsTab(btn); // reuse existing active-state logic
 
+  const articlesSection = document.getElementById('tipsArticlesSection');
+  const videosSection = document.getElementById('tipsVideosSection');
+
+  if (articlesSection) articlesSection.style.display = type === 'article' ? '' : 'none';
+  if (videosSection) videosSection.style.display = type === 'video' ? '' : 'none';
+
+  // Sync aria-selected
+  document.querySelectorAll('.tips-tab').forEach(t => {
+    t.setAttribute('aria-selected', t === btn ? 'true' : 'false');
+  });
+}
+
+/**
+ * Live-filter articles and video cards by search keyword.
+ * Hides cards whose titles/descriptions don't match the query.
+ * @param {string} query
+ */
+function filterTips(query) {
+  const q = query.toLowerCase().trim();
+
+  document.querySelectorAll('.article-card').forEach(card => {
+    const title = card.querySelector('.article-title')?.textContent.toLowerCase() ?? '';
+    const desc = card.querySelector('.article-desc')?.textContent.toLowerCase() ?? '';
+    card.style.display = (!q || title.includes(q) || desc.includes(q)) ? '' : 'none';
+  });
+
+  document.querySelectorAll('.video-card').forEach(card => {
+    const label = card.querySelector('.video-label')?.textContent.toLowerCase() ?? '';
+    card.style.display = (!q || label.includes(q)) ? '' : 'none';
+  });
+}
+
+/**
+ * Open an article detail (stub — extend with real routing or modal).
+ * @param {string} id
+ */
+function openArticle(id) {
+  // TODO: navigate to article detail page
+  alert(`"${id}" нийтлэлийн дэлгэрэнгүй хуудас удахгүй нэмэгдэнэ.`);
+}
+
+/**
+ * Open a video player (stub — extend with full-screen player modal).
+ * @param {string} id
+ */
+function openVideo(id) {
+  // TODO: open video player modal
+  alert(`"${id}" видео тоглуулагч удахгүй нэмэгдэнэ.`);
+}
+
+/* ── NEARBY WASHING PAGE ──────────────────────────────── */
+
+/**
+ * Live-filter wash cards by venue name.
+ * @param {string} query
+ */
+function filterWash(query) {
+  const q = query.toLowerCase().trim();
+  document.querySelectorAll('#washList .wash-card, #washList .wash-card-small').forEach(card => {
+    const name = (card.dataset.name ?? '').toLowerCase();
+    card.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+}
+
+/**
+ * Client-side sort the wash list by distance, rating, or price.
+ * Deactivates other sort buttons, then re-appends cards in sorted order.
+ * @param {HTMLElement} btn
+ * @param {'distance'|'rating'|'price'} key
+ */
+function washSort(btn, key) {
+  document.querySelectorAll('.wash-filter-sort').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+
+  const list = document.getElementById('washList');
+  if (!list) return;
+
+  const cards = [...list.querySelectorAll('.wash-card, .wash-card-small')];
+  cards.sort((a, b) => {
+    const av = parseFloat(a.dataset[key]) || 0;
+    const bv = parseFloat(b.dataset[key]) || 0;
+    return key === 'rating' ? bv - av : av - bv;
+  });
+
+  cards.forEach(c => list.appendChild(c));
+}
+
+/**
+ * Toggle the filter button active state.
+ * @param {HTMLElement} btn
+ */
+function toggleWashFilter(btn) {
+  btn.classList.toggle('active');
+  btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+}
+
+/**
+ * Quick-book a wash venue from the compact card.
+ * @param {string} name
+ */
+function quickBookWash(name) {
+  window.location.href = `booking.html?venue=${encodeURIComponent(name)}&type=wash`;
+}
+
+/** Open QR code scanner (stub). */
+function openQR() {
+  alert('QR код уншуулах функц удахгүй нэмэгдэнэ.');
+}
+
+/* ── ACTIVITY FEED PAGE ───────────────────────────────── */
+
+/** Interval reference for the countdown timer */
+let _activityTimerInterval = null;
+
+/**
+ * Format seconds as MM:SS.
+ * @param {number} secs
+ * @returns {string}
+ */
+function _fmtMSS(secs) {
+  const m = Math.floor(Math.abs(secs) / 60);
+  const s = Math.floor(Math.abs(secs) % 60);
+  const sign = secs < 0 ? '-' : '';
+  return `${sign}${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+/**
+ * Start (or restart) the live countdown timer and progress bar.
  * Reads window.ACTIVITY_END_TIME and ACTIVITY_START_TIME set in the HTML.
  */
 function initActivityFeed() {
@@ -620,4 +1107,146 @@ function showRepairMap() {
    FIND PARK PAGE  (pages/findPark.html)
    ═══════════════════════════════════════════════════════════ */
 
+/**
+ * Live-filter parking cards by name (data-name attribute).
+ * Updates the sheet count badge.
+ * @param {string} query
+ */
+function filterParkingCards(query) {
+  const q = (query || '').toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll('#parkingCardList .parking-card').forEach(card => {
+    const name = (card.dataset.name || '').toLowerCase();
+    const show = !q || name.includes(q);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const badge = document.getElementById('sheetCount');
+  if (badge) badge.textContent = visible;
+}
 
+/**
+ * Sort parking card list.
+ * @param {HTMLElement} btn - the clicked sort pill
+ * @param {'all'|'near'|'cheap'|'free'} key
+ */
+function parkingSort(btn, key) {
+  // Update active pill
+  document.querySelectorAll('.map-sort-tabs .filter-tab').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+
+  const list = document.getElementById('parkingCardList');
+  if (!list) return;
+
+  const cards = [...list.querySelectorAll('.parking-card')];
+
+  if (key === 'free') {
+    // Show only cards with data-slots > 0
+    cards.forEach(c => {
+      const slots = parseInt(c.dataset.slots || '1');
+      c.style.display = slots > 0 ? '' : 'none';
+    });
+    return;
+  }
+
+  // Reset display
+  cards.forEach(c => c.style.display = '');
+
+  if (key === 'near') {
+    cards.sort((a, b) => parseFloat(a.dataset.dist || '0') - parseFloat(b.dataset.dist || '0'));
+  } else if (key === 'cheap') {
+    cards.sort((a, b) => parseInt(a.dataset.price || '0') - parseInt(b.dataset.price || '0'));
+  }
+  // 'all' = no sort, just reset display
+
+  cards.forEach(c => list.appendChild(c));
+
+  const badge = document.getElementById('sheetCount');
+  if (badge) badge.textContent = cards.length;
+}
+
+/**
+ * Toggle the parking card list bottom sheet open/collapsed.
+ * @param {HTMLElement} btn
+ */
+function toggleListSheet(btn) {
+  const sheet = document.getElementById('parkingListSheet');
+  if (!sheet) return;
+  sheet.classList.toggle('collapsed');
+  const isCollapsed = sheet.classList.contains('collapsed');
+  btn.setAttribute('aria-label', isCollapsed ? 'Жагсаалт харуулах' : 'Жагсаалт нуух');
+}
+
+/* \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+   TIPS PAGE  (pages/tips.html)
+   \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 */
+
+/**
+ * Switch between Нийтлал (articles) and Видео (videos) panels.
+ * @param {HTMLElement} btn       - the clicked tips-tab button
+ * @param {string}      showId    - panel to show
+ * @param {string}      hideId    - panel to hide
+ */
+function switchTipsTab(btn, showId, hideId) {
+  // Update tab buttons
+  document.querySelectorAll('.tips-tabs .tips-tab[role="tab"]').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+
+  // Toggle panels
+  const show = document.getElementById(showId);
+  const hide = document.getElementById(hideId);
+  if (show) show.style.display = '';
+  if (hide) hide.style.display = 'none';
+}
+
+/**
+ * Filter article cards by category pill.
+ * @param {HTMLElement} btn
+ * @param {string} cat
+ */
+function filterTipsByCategory(btn, cat) {
+  // Update category pill active state
+  document.querySelectorAll('[data-cat]').forEach(b => {
+    if (b.classList.contains('tips-tab')) {
+      b.classList.remove('active');
+    }
+  });
+  btn.classList.add('active');
+
+  // Show/hide articles matching category
+  document.querySelectorAll('.tip-article').forEach(card => {
+    const cardCat = card.dataset.cat || 'all';
+    card.style.display = (cat === 'all' || cardCat === cat) ? '' : 'none';
+  });
+}
+
+/**
+ * Live search across tip-title and tip-desc text.
+ * @param {string} query
+ */
+function tipsSearch(query) {
+  const q = (query || '').toLowerCase().trim();
+  document.querySelectorAll('.tip-article').forEach(card => {
+    const title = (card.querySelector('.tip-title')?.textContent || '').toLowerCase();
+    const desc = (card.querySelector('.tip-desc')?.textContent || '').toLowerCase();
+    card.style.display = (!q || title.includes(q) || desc.includes(q)) ? '' : 'none';
+  });
+}
+
+/**
+ * Open a video — stub ready for real player integration.
+ * @param {string} videoId
+ */
+function openTipVideo(videoId) {
+  // TODO: integrate with a video player modal or YouTube embed
+  console.log('Open video:', videoId);
+  alert('Видео: ' + videoId + '\n(Бодит тоглогчтой холбогдох боломжтой)');
+}
