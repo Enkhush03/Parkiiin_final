@@ -1,0 +1,17 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Washing from "./pages/Washing";
+import Repair from "./pages/Repair";
+import Booking from "./pages/Booking";
+import Success from "./pages/Success"
+<Route path="/success" element={<Success/>}/>
+function App(){
+  return  (<BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Washing />} />
+        <Route path="/washing" element={<Washing />} />
+        <Route path="/repair" element={<Repair />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+export default App;
