@@ -1,0 +1,78 @@
+/* FindPark.module.css */
+.page { padding-top: var(--top-nav-h); padding-bottom: var(--bottom-nav-h); }
+
+.header {
+  background: linear-gradient(135deg,#e8faf7,#d0f2ec);
+  padding: 28px 24px 20px;
+}
+.header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(22px,4vw,34px);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.header p { color: var(--text-muted); font-size: 14px; }
+
+/* Search + sort */
+.searchRow {
+  display: flex; gap: 10px;
+  padding: 16px 20px 0;
+  align-items: center;
+}
+.searchWrap {
+  flex: 1;
+  background: white;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+}
+.searchWrap svg {
+  width: 18px; height: 18px;
+  stroke: var(--primary); fill: none; stroke-width: 2; flex-shrink: 0;
+}
+.searchWrap input {
+  flex: 1; border: none; outline: none;
+  font-size: 14px; font-family: inherit;
+  color: var(--text); background: none;
+}
+.searchWrap input::placeholder { color: var(--text-muted); }
+
+/* Sort pills */
+.sortRow {
+  display: flex; gap: 8px; overflow-x: auto;
+  padding: 12px 20px 4px;
+  scrollbar-width: none;
+}
+.sortRow::-webkit-scrollbar { display: none; }
+.pill {
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  border: 1.5px solid var(--border);
+  background: white; color: var(--text-muted);
+  white-space: nowrap; transition: all 0.2s;
+  flex-shrink: 0;
+}
+.pill.active, .pill:hover {
+  background: var(--primary); color: white; border-color: var(--primary);
+}
+
+/* Card grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+  gap: 16px;
+  padding: 16px 20px;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 20px;
+  font-size: 14px;
+}
