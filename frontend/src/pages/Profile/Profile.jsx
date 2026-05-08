@@ -68,45 +68,54 @@ export default function Profile() {
           <div className="points-progress">
             <div className="points-bar" style={{ width: '65%' }}></div>
           </div>
-          <div className="points-hint">Дараагийн түвшинд 260 оноо</div>
+
         </div>
 
-        {/* PROFILE MENU */}
-        <div className="profile-menu-list" role="navigation" aria-label="Профайл цэс">
-          <button className="p-menu-item" onClick={() => setActiveSubpage('vehicles')}>
-            <div className="p-menu-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/><path d="M5 11l2-6h10l2 6"/></svg>
+        {/* MAIN MENU */}
+        <div className="menu-list" role="navigation" aria-label="Профайл цэс">
+          <div className="menu-item" onClick={() => setActiveSubpage('vehicles')} role="button" tabIndex="0">
+            <div className="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v5" /><circle cx="15.5" cy="17.5" r="2.5" /><circle cx="5.5" cy="17.5" r="2.5" /><polyline points="3 13 3 9 9 9" /><polyline points="13 3 13 9 3 9" /></svg>
             </div>
-            <div className="p-menu-text">Миний машинууд</div>
-            <div className="p-menu-arr">›</div>
-          </button>
+            <div className="menu-text">
+              <div className="menu-title">Машины төрөл</div>
+              <div className="menu-sub">2 машин бүртгэлтэй</div>
+            </div>
+            <span className="menu-arrow" aria-hidden="true">›</span>
+          </div>
 
-          <button className="p-menu-item" onClick={() => setActiveSubpage('history')}>
-            <div className="p-menu-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+          <div className="menu-item" onClick={() => setActiveSubpage('history')} role="button" tabIndex="0">
+            <div className="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
             </div>
-            <div className="p-menu-text">Захиалгын түүх</div>
-            <div className="p-menu-arr">›</div>
-          </button>
+            <div className="menu-text">
+              <div className="menu-title">Захиалгын түүх</div>
+              <div className="menu-sub">Өнгөрсөн захиалгууд</div>
+            </div>
+            <span className="menu-arrow" aria-hidden="true">›</span>
+          </div>
 
-          <button className="p-menu-item" onClick={() => setActiveSubpage('payments')}>
-            <div className="p-menu-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <div className="menu-item" onClick={() => setActiveSubpage('reviews')} role="button" tabIndex="0">
+            <div className="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
             </div>
-            <div className="p-menu-text">Төлбөрийн хэрэгсэл</div>
-            <div className="p-menu-arr">›</div>
-          </button>
+            <div className="menu-text">
+              <div className="menu-title">Миний үнэлгээ</div>
+              <div className="menu-sub">24 үнэлгээ • Дундаж 4.9</div>
+            </div>
+            <span className="menu-arrow" aria-hidden="true">›</span>
+          </div>
 
-          <button className="p-menu-item" onClick={() => setActiveSubpage('help')}>
-            <div className="p-menu-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div className="menu-item menu-item--danger" onClick={() => alert('Гарах')} role="button" tabIndex="0">
+            <div className="menu-icon menu-icon--danger" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
             </div>
-            <div className="p-menu-text">Тусламж</div>
-            <div className="p-menu-arr">›</div>
-          </button>
+            <div className="menu-text">
+              <div className="menu-title menu-title--danger">Sign Out</div>
+            </div>
+            <span className="menu-arrow menu-arrow--danger" aria-hidden="true">›</span>
+          </div>
         </div>
-
-        <button className="logout-btn" onClick={() => alert('Гарах')}>Гарах</button>
       </main>
 
       {/* Subpages would be rendered here when activeSubpage is set, e.g. <HistorySubpage /> */}
@@ -116,9 +125,9 @@ export default function Profile() {
             <button className="subpage-back" onClick={() => setActiveSubpage(null)}>←</button>
             <h2 className="subpage-title">{
               activeSubpage === 'history' ? 'Захиалгын түүх' :
-              activeSubpage === 'loyalty' ? 'Loyalty оноо' :
-              activeSubpage === 'vehicles' ? 'Миний машинууд' :
-              activeSubpage === 'payments' ? 'Төлбөрийн хэрэгсэл' : 'Тохиргоо'
+                activeSubpage === 'loyalty' ? 'Loyalty оноо' :
+                  activeSubpage === 'vehicles' ? 'Миний машинууд' :
+                    activeSubpage === 'payments' ? 'Төлбөрийн хэрэгсэл' : 'Тохиргоо'
             }</h2>
           </div>
           <div className="subpage-content" style={{ padding: '20px' }}>
