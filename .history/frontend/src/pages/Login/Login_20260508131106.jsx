@@ -71,7 +71,7 @@ export default function Login() {
           )}
 
           <button type="submit" className={s.btnFull}>
-            {tab === 'login' ? 'Нэвтрэх' : 'Бүртгэл үүсгэх'}
+            {tab === 'login' ? 'Нэвтрэх →' : 'Бүртгэл үүсгэх →'}
           </button>
         </form>
 

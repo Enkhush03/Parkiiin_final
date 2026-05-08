@@ -11,7 +11,7 @@
 export const BOOKING_CONFIG = {
   /** Цагийн тариф (₮/цаг) */
   RATE_PER_HOUR: 2000,
-  /** Loyalty оноо */
+  /** Loyalty оноо ашиглах тогтмол хөнгөлөлт (₮) */
   LOYALTY_DISCOUNT: 200,
 };
 

@@ -223,7 +223,7 @@ export default function FindPark() {
                     <div className="p-price">{s.price.toLocaleString()}₮<span>/цаг</span></div>
                     <div className="p-rating">{s.rating}</div>
                   </div>
-                  <button className="book-btn" onClick={(e) => { e.stopPropagation(); navigate('/booking', { state: { type: 'parking', id: s.id, name: s.name, price: s.price } }) }}>Захиалах</button>
+                  <button className="book-btn" onClick={(e) => { e.stopPropagation(); navigate('/booking', { state: { type: 'parking', id: s.id, name: s.name, price: s.price } }) }}>Захиалах →</button>
                 </div>
               </div>
             ))}

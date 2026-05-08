@@ -71,15 +71,15 @@ export default function Login() {
           )}
 
           <button type="submit" className={s.btnFull}>
-            {tab === 'login' ? 'Нэвтрэх' : 'Бүртгэл үүсгэх'}
+            {tab === 'login' ? 'Нэвтрэх →' : 'Бүртгэл үүсгэх →'}
           </button>
         </form>
 
         <div className={s.divider}><span>эсвэл</span></div>
 
         <div className={s.socialBtns}>
-          <button className={s.socialBtn}>Google</button>
-          <button className={s.socialBtn}>Apple ID</button>
+          <button className={s.socialBtn}>🇬 Google</button>
+          <button className={s.socialBtn}>🍎 Apple</button>
         </div>
       </div>
     </div>
