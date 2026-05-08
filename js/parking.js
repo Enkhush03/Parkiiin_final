@@ -3,18 +3,14 @@
    Parking / find-park interactions extracted from main.js.
    ========================================================= */
 
-/* ── FIND PARK MAP PAGE ───────────────────────────────── */
+/* ── ES6 IMPORT: Статик дата тусдаа файлаас татаж авна ── */
 
-/**
- * Marker data table — maps markerId → detail card content.
- * Extend this object as new locations are added.
- */
-const MARKER_DATA = {
-  central: { emoji: '🏢', name: 'Central Tower Parking', loc: 'Сүхбаатар дүүрэг, УБ', price: '2,000₮', slots: '12 зогсоол', rating: '4.8' },
-  shangri: { emoji: '🏬', name: 'Shangri-La Зогсоол', loc: 'Сүхбаатар дүүрэг, 1-р хороо', price: '5,000₮', slots: 'Нээлттэй', rating: '4.9' },
-  cleanmax: { emoji: '🚿', name: 'CleanMax Auto Wash', loc: 'Сүхбаатар дүүрэг, 1.2км', price: '25,000₮', slots: 'Үйлчилгээ', rating: '4.8' },
-  autodoc: { emoji: '🔧', name: 'Auto Doc Repair', loc: 'Баянзүрх дүүрэг, 1.2км', price: 'Тохиролцоно', slots: 'Засвар', rating: '4.9' },
-};
+// parkingData.js файлд тодорхойлогдсон MARKER_DATA болон
+// PARKING_SPOTS объектуудыг ES6 import ашиглан оруулж ирнэ.
+// Ингэснээр өгөгдлийг нэг газарт удирдаж, модулиудад хуваалцана.
+import { MARKER_DATA, PARKING_SPOTS } from './data/parkingData.js';
+
+/* ── FIND PARK MAP PAGE ───────────────────────────────── */
 
 /** Currently selected marker id */
 let _activeMarkerId = null;

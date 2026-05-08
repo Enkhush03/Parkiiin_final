@@ -3,6 +3,16 @@
    Booking-page interactions extracted from main.js.
    ========================================================= */
 
+/* ── ES6 IMPORT: Статик дата тусдаа файлаас татаж авна ── */
+
+// bookingData.js файлд тодорхойлогдсон BOOKING_CONFIG,
+// HOUR_OPTIONS, PAYMENT_METHODS өгөгдлийг ES6 import-оор татаж авна.
+import { BOOKING_CONFIG, HOUR_OPTIONS, PAYMENT_METHODS } from './data/bookingData.js';
+
+// Дотоод хэрэглээнд хялбар нэрлэлт
+const RATE_PER_HOUR   = BOOKING_CONFIG.RATE_PER_HOUR;
+const LOYALTY_DISCOUNT = BOOKING_CONFIG.LOYALTY_DISCOUNT;
+
 /* Booking page aliases */
 
 function selectHour(btn) {
@@ -71,8 +81,8 @@ function toggleLoyalty(toggleEl) {
  * Extend / replace with real pricing logic as needed.
  */
 function updateBookingSummary() {
-  const RATE_PER_HOUR = 2000;   // ₮ / цаг
-  const LOYALTY_DISCOUNT = 200; // fixed ₮ discount
+  // RATE_PER_HOUR болон LOYALTY_DISCOUNT нь дээр import хийсэн
+  // bookingData.js-ийн BOOKING_CONFIG-оос гаргаж авсан тоо юм.
 
   // Determine selected hours from active button label
   const activeBtn = document.querySelector('#hoursGrid .hour-btn.active');

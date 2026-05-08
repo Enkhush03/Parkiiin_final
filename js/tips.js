@@ -3,6 +3,14 @@
    Tips-page interactions extracted from main.js.
    ========================================================= */
 
+/* ── ES6 IMPORT: Статик дата тусдаа файлаас татаж авна ── */
+
+// tipsData.js файлд тодорхойлогдсон TIPS_ARTICLES болон
+// TIPS_VIDEOS массивуудыг ES6 import-оор татаж авна.
+// Энэ нь tips.html-ийн нийтлэл, видео хэсгийг
+// JS-ээс динамикаар үүсгэхэд ашиглагдана.
+import { TIPS_ARTICLES, TIPS_VIDEOS } from './data/tipsData.js';
+
 /* Tips page aliases */
 
 function ttab(btn, showPanelId, hidePanelId) {
