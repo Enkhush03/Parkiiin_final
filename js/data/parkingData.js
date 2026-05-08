@@ -7,6 +7,7 @@
 /**
  * Газрын зургийн marker-уудын дэлгэрэнгүй мэдээлэл.
  * parking.js дотор import хийж ашиглана.
+ * Дэлгэцэнд шууд харуулах форматтай.
  * @type {Object.<string, {emoji: string, name: string, loc: string, price: string, slots: string, rating: string}>}
  */
 export const MARKER_DATA = {
