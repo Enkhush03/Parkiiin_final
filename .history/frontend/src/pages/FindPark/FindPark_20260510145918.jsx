@@ -1,12 +1,10 @@
-import { useState, useEffect, useMemo } from 'react'
+
 import { Link, useNavigate } from 'react-router-dom'
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar'
+import React, {useState, useEffect, useMemo } from 'react';
 
-
-
-
-export default function FindPark() {
-   const [parkingSpots, setParkingSpots] = useState([]);
+const FindPark = () => {
+  const [parkingSpots, setParkingSpots] = useState([]);
   useEffect(() =>{
     fetch('/api/parking.json')
     .then(response => response.json())
@@ -15,7 +13,8 @@ export default function FindPark() {
     })
     .catch(error => console.error('Error fetching parking data:', error));
   },[]);
-
+}
+export default function FindPark() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [sortType, setSortType] = useState('all')
@@ -23,7 +22,7 @@ export default function FindPark() {
 
   // Шүүлтүүр & Эрэмбэлэлт
   const filtered = useMemo(() => {
-    let result = parkingSpots.filter(s =>
+    let result = PARKING_SPOTS.filter(s =>
       s.name.toLowerCase().includes(query.toLowerCase()) ||
       s.loc.toLowerCase().includes(query.toLowerCase())
     )
@@ -33,11 +32,11 @@ export default function FindPark() {
     if (sortType === 'free')  result = result.filter(s => s.slots > 0)
 
     return result
-  }, [parkingSpots, query, sortType])
+  }, [query, sortType])
 
   const handleSelectMarker = (id) => {
-    const spot = parkingSpots.find(s => s.id === id);
-    if (spot) setSelectedSpot(spot);
+    const spot = MARKER_DATA[id]
+    if (spot) setSelectedSpot({ id, ...spot })
   }
 
   const handleBook = () => {
@@ -131,38 +130,9 @@ export default function FindPark() {
             <button className={`filter-tab ${sortType === 'free' ? 'active' : ''}`} onClick={() => setSortType('free')}>Чөлөөтэй</button>
           </div>
         </div>
-        {/* ── MARKERS ────────────────────────────────────── */}
-<div className="map-markers-layer" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-  {parkingSpots.map(spot => (
-    <button
-      key={spot.id}
-      className={`map-marker ${selectedSpot?.id === spot.id ? 'is-active' : ''}`}
-      style={{
-        position: 'absolute',
-        top: spot.top,
-        left: spot.left,
-        pointerEvents: 'auto',
-        transform: 'translate(-50%, -50%)',
-        background: 'white',
-        border: 'none',
-        borderRadius: '50%',
-        width: '40px',
-        height: '40px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
-        cursor: 'pointer',
-        fontSize: '20px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
-      onClick={() => setSelectedSpot(spot)}
-    >
-      {spot.emoji}
-    </button>
-  ))}
-</div>
+
         {/* ── MAP MARKERS ─────────────────────────────────── */}
-        {Object.entries(parkingSpots).map(([id, spot]) => {
+        {Object.entries(MARKER_DATA).map(([id, spot]) => {
           let pinClass = 'map-marker-pin';
           if (id === 'cleanmax') pinClass += ' map-marker-pin--blue';
           if (id === 'autodoc') pinClass += ' map-marker-pin--orange';

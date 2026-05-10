@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import React, {useState, useEffect, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar';
 
@@ -131,36 +131,7 @@ export default function FindPark() {
             <button className={`filter-tab ${sortType === 'free' ? 'active' : ''}`} onClick={() => setSortType('free')}>Чөлөөтэй</button>
           </div>
         </div>
-        {/* ── MARKERS ────────────────────────────────────── */}
-<div className="map-markers-layer" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-  {parkingSpots.map(spot => (
-    <button
-      key={spot.id}
-      className={`map-marker ${selectedSpot?.id === spot.id ? 'is-active' : ''}`}
-      style={{
-        position: 'absolute',
-        top: spot.top,
-        left: spot.left,
-        pointerEvents: 'auto',
-        transform: 'translate(-50%, -50%)',
-        background: 'white',
-        border: 'none',
-        borderRadius: '50%',
-        width: '40px',
-        height: '40px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
-        cursor: 'pointer',
-        fontSize: '20px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
-      onClick={() => setSelectedSpot(spot)}
-    >
-      {spot.emoji}
-    </button>
-  ))}
-</div>
+
         {/* ── MAP MARKERS ─────────────────────────────────── */}
         {Object.entries(parkingSpots).map(([id, spot]) => {
           let pinClass = 'map-marker-pin';

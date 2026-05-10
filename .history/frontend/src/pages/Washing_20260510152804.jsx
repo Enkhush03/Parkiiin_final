@@ -1,5 +1,5 @@
 import "../../../styles/main.css"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import ServiceCard from "../components/ServiceCard"
 import Navbar from "../components/Navbar/Navbar"
 import SearchBar from "../components/SearchBar"
@@ -10,27 +10,56 @@ export default function Washing() {
   const [query, setQuery] = useState("")
   const [activeTab, setActiveTab] = useState("wash")
   const [sortType, setSortType] = useState("distance")
-  const [services, setServices] = useState([])
 
+  const services = [
+    {
+      name: "CleanMax Auto Wash",
+      distance: "1.2km",
+      time: "25-35 мин",
+      price: "25,000₮",
+      rating: 4.8,
+      tag: "Нээлттэй",
+      type: "wash",
+      gradient: "linear-gradient(135deg,#1a2e2a,#2BBFA0)"
+    },
+    {
+      name: "Eco Shine Detailing",
+      distance: "2.4km",
+      time: "40-50 мин",
+      price: "18,000₮",
+      rating: 4.5,
+      tag: "Нээлттэй",
+      type: "wash",
+      gradient: "linear-gradient(135deg,#134040,#2BBFA0)"
+    },
+    {
+      name: "Sparkle Express",
+      distance: "0.8km",
+      time: "—",
+      price: "15,000₮",
+      rating: 4.3,
+      tag: "-15%",
+      type: "wash",
+      gradient: "linear-gradient(135deg,#0a2a20,#2BBFA0)"
+    },
+    {
+      name: "AutoSPA Premium",
+      distance: "3.1km",
+      time: "60 мин",
+      price: "35,000₮",
+      rating: 4.7,
+      tag: "Нээлттэй",
+      type: "wash",
+      gradient: "linear-gradient(135deg,#0d5e52,#2BBFA0)"
+    }
+  ]
   useEffect(() => {
     fetch('/api/parking.json')
     .then(res => res.json())
     .then(data =>{
-      // JSON дотроос washing төрөлтэй үйлчилгээг шүүж авах
-      const washingServices = data.services
-        .filter(s => s.type === 'washing')
-        .map(s => ({
-          ...s,
-          // Сүүлд гарч ирэх картуудад хэрэгтэй нэмэлт талбарууд
-          distance: s.loc.includes("км") ? s.loc.split(",")[1].trim() : "1.0km",
-          time: "25-35 мин",
-          tag: "Нээлттэй",
-          type: "wash",
-          gradient: "linear-gradient(135deg,#1a2e2a,#2BBFA0)"
-        }));
-      setServices(washingServices);
-    })
-    .catch(err => console.error("Error loading services:", err));
+      const washingServices = data.services.filter(s => s.type === 'washing');
+      setWashingSpots(washingServices);
+    });
   }, []);
 
   //  filter

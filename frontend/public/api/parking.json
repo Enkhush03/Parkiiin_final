@@ -1,0 +1,80 @@
+{
+  "parking_spots": [
+    {
+      "id": "central",
+      "name": "Central Tower Parking",
+      "loc": "Сүхбаатар дүүрэг, 9-р хороо",
+      "price": 2000,
+      "slots": 12,
+      "dist": 0.3,
+      "rating": 4.8,
+      "badge": "12 зогсоол",
+      "top": "50%",
+      "left": "35%",
+      "emoji": "🏢"
+    },
+    {
+      "id": "shangri",
+      "name": "Shangri-La Зогсоол",
+      "loc": "Сүхбаатар дүүрэг, 1-р хороо",
+      "price": 5000,
+      "slots": 25,
+      "dist": 0.8,
+      "rating": 4.9,
+      "badge": "Нээлттэй",
+      "top": "28%",
+      "left": "65%",
+      "emoji": "🏬"
+    },
+    {
+      "id": "bluesky",
+      "name": "Blue Sky Граж",
+      "loc": "Сүхбаатар дүүрэг, Энхтайваны өргөн чөлөө",
+      "price": 4000,
+      "slots": 8,
+      "dist": 0.5,
+      "rating": 4.7,
+      "badge": "8 зогсоол",
+      "top": "62%",
+      "left": "55%",
+      "emoji": "🅿️"
+    },
+    {
+      "id": "ubdel",
+      "name": "Улаанбаатар Их Дэлгүүр",
+      "loc": "Чингэлтэй дүүрэг, 4-р хороо",
+      "price": 2500,
+      "slots": 0,
+      "dist": 1.2,
+      "rating": 4.5,
+      "badge": "Дүүрсэн",
+      "top": "40%",
+      "left": "20%",
+      "emoji": "🏪"
+    }
+  ],
+  "services": [
+    {
+      "id": "cleanmax",
+      "name": "CleanMax Auto Wash",
+      "type": "washing",
+      "loc": "Сүхбаатар дүүрэг, 1.2км",
+      "price": "25,000₮",
+      "rating": 4.8,
+      "top": "38%",
+      "left": "48%",
+      "emoji": "🚿"
+    },
+    {
+      "id": "autodoc",
+      "name": "Auto Doc Repair",
+      "type": "repair",
+      "loc": "Баянзүрх дүүрэг, 1.2км",
+      "price": "Тохиролцоно",
+      "rating": 4.9,
+      "top": "56%",
+      "left": "62%",
+      "emoji": "🔧"
+    }
+  ]
+}
