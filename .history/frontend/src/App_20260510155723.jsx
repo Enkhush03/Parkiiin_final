@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-
+// ── Existing pages (байгаа) ───────────────────────
 import Washing from './pages/Washing'
 import Repair  from './pages/Repair'
 

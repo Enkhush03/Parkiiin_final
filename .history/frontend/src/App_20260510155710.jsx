@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import {washing api} from '/services/washing'
+import {repair} from '/services/repair'
 
 import Washing from './pages/Washing'
 import Repair  from './pages/Repair'
@@ -28,8 +29,8 @@ export default function App() {
         <Route path="/success" element={<Success />} />
 
         {/* Үйлчилгээ */}
-        <Route path="/services/washing" element={<Washing />} />
-        <Route path="/services/repair"  element={<Repair />} />
+        <Route path="/washing" element={<Washing />} />
+        <Route path="/repair"  element={<Repair />} />
 
         {/* Зөвлөмж */}
         <Route path="/tips"    element={<Tips />} />

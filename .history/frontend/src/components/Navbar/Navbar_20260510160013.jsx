@@ -5,7 +5,7 @@ const NAV_LINKS = [
   { to: '/',        label: 'Нүүр' },
   { to: '/parking', label: 'Зогсоол' },
   { to: '/services/washing', label: 'Үйлчилгээ' },
-  { to: '/tips',    label: 'Зөвлөмж' },
+  { to: '/services/tips',    label: 'Зөвлөмж' },
   { to: '/profile', label: 'Профайл' },
 ]
 

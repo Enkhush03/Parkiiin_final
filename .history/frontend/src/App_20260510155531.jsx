@@ -28,8 +28,8 @@ export default function App() {
         <Route path="/success" element={<Success />} />
 
         {/* Үйлчилгээ */}
-        <Route path="/services/washing" element={<Washing />} />
-        <Route path="/services/repair"  element={<Repair />} />
+        <Route path="/washing" element={<Washing />} />
+        <Route path="/repair"  element={<Repair />} />
 
         {/* Зөвлөмж */}
         <Route path="/tips"    element={<Tips />} />

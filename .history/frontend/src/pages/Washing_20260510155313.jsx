@@ -6,28 +6,29 @@ import SearchBar from "../components/SearchBar"
 import { Link } from "react-router-dom"
 import { parkingService } from "../services/parkingService"
 
-export default function Repair() {
+export default function Washing() {
 
   const [query, setQuery] = useState("")
-  const [activeTab, setActiveTab] = useState("repair")
+  const [activeTab, setActiveTab] = useState("wash")
   const [sortType, setSortType] = useState("distance")
   const [services, setServices] = useState([])
 
-useEffect(() => {
-    parkingService.getServicesByType('repair')
-    .then(repairServices =>{
-      const mapped = repairServices.map(s => ({
-        ...s,
-        distance: s.loc.includes("км") ? s.loc.split(",")[1].trim() : "1.5km",
-        time: "30-60 мин",
-        tag: "Нээлттэй",
-        type: "repair",
-        gradient: "linear-gradient(135deg,#2b1a1a,#ff6b6b)"
-      }));
-      setServices(mapped);
+  useEffect(() => {
+    parkingService.getServicesByType('washing')
+    .then(washingServices =>{
+     const mapped = washingServices.map(s =>({
+    
+          distance: s.loc.includes("км") ? s.loc.split(",")[1].trim() : "1.0km",
+          time: "25-35 мин",
+          tag: "Нээлттэй",
+          type: "wash",
+          gradient: "linear-gradient(135deg,#1a2e2a,#2BBFA0)"
+        }));
+      setServices(washingServices);
     })
     .catch(err => console.error("Error loading services:", err));
   }, []);
+
   //  filter
   const filteredServices = services
     .filter((s) =>
@@ -68,13 +69,13 @@ useEffect(() => {
             <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
           <input type="text" placeholder="Үйлчилгээний газар хайх..." value={query} onChange={(e) => setQuery(e.target.value)}
-            autoComplete="off" aria-label="Засварын газар хайх" />
+            autoComplete="off" aria-label="Угаалгын газар хайх" />
         </div>
 
         {/* ── Service type tabs ──────── */}
         <div className="service-tabs" role="tablist" aria-label="Үйлчилгээний төрөл">
-          <Link to="/washing" className="service-tab" role="tab" aria-selected="false">Угаалга</Link>
-          <Link to="/repair" className="service-tab active" role="tab" aria-selected="true">Засвар</Link>
+          <Link to="/washing" className="service-tab active" role="tab" aria-selected="true">Угаалга</Link>
+          <Link to="/repair" className="service-tab" role="tab" aria-selected="false">Засвар</Link>
         </div>
 
         {/* ── Filter row ─────────────────────────────────── */}
