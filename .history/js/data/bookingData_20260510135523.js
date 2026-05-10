@@ -11,10 +11,3 @@ export const HourOptions = [
     { label: '8 цаг', hours: 8 },
     { label: 'Өдрийн', hours: 10, span2: true }
 ];
-export const PaymentMethod = [
-    { id: 'qpay' , name:'QPay' , sub:'Цахим хэтэвч', default: true},
-    { id: 'social' , name:'SocialPay' , sub:'Цахим хэтэвч'},
-    { id: 'toki' , name:'TokiPay' , sub:'Цахим хэтэвч'},
-    { id: 'card' , name:'Банкны карт' , sub:'Visa/Mastercard'},
-
-]
