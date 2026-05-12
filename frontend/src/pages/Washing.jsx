@@ -34,7 +34,7 @@ export default function Washing() {
     .filter((s) =>
       s.name.toLowerCase().includes(query.toLowerCase())
     )
-    .filter((s) => s.type === activeTab)
+    .filter((s) => s.type === 'wash' || s.type === 'washing')
 
   //  sort
   const parseDistance = (d) => parseFloat(d)

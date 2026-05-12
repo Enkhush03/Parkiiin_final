@@ -1,10 +1,7 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
-
 import TipCard from '../../components/TipCard/TipCard'
-
-// ✅ ES6 import — статик JSON дата тусдаа файлаас татаж авна
-import { TIPS_ARTICLES, TIPS_VIDEOS } from '../../data/tipsData'
+import { userService } from '../../services/userService'
 
 import s from './Tips.module.css'
 
@@ -20,26 +17,35 @@ export default function Tips() {
   const [tab,    setTab]    = useState('article')
   const [cat,    setCat]    = useState('all')
   const [query,  setQuery]  = useState('')
+  const [apiData, setApiData] = useState({ TipsArticles: [], TipsVideos: [] })
+
+  useEffect(() => {
+    userService.getTips()
+      .then(data => {
+        setApiData(data)
+      })
+      .catch(err => console.error("Error loading tips:", err))
+  }, [])
 
   // Нийтлэлийн шүүлт — useMemo ашиглан
   const articles = useMemo(() =>
-    TIPS_ARTICLES
+    apiData.TipsArticles
       .filter(a => cat === 'all' || a.cat === cat)
       .filter(a =>
         a.title.toLowerCase().includes(query.toLowerCase()) ||
         a.desc.toLowerCase().includes(query.toLowerCase())
       ),
-    [cat, query]
+    [apiData.TipsArticles, cat, query]
   )
 
   // Видеоны шүүлт
   const videos = useMemo(() =>
-    TIPS_VIDEOS.filter(v =>
+    apiData.TipsVideos.filter(v =>
       !v.featured && v.label.toLowerCase().includes(query.toLowerCase())
     ),
-    [query]
+    [apiData.TipsVideos, query]
   )
-  const featured = TIPS_VIDEOS.find(v => v.featured)
+  const featured = apiData.TipsVideos.find(v => v.featured)
 
   return (
     <>
@@ -71,79 +77,81 @@ export default function Tips() {
           <button className={`service-tab ${tab === 'video' ? 'active' : ''}`} onClick={() => setTab('video')} role="tab" aria-selected={tab === 'video'}>Бичлэг</button>
         </div>
 
-          {/* Articles panel */}
-          {tab === 'article' && (
-            <>
-              {/* Category pills */}
-              <div className={s.cats} role="group" aria-label="Ангилал">
-                {CATS.map(({ key, label }) => (
-                  <button
-                    key={key}
-                    className={`${s.cat} ${cat === key ? s.active : ''}`}
-                    onClick={() => setCat(key)}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-
-              <div className={s.sectionRow}>
-                <h3>Онцлох нийтлэлүүд</h3>
-                <a href="#">Бүгдийг үзэх →</a>
-              </div>
-
-              {/* TIPS_ARTICLES-г .map() ашиглан рендер */}
-              {articles.map(article => (
-                <TipCard key={article.id} {...article} />
+        {/* Articles panel */}
+        {(tab === 'article' || tab === 'all') && (
+          <div style={{ marginBottom: tab === 'all' ? '40px' : '0' }}>
+            {/* Category pills - Зөвхөн 'article' таб дээр эсвэл 'all' дээр харуулж болно */}
+            <div className={s.cats} role="group" aria-label="Ангилал">
+              {CATS.map(({ key, label }) => (
+                <button
+                  key={key}
+                  className={`${s.cat} ${cat === key ? s.active : ''}`}
+                  onClick={() => setCat(key)}
+                >
+                  {label}
+                </button>
               ))}
-            </>
-          )}
+            </div>
 
-          {/* Videos panel */}
-          {tab === 'video' && (
-            <>
-              <div className={s.sectionRow}>
-                <h3>Сүүлийн үеийн видео</h3>
-                <a href="#">Бүгдийг үзэх →</a>
-              </div>
+            <div className={s.sectionRow}>
+              <h3>Нийтлэлүүд</h3>
+              {tab !== 'all' && <a href="#">Бүгдийг үзэх →</a>}
+            </div>
 
-              {/* TIPS_VIDEOS-г .map() ашиглан рендер */}
-              <div className={s.videoRow} role="list">
-                {videos.map(v => (
-                  <div
-                    key={v.id}
-                    className={s.videoThumb}
-                    style={{ background: v.gradient }}
-                    role="listitem"
-                    tabIndex={0}
-                    onClick={() => alert(`Видео: ${v.label}`)}
-                    aria-label={v.label}
-                  >
-                    <div className={s.playBtn}>▶</div>
-                    <div className={s.duration}>{v.duration}</div>
-                    <div className={s.videoLabel}>{v.label}</div>
-                  </div>
-                ))}
-              </div>
+            {articles.length > 0 ? (
+              articles.map(article => (
+                <TipCard key={article.id} {...article} />
+              ))
+            ) : (
+              <p style={{ textAlign: 'center', opacity: 0.6 }}>Илэрц олдсонгүй.</p>
+            )}
+          </div>
+        )}
 
-              {featured && (
-                <>
-                  <div className={s.sectionRow}><h3>Онцлох видео</h3></div>
-                  <div
-                    className={`${s.videoThumb} ${s.videoFeatured}`}
-                    style={{ background: featured.gradient }}
-                    tabIndex={0}
-                    onClick={() => alert(`Видео: ${featured.label}`)}
-                    aria-label={featured.label}
-                  >
-                    <div className={s.playBtn} style={{ fontSize: 28 }}>▶</div>
-                    <div className={s.duration} style={{ fontSize: 13 }}>{featured.duration}</div>
-                    <div className={s.videoLabel} style={{ fontSize: 14, fontWeight: 700 }}>{featured.label}</div>
-                  </div>
-                </>
-              )}
-            </>
-          )}
+        {/* Videos panel */}
+        {(tab === 'video' || tab === 'all') && (
+          <>
+            <div className={s.sectionRow}>
+              <h3>Видео зөвлөмж</h3>
+              {tab !== 'all' && <a href="#">Бүгдийг үзэх →</a>}
+            </div>
+
+            <div className={s.videoRow} role="list">
+              {videos.map(v => (
+                <div
+                  key={v.id}
+                  className={s.videoThumb}
+                  style={{ background: v.gradient }}
+                  role="listitem"
+                  tabIndex={0}
+                  onClick={() => alert(`Видео: ${v.label}`)}
+                  aria-label={v.label}
+                >
+                  <div className={s.playBtn}>▶</div>
+                  <div className={s.duration}>{v.duration}</div>
+                  <div className={s.videoLabel}>{v.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {featured && tab !== 'all' && (
+              <>
+                <div className={s.sectionRow}><h3>Онцлох видео</h3></div>
+                <div
+                  className={`${s.videoThumb} ${s.videoFeatured}`}
+                  style={{ background: featured.gradient }}
+                  tabIndex={0}
+                  onClick={() => alert(`Видео: ${featured.label}`)}
+                  aria-label={featured.label}
+                >
+                  <div className={s.playBtn} style={{ fontSize: 28 }}>▶</div>
+                  <div className={s.duration} style={{ fontSize: 13 }}>{featured.duration}</div>
+                  <div className={s.videoLabel} style={{ fontSize: 14, fontWeight: 700 }}>{featured.label}</div>
+                </div>
+              </>
+            )}
+          </>
+        )}
       </main>
     </>
   )

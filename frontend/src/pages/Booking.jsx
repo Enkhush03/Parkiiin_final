@@ -1,22 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar/Navbar'
+import { bookingService } from '../services/bookingService'
 
 export default function Booking() {
   const { state } = useLocation()
   const navigate = useNavigate()
   
+  const [config, setConfig] = useState(null)
   const [hour, setHour] = useState(2)
   const [useLoyalty, setUseLoyalty] = useState(false)
   const [payment, setPayment] = useState('qpay')
+
+  useEffect(() => {
+    bookingService.getBookingConfig()
+      .then(data => {
+        setConfig(data)
+        // Default утгуудыг тохируулах (JSON-оос)
+        const defPayment = data.PaymentMethod.find(p => p.default)
+        if (defPayment) setPayment(defPayment.id)
+      })
+      .catch(err => console.error("Error loading booking config:", err))
+  }, [])
 
   if (!state) return <div style={{ padding: '100px 20px', textAlign: 'center' }}>Мэдээлэл алга байна. <button onClick={() => navigate('/parking')}>Буцах</button></div>
 
   const { type, name, price } = state
   
   // Тооцоолол
-  const basePrice = price * hour
-  const discount = useLoyalty ? 200 : 0
+  const ratePerHour = config?.Booking?.Price_per_hour || price
+  const basePrice = ratePerHour * hour
+  const discount = useLoyalty ? (config?.Booking?.Bonus || 0) : 0
   const total = basePrice - discount
 
   const handleConfirm = () => {
@@ -29,6 +43,9 @@ export default function Booking() {
       }
     })
   }
+
+  // Loading state
+  if (!config) return <div style={{ padding: '100px 20px', textAlign: 'center' }}>Уншиж байна...</div>
 
   return (
     <>
@@ -69,10 +86,15 @@ export default function Booking() {
           <div className="section-card">
             <div className="sc-title">Хугацаа сонгох</div>
             <div className="hours-grid" role="group" aria-label="Цаг сонгох">
-              {[1, 2, 3, 4, 6, 8].map(h => (
-                <button key={h} className={`hour-btn ${hour === h ? 'active' : ''}`} onClick={() => setHour(h)}>{h} цаг</button>
+              {config.HourOptions.map(opt => (
+                <button 
+                  key={opt.label} 
+                  className={`hour-btn ${hour === opt.hours ? 'active' : ''} ${opt.span2 ? 'hour-btn--span2' : ''}`} 
+                  onClick={() => setHour(opt.hours)}
+                >
+                  {opt.label}
+                </button>
               ))}
-              <button className={`hour-btn hour-btn--span2 ${hour === 24 ? 'active' : ''}`} onClick={() => setHour(24)}>Өдрийн</button>
             </div>
           </div>
 
@@ -94,7 +116,7 @@ export default function Booking() {
             <div className="sc-title">Loyalty оноо</div>
             <div className="booking-loyalty-row">
               <div className="booking-loyalty-info">
-                <div className="loyalty-title">200 оноо ашиглах</div>
+                <div className="loyalty-title">{config.Booking.Bonus} оноо ашиглах</div>
                 <div className="loyalty-desc">Захиалгын дүнгээс хөнгөлөлт эдлэх</div>
               </div>
               <button className={`toggle ${useLoyalty ? 'on' : ''}`} onClick={() => setUseLoyalty(!useLoyalty)} aria-label="Loyalty оноо идэвхжүүлэх" aria-pressed={useLoyalty}>

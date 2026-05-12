@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 const NAV_LINKS = [
   { to: '/',        label: 'Нүүр' },
   { to: '/parking', label: 'Зогсоол' },
-  { to: '/services/washing', label: 'Үйлчилгээ' },
+  { to: '/washing', label: 'Үйлчилгээ' },
   { to: '/tips',    label: 'Зөвлөмж' },
   { to: '/profile', label: 'Профайл' },
 ]

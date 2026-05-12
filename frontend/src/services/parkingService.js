@@ -1,4 +1,4 @@
-/** Parking & Services API layer*/
+
 
 const BASE_URL = '/api';
 
