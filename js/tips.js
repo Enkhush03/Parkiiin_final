@@ -4,12 +4,66 @@
    ========================================================= */
 
 /* ── ES6 IMPORT: Статик дата тусдаа файлаас татаж авна ── */
+import { TipsArticles, TipsVideos } from './data/tipsData.js';
 
-// tipsData.js файлд тодорхойлогдсон TIPS_ARTICLES болон
-// TIPS_VIDEOS массивуудыг ES6 import-оор татаж авна.
-// Энэ нь tips.html-ийн нийтлэл, видео хэсгийг
-// JS-ээс динамикаар үүсгэхэд ашиглагдана.
-import { TIPS_ARTICLES, TIPS_VIDEOS } from './data/tipsData.js';
+/* ── RENDER: TIPS_ARTICLES датаас article карт үүсгэнэ ── */
+function renderArticles() {
+  const container = document.getElementById('articlesList');
+  if (!container) return;
+
+  container.innerHTML = TipsArticles.map(article => `
+    <div class="tip-article" data-cat="${article.cat}" data-id="${article.id}">
+      <div class="tip-img" style="background:${article.gradient}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"
+          style="width:28px;height:28px;stroke:white;fill:none;stroke-width:2;">
+          <path d="${article.iconPath}" />
+        </svg>
+      </div>
+      <div class="tip-body">
+        <span class="tip-tag">${article.tag}</span>
+        <div class="tip-title">${article.title}</div>
+        <div class="tip-desc">${article.desc}</div>
+        <div class="tip-read" onclick="openTipVideo('${article.id}')">Унших →</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── RENDER: TIPS_VIDEOS датаас видео карт үүсгэнэ ── */
+function renderVideos() {
+  const list = document.getElementById('videosList');
+  const featured = document.getElementById('featuredVideo');
+  if (!list || !featured) return;
+
+  const regular = TipsVideos.filter(v => !v.featured);
+  const featuredItem = TipsVideos.find(v => v.featured);
+
+  list.innerHTML = regular.map(v => `
+    <div class="video-thumb" style="background:${v.gradient}" role="listitem" tabindex="0"
+      aria-label="${v.label} видео тоглуулах" onclick="openTipVideo('${v.id}')">
+      <div class="video-play" aria-hidden="true">▶</div>
+      <div class="video-duration">${v.duration}</div>
+      <div class="video-label">${v.label}</div>
+    </div>
+  `).join('');
+
+  if (featuredItem) {
+    featured.innerHTML = `
+      <div class="video-thumb video-thumb--wide"
+        style="background:${featuredItem.gradient};width:100%;height:160px;border-radius:16px;position:relative;"
+        tabindex="0" aria-label="${featuredItem.label} видео тоглуулах"
+        onclick="openTipVideo('${featuredItem.id}')">
+        <div class="video-play" style="font-size:28px;" aria-hidden="true">▶</div>
+        <div class="video-duration" style="font-size:13px;">${featuredItem.duration}</div>
+        <div class="video-label" style="font-size:14px;font-weight:700;">${featuredItem.label}</div>
+      </div>
+    `;
+  }
+}
+
+/* Хуудас ачаалагдахад render хийнэ */
+renderArticles();
+renderVideos();
 
 /* Tips page aliases */
 
