@@ -1,0 +1,41 @@
+export const TipsArticles = [
+    {
+        id: 'safety-1', cat: 'safety', tag: 'Шинэ • 5 мин унших',
+        title: 'Хэрхэн аюулгүй зогсох вэ?',
+        desc: 'Автомашинаа аюулгүй байршуулах үндсэн заавар болон анхаарах зүйлс.',
+        date:'2026-04-01', views: 1240, readTime: 5,
+        content: 'Зогсоол орж байхдаа хурдаа бууруул. Зогсоолын шугамаас гарахгүй байх нь бусдад тав тухтай орчин бүрдүүлнэ. ',
+        gradient: 'linear-gradient(135deg,#1a2e2a,#2BBFA0)', iconPath: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'
+    },
+    {
+        id: 'signs-1', cat: 'signs', tag: 'Тэмдэглэл • 5 мин унших',
+        title: 'Зогсоолын тэмдэг тэмдэглэгээ',
+        desc:'Хотын гудамжинд байгаа зогсоолын тэмдэглэгээний утга учир.',
+        date:'2026-03-15', views: 980,
+        gradient: 'linear-gradient(135deg,#0d5e52,#2BBFA0)', iconPath: 'M3 3h18v13H3z M12 16v5 M8 21h8'
+    },
+    {
+        id: 'eco-1', cat: 'eco', tag: 'Эко • 4 мин унших',
+        title: 'Эко зогсоолд зогсох заавар',
+        desc: 'Байгаль орчинд ээлтэй, цахилгаан тээвэр болон дугуйчдад зориулсан зогсоолын стандарт.',
+        date: '2026-02-20', views: 654, readTime: 4,
+        content: 'Дугуйн зогсоолыг битгий хааж зогсоорой.',
+        gradient: 'linear-gradient(135deg,#134040,#1e9e85)', iconPath: 'M12 17.5V2 M7 7c1.5 1 3 1.5 5 1.5S14.5 8 16 7'
+    },
+    {
+        id: 'night-1', cat: 'night', tag: 'Шөнийн • 6 мин унших',
+        title:'Шөнийн цагаар аюулгүй байдал',
+        desc:'Шөнийн цагт зогсоолд машинаа байрлуулах, хулгайгаас сэргийлэх зөвлөмжүүд.',
+        date:'2026-01-10', views: 2100, readTime: 6,
+        content: 'Гэрэлтэй газарт зогсоорой. Үнэт зүйлсээ машинд бүү үлдээ.  ',
+        gradient: 'linear-gradient(135deg,#0a1a2a,#1a3a5a)', iconPath: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'
+    },
+];
+
+export const TipsVideos = [
+    { id: 'park-1',label: 'Зогсоолд хэрхэн зөв байрлуулах вэ?',  duration: '2:14', gradient: 'linear-gradient(135deg,#1a2e2a,#2BBFA0)' },
+    { id: 'night-1',label: 'Шөнийн цагаар аюулгүй зүйлс',   duration: '3:45', gradient: 'linear-gradient(135deg,#0d5e52,#2BBFA0)' },
+    { id: 'eco-1',label: 'Эко зогсоолд зогсох зүйлс',duration: '1:58', gradient: 'linear-gradient(135deg,#134040,#1e9e85)' },
+    { id: 'signs-1',label: 'Зогсоолын тэмдгүүд', duration: '4:02', gradient: 'linear-gradient(135deg,#0a2a4a,#1a5a80)' },
+    { id: 'featured-1', label: 'Зогсоолын аюулгүй байдлын бүрэн гарын авлага', duration: '12:30', gradient: 'linear-gradient(135deg,#1a2e2a,#2BBFA0)', featured: true },
+];
