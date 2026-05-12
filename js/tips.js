@@ -1,12 +1,5 @@
-/* =========================================================
-   PARKIIIN — TIPS.JS
-   Tips-page interactions extracted from main.js.
-   ========================================================= */
-
-/* ── ES6 IMPORT: Статик дата тусдаа файлаас татаж авна ── */
 import { TipsArticles, TipsVideos } from './data/tipsData.js';
 
-/* ── RENDER: TIPS_ARTICLES датаас article карт үүсгэнэ ── */
 function renderArticles() {
   const container = document.getElementById('articlesList');
   if (!container) return;
@@ -29,7 +22,6 @@ function renderArticles() {
   `).join('');
 }
 
-/* ── RENDER: TIPS_VIDEOS датаас видео карт үүсгэнэ ── */
 function renderVideos() {
   const list = document.getElementById('videosList');
   const featured = document.getElementById('featuredVideo');
@@ -61,36 +53,17 @@ function renderVideos() {
   }
 }
 
-/* Хуудас ачаалагдахад render хийнэ */
 renderArticles();
 renderVideos();
-
-/* Tips page aliases */
-
 function ttab(btn, showPanelId, hidePanelId) {
   return switchTipsTab(btn, showPanelId, hidePanelId);
 }
 
-/**
- * Filter tip articles by category.
- * Articles use data-cat attribute matching pill data-cat.
- * @param {HTMLElement} btn  The clicked pill button
- * @param {string} cat       Category key or 'all'
- */
 function tipsCat(btn, cat) {
   return filterTipsByCategory(btn, cat);
 }
-
-/* ── TIPS PAGE ────────────────────────────────────────── */
-
-/**
- * Switch between the Нийтлал (article) and Видео panels.
- * Extends the existing ttab() with content-panel show/hide.
- * @param {HTMLElement} btn   The clicked tab button
- * @param {'article'|'video'} type
- */
 function tipsTabSwitch(btn, type) {
-  switchTipsTab(btn); // reuse existing active-state logic
+  switchTipsTab(btn); 
 
   const articlesSection = document.getElementById('tipsArticlesSection');
   const videosSection = document.getElementById('tipsVideosSection');
@@ -98,15 +71,13 @@ function tipsTabSwitch(btn, type) {
   if (articlesSection) articlesSection.style.display = type === 'article' ? '' : 'none';
   if (videosSection) videosSection.style.display = type === 'video' ? '' : 'none';
 
-  // Sync aria-selected
+  
   document.querySelectorAll('.tips-tab').forEach(t => {
     t.setAttribute('aria-selected', t === btn ? 'true' : 'false');
   });
 }
 
 /**
- * Live-filter articles and video cards by search keyword.
- * Hides cards whose titles/descriptions don't match the query.
  * @param {string} query
  */
 function filterTips(query) {
@@ -125,16 +96,13 @@ function filterTips(query) {
 }
 
 /**
- * Open an article detail (stub — extend with real routing or modal).
  * @param {string} id
  */
 function openArticle(id) {
-  // TODO: navigate to article detail page
   alert(`"${id}" нийтлэлийн дэлгэрэнгүй хуудас удахгүй нэмэгдэнэ.`);
 }
 
 /**
- * Open a video player (stub — extend with full-screen player modal).
  * @param {string} id
  */
 function openVideo(id) {
@@ -142,15 +110,12 @@ function openVideo(id) {
   alert(`"${id}" видео тоглуулагч удахгүй нэмэгдэнэ.`);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TIPS PAGE  (pages/tips.html)
-   ═══════════════════════════════════════════════════════════ */
 
 /**
- * Switch between Нийтлал (articles) and Видео (videos) panels.
- * @param {HTMLElement} btn       - the clicked tips-tab button
- * @param {string}      showId    - panel to show
- * @param {string}      hideId    - panel to hide
+
+ * @param {HTMLElement} btn  
+ * @param {string} showId   
+ * @param {string} hideId    
  */
 function switchTipsTab(btn, showId, hideId) {
   // Update tab buttons
@@ -169,7 +134,6 @@ function switchTipsTab(btn, showId, hideId) {
 }
 
 /**
- * Filter article cards by category pill.
  * @param {HTMLElement} btn
  * @param {string} cat
  */
@@ -190,7 +154,6 @@ function filterTipsByCategory(btn, cat) {
 }
 
 /**
- * Live search across tip-title and tip-desc text.
  * @param {string} query
  */
 function tipsSearch(query) {
@@ -203,11 +166,9 @@ function tipsSearch(query) {
 }
 
 /**
- * Open a video — stub ready for real player integration.
  * @param {string} videoId
  */
 function openTipVideo(videoId) {
-  // TODO: integrate with a video player modal or YouTube embed
   console.log('Open video:', videoId);
   alert('Видео: ' + videoId + '\n(Бодит тоглогчтой холбогдох боломжтой)');
 }

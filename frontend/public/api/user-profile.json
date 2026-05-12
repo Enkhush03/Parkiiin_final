@@ -1,0 +1,32 @@
+{
+  "user": {
+    "name": "Enkhush",
+    "email": "enkhush.c@gmail.com",
+    "avatar": "E",
+    "points": 1240,
+    "totalParking": 24,
+    "rating": 4.6
+  },
+  "vehicles": [
+    { "plate": "1234 ААУ", "model": "Toyota Prius 30" },
+    { "plate": "5678 УББ", "model": "Hyundai Sonata" }
+  ],
+  "history": [
+    { "name": "Сэнтрал Тауэр","loc": "Сүхбаатар дүүрэг, 8-р хороо", "price": 3000, "rating": 4.8, "cssClass": "c1" },
+    { "name": "Shangri-La Зогсоол","loc": "Сүхбаатар дүүрэг, 1-р хороо", "price": 5000, "rating": 4.9, "cssClass": "c2" },
+    { "name": "Blue Sky" , "loc": "Сүхбаатар дүүрэг, Энхтайваны өргөн чөлөө", "price": 4000, "rating": 4.7, "cssClass": "c3" }
+  ],
+  "reviews": [
+    { "place": "Зайсан ", "date": "2023.10.25", "score": 5.0, "text": "Маш тохилог, зай талбай ихтэй юм байна. Автомат систем маш хурдан ажилладаг .", "likes": 12 },
+    { "place": "Шангри-Ла Төв","date": "2023.10.12", "score": 4.0, "text": " Үйлчилгээ болон аюулгүй байдал маш сайн.", "likes": 5  }
+  ],
+  "loyalty": {
+    "total": 1240,
+    "cashbackPercent": 5,
+    "transactions": [
+      { "label": "Central Tower (2 цаг)",  "points": 40   },
+      { "label": "Shangri-La (1 цаг)","points": 50   },
+      { "label": "Хөнгөлөлт ашигласан", "points": -200 }
+    ]
+  }
+}
