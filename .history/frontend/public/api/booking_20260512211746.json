@@ -1,0 +1,21 @@
+{
+  "Booking": {
+    "Price_per_hour": 2000,
+    "Bonus": 200
+  },
+  "HourOptions": [
+    { "label": "1 цаг", "hours": 1 },
+    { "label": "2 цаг", "hours": 2, "default": true },
+    { "label": "3 цаг", "hours": 3 },
+    { "label": "4 цаг", "hours": 4 },
+    { "label": "6 цаг", "hours": 6 },
+    { "label": "8 цаг", "hours": 8 },
+    { "label": "Өдрийн", "hours": 10, "span2": true }
+  ],
+  "PaymentMethod": [
+    { "id": "qpay",   "name": "QPay",       "sub": "Цахим хэтэвч", "default": true },
+    { "id": "social", "name": "SocialPay",  "sub": "Цахим хэтэвч" },
+    { "id": "toki",   "name": "TokiPay",    "sub": "Цахим хэтэвч" },
+    { "id": "card",   "name": "Банкны карт","sub": "Visa/Mastercard" }
+  ]
+}
