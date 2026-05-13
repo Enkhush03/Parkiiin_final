@@ -5,6 +5,11 @@ const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/parkiiin_db')
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log(err));
+
 
 // Middleware
 app.use(cors());
@@ -19,13 +24,42 @@ const readData = (filename) => {
 
 // --- API Endpoints ---
 
+const Parking = require('./models/Parking');
+
 // 1. Parking API
-app.get('/api/parking', (req, res) => {
+app.get('/api/parking', async (req, res) => {
     try {
-        const parkingData = readData('parking.json');
-        res.json(parkingData);
+        const parkingSpots = await Parking.find();
+        
+        const PARKING_SPOTS = parkingSpots.map(spot => ({
+            id: spot.spotId,
+            name: spot.name,
+            loc: spot.loc,
+            price: spot.price,
+            slots: spot.slots,
+            dist: spot.dist,
+            rating: spot.rating,
+            cssClass: spot.cssClass,
+            badge: spot.badge
+        }));
+
+        const MARKER_DATA = {};
+        parkingSpots.forEach(spot => {
+            if(spot.emoji || spot.markerPrice) {
+                MARKER_DATA[spot.spotId] = {
+                    emoji: spot.emoji,
+                    name: spot.name,
+                    loc: spot.markerLoc || spot.loc,
+                    price: spot.markerPrice,
+                    slots: spot.markerSlots,
+                    rating: spot.rating ? spot.rating.toString() : ''
+                };
+            }
+        });
+
+        res.json({ MARKER_DATA, PARKING_SPOTS });
     } catch (error) {
-        res.status(500).json({ message: "Error reading parking data", error: error.message });
+        res.status(500).json({ message: "Error reading parking data from DB", error: error.message });
     }
 });
 

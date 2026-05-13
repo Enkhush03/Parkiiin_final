@@ -1,12 +1,12 @@
 
 
-const BASE_URL = '/api';
+const BASE_URL = 'http://localhost:5000/api';
 
 export const userService = {
  
   getTips: async () => {
     try {
-      const response = await fetch(`${BASE_URL}/tips.json`);
+      const response = await fetch(`${BASE_URL}/tips`);
       if (!response.ok) throw new Error('Network response was not ok');
       return await response.json();
     } catch (error) {

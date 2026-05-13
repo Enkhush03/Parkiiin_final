@@ -8,10 +8,10 @@ import Navbar from '../../components/Navbar/Navbar';
 export default function FindPark() {
    const [parkingSpots, setParkingSpots] = useState([]);
   useEffect(() =>{
-    fetch('/api/parking.json')
+    fetch('http://localhost:5000/api/parking')
     .then(response => response.json())
     .then(data => {
-      setParkingSpots(data.parking_spots);
+      setParkingSpots(data.PARKING_SPOTS);
     })
     .catch(error => console.error('Error fetching parking data:', error));
   },[]);
