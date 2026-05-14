@@ -25,6 +25,8 @@ const readData = (filename) => {
 // --- API Endpoints ---
 
 const Parking = require('./models/Parking');
+const TipArticle = require('./models/TipArticle');
+const TipVideo = require('./models/TipVideo');
 
 // 1. Parking API
 app.get('/api/parking', async (req, res) => {
@@ -98,12 +100,13 @@ app.get('/api/booking', (req, res) => {
 });
 
 // 3. Tips API
-app.get('/api/tips', (req, res) => {
+app.get('/api/tips', async (req, res) => {
     try {
-        const tipsData = readData('tips.json');
-        res.json(tipsData);
+        const TipsArticles = await TipArticle.find();
+        const TipsVideos = await TipVideo.find();
+        res.json({ TipsArticles, TipsVideos });
     } catch (error) {
-        res.status(500).json({ message: "Error reading tips data", error: error.message });
+        res.status(500).json({ message: "Error reading tips data from DB", error: error.message });
     }
 });
 
