@@ -63,6 +63,30 @@ app.get('/api/parking', async (req, res) => {
     }
 });
 
+// Create new parking spot
+app.post('/api/parking', async (req, res) => {
+    try {
+        const newSpot = new Parking(req.body);
+        const savedSpot = await newSpot.save();
+        res.status(201).json(savedSpot);
+    } catch (error) {
+        res.status(400).json({ message: "Error creating parking spot", error: error.message });
+    }
+});
+
+// Delete parking spot
+app.delete('/api/parking/:spotId', async (req, res) => {
+    try {
+        const result = await Parking.findOneAndDelete({ spotId: req.params.spotId });
+        if (!result) {
+            return res.status(404).json({ message: "Parking spot not found" });
+        }
+        res.json({ message: "Parking spot deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting parking spot", error: error.message });
+    }
+});
+
 // 2. Booking API
 app.get('/api/booking', (req, res) => {
     try {
@@ -80,6 +104,77 @@ app.get('/api/tips', (req, res) => {
         res.json(tipsData);
     } catch (error) {
         res.status(500).json({ message: "Error reading tips data", error: error.message });
+    }
+});
+
+// 4. Auth & User API
+const User = require('./models/User');
+
+// Register
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+        // Basic check if user exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) return res.status(400).json({ message: "И-мэйл бүртгэлтэй байна." });
+
+        const newUser = new User({ name, email, password, vehicles: [], points: 0 });
+        await newUser.save();
+        res.status(201).json({ id: newUser._id, name: newUser.name, email: newUser.email });
+    } catch (error) {
+        res.status(500).json({ message: "Бүртгэхэд алдаа гарлаа.", error: error.message });
+    }
+});
+
+// Login
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email, password });
+        if (!user) return res.status(401).json({ message: "И-мэйл эсвэл нууц үг буруу байна." });
+
+        res.json({ id: user._id, name: user.name, email: user.email, vehicles: user.vehicles, points: user.points });
+    } catch (error) {
+        res.status(500).json({ message: "Нэвтрэхэд алдаа гарлаа.", error: error.message });
+    }
+});
+
+// Get User
+app.get('/api/users/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ message: "Хэрэглэгч олдсонгүй." });
+        res.json({ id: user._id, name: user.name, email: user.email, vehicles: user.vehicles, points: user.points });
+    } catch (error) {
+        res.status(500).json({ message: "Алдаа гарлаа.", error: error.message });
+    }
+});
+
+// Add Vehicle
+app.post('/api/users/:id/vehicles', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ message: "Хэрэглэгч олдсонгүй." });
+
+        user.vehicles.push(req.body);
+        await user.save();
+        res.status(201).json(user.vehicles);
+    } catch (error) {
+        res.status(500).json({ message: "Машин нэмэхэд алдаа гарлаа.", error: error.message });
+    }
+});
+
+// Delete Vehicle
+app.delete('/api/users/:id/vehicles/:plateId', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ message: "Хэрэглэгч олдсонгүй." });
+
+        user.vehicles = user.vehicles.filter(v => v._id.toString() !== req.params.plateId);
+        await user.save();
+        res.json(user.vehicles);
+    } catch (error) {
+        res.status(500).json({ message: "Машин устгахад алдаа гарлаа.", error: error.message });
     }
 });
 

@@ -15,6 +15,8 @@ import Login    from './pages/Login/Login'
 import Booking  from './pages/Booking'
 import Success  from './pages/Success'
 
+import AdminParking from './pages/Admin/AdminParking'
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -39,6 +41,9 @@ export default function App() {
 
         {/* Auth */}
         <Route path="/login"   element={<Login />} />
+
+        {/* Admin */}
+        <Route path="/admin/parking" element={<AdminParking />} />
       </Routes>
     </BrowserRouter>
   )

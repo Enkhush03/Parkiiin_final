@@ -12,7 +12,20 @@ export default function Booking() {
   const [useLoyalty, setUseLoyalty] = useState(false)
   const [payment, setPayment] = useState('qpay')
 
+  const [vehicles, setVehicles] = useState([])
+  const [selectedVehicleId, setSelectedVehicleId] = useState('')
+
   useEffect(() => {
+    // Load vehicles from logged-in user
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const userObj = JSON.parse(userStr);
+      setVehicles(userObj.vehicles || []);
+      if (userObj.vehicles && userObj.vehicles.length > 0) {
+        setSelectedVehicleId(userObj.vehicles[0]._id);
+      }
+    }
+
     bookingService.getBookingConfig()
       .then(data => {
         setConfig(data)
@@ -101,14 +114,23 @@ export default function Booking() {
           {/* ── Vehicle info ───────────────────────────────── */}
           <div className="section-card">
             <div className="sc-title">Машины мэдээлэл</div>
-            <div className="booking-vehicle-row">
-              <span className="booking-vehicle-emoji" aria-hidden="true">🚗</span>
-              <div className="booking-vehicle-info">
-                <div className="booking-vehicle-model">Toyota Prius</div>
-                <div className="booking-vehicle-plate">1234 УБА</div>
+            {vehicles.length > 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <select 
+                  style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '15px' }}
+                  value={selectedVehicleId}
+                  onChange={(e) => setSelectedVehicleId(e.target.value)}
+                >
+                  {vehicles.map(v => (
+                    <option key={v._id} value={v._id}>{v.emoji} {v.model} - {v.plate}</option>
+                  ))}
+                </select>
               </div>
-              <button className="car-change-btn" aria-label="Машин өөрчлөх">Өөрчлөх</button>
-            </div>
+            ) : (
+              <div style={{ padding: '15px', background: '#fff3cd', color: '#856404', borderRadius: '8px' }}>
+                Та профайл хэсэгт орж машинаа бүртгүүлнэ үү.
+              </div>
+            )}
           </div>
 
           {/* ── Loyalty toggle ────────────────────────────── */}

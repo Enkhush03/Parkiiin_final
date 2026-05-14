@@ -10,10 +10,28 @@ export default function Login() {
 
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    // TODO: бодит API дуудлага
-    navigate('/')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const endpoint = tab === 'login' ? '/api/auth/login' : '/api/auth/register';
+    
+    try {
+      const response = await fetch(`http://localhost:5000${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        localStorage.setItem('user', JSON.stringify(data));
+        navigate('/profile'); // or '/'
+      } else {
+        alert(data.message || 'Алдаа гарлаа');
+      }
+    } catch (error) {
+      alert('Сэрвэртэй холбогдож чадсангүй');
+    }
   }
 
   return (

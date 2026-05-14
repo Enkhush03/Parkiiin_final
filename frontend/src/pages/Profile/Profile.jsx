@@ -1,9 +1,84 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [activeSubpage, setActiveSubpage] = useState(null)
+  const [user, setUser] = useState(null)
+  
+  // Vehicles state
+  const [vehicles, setVehicles] = useState([])
+  const [newVehicle, setNewVehicle] = useState({ model: '', plate: '', emoji: '🚗' })
+
+  useEffect(() => {
+    // Load user from localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      // Fetch latest user data from server to get updated vehicles
+      fetch(`http://localhost:5000/api/users/${parsedUser.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setUser(data);
+          setVehicles(data.vehicles || []);
+          localStorage.setItem('user', JSON.stringify(data));
+        })
+        .catch(err => console.error(err));
+    } else {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  }
+
+  const handleAddVehicle = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/${user.id}/vehicles`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newVehicle)
+      });
+      if (response.ok) {
+        const updatedVehicles = await response.json();
+        setVehicles(updatedVehicles);
+        setNewVehicle({ model: '', plate: '', emoji: '🚗' });
+        // Update localStorage
+        const updatedUser = { ...user, vehicles: updatedVehicles };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      } else {
+        alert('Машин нэмэхэд алдаа гарлаа');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleDeleteVehicle = async (vehicleId) => {
+    if (!window.confirm('Энэ машиныг устгах уу?')) return;
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/${user.id}/vehicles/${vehicleId}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        const updatedVehicles = await response.json();
+        setVehicles(updatedVehicles);
+        const updatedUser = { ...user, vehicles: updatedVehicles };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  if (!user) return null;
 
   return (
     <>
@@ -13,10 +88,10 @@ export default function Profile() {
         {/* HERO BANNER */}
         <div className="profile-hero">
           <div className="profile-top">
-            <div className="avatar" aria-label="Хэрэглэгчийн дүрс тэмдэг">E</div>
+            <div className="avatar" aria-label="Хэрэглэгчийн дүрс тэмдэг">{user.name.charAt(0).toUpperCase()}</div>
             <div className="profile-info">
-              <h1>Enkhush</h1>
-              <p>enkhush.c@gmail.com</p>
+              <h1>{user.name}</h1>
+              <p>{user.email}</p>
             </div>
             <button className="profile-settings-btn" aria-label="Тохиргоо" onClick={() => setActiveSubpage('settings')}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -34,41 +109,24 @@ export default function Profile() {
               <div className="profile-stat-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
               </div>
-              <div className="profile-stat-num">24</div>
+              <div className="profile-stat-num">0</div>
               <div className="profile-stat-lbl">Зогсоол</div>
             </div>
             <div className="profile-stat-card profile-stat-card--accent" onClick={() => setActiveSubpage('loyalty')}>
               <div className="profile-stat-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12" /><rect x="2" y="7" width="20" height="5" /><line x1="12" y1="22" x2="12" y2="7" /><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" /><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></svg>
               </div>
-              <div className="profile-stat-num">1240</div>
+              <div className="profile-stat-num">{user.points || 0}</div>
               <div className="profile-stat-lbl">Оноо</div>
             </div>
             <div className="profile-stat-card">
               <div className="profile-stat-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
               </div>
-              <div className="profile-stat-num">4.6</div>
+              <div className="profile-stat-num">0.0</div>
               <div className="profile-stat-lbl">Үнэлгээ</div>
             </div>
           </div>
-        </div>
-
-        {/* LOYALTY POINTS CARD */}
-        <div className="points-wrap">
-          <div className="points-inner">
-            <div>
-              <div className="points-lbl">Зогсоолын оноо</div>
-              <div className="points-num">1,240</div>
-            </div>
-            <button className="points-badge" onClick={() => setActiveSubpage('loyalty')} aria-label="Оноо дэлгэрэнгүй">
-              Дэлгэрэнгүй
-            </button>
-          </div>
-          <div className="points-progress">
-            <div className="points-bar" style={{ width: '65%' }}></div>
-          </div>
-
         </div>
 
         {/* MAIN MENU */}
@@ -79,7 +137,7 @@ export default function Profile() {
             </div>
             <div className="menu-text">
               <div className="menu-title">Машины төрөл</div>
-              <div className="menu-sub">2 машин бүртгэлтэй</div>
+              <div className="menu-sub">{vehicles.length} машин бүртгэлтэй</div>
             </div>
             <span className="menu-arrow" aria-hidden="true">›</span>
           </div>
@@ -95,46 +153,82 @@ export default function Profile() {
             <span className="menu-arrow" aria-hidden="true">›</span>
           </div>
 
-          <div className="menu-item" onClick={() => setActiveSubpage('reviews')} role="button" tabIndex="0">
-            <div className="menu-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-            </div>
-            <div className="menu-text">
-              <div className="menu-title">Миний үнэлгээ</div>
-              <div className="menu-sub">24 үнэлгээ • Дундаж 4.9</div>
-            </div>
-            <span className="menu-arrow" aria-hidden="true">›</span>
-          </div>
-
-          <div className="menu-item menu-item--danger" onClick={() => alert('Гарах')} role="button" tabIndex="0">
+          <div className="menu-item menu-item--danger" onClick={handleLogout} role="button" tabIndex="0">
             <div className="menu-icon menu-icon--danger" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
             </div>
             <div className="menu-text">
-              <div className="menu-title menu-title--danger">Sign Out</div>
+              <div className="menu-title menu-title--danger">Системээс гарах</div>
             </div>
             <span className="menu-arrow menu-arrow--danger" aria-hidden="true">›</span>
           </div>
         </div>
       </main>
 
-      {/* Subpages would be rendered here when activeSubpage is set, e.g. <HistorySubpage /> */}
+      {/* SUBPAGES */}
       {activeSubpage && (
-        <div className="subpage active">
-          <div className="subpage-header">
-            <button className="subpage-back" onClick={() => setActiveSubpage(null)}>←</button>
-            <h2 className="subpage-title">{
+        <div className="subpage active" style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: '#fff',
+          zIndex: 9999,
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          <div className="subpage-header" style={{
+            display: 'flex', alignItems: 'center', padding: '16px',
+            borderBottom: '1px solid #eee', background: '#fff',
+            position: 'sticky', top: 0, zIndex: 10
+          }}>
+            <button 
+              className="subpage-back" 
+              onClick={() => setActiveSubpage(null)}
+              style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', marginRight: '16px' }}
+            >←</button>
+            <h2 className="subpage-title" style={{ margin: 0, fontSize: '18px' }}>{
               activeSubpage === 'history' ? 'Захиалгын түүх' :
                 activeSubpage === 'loyalty' ? 'Loyalty оноо' :
                   activeSubpage === 'vehicles' ? 'Миний машинууд' :
                     activeSubpage === 'payments' ? 'Төлбөрийн хэрэгсэл' : 'Тохиргоо'
             }</h2>
           </div>
-          <div className="subpage-content" style={{ padding: '20px' }}>
-            {/* Simple placeholder for subpages */}
-            <p style={{ textAlign: 'center', marginTop: '40px', color: 'var(--text-muted)' }}>
-              Энэ хэсэг хөгжүүлэлтийн шатанд байна.
-            </p>
+          
+          <div className="subpage-content" style={{ padding: '20px', flex: 1 }}>
+            
+            {/* VEHICLES SUBPAGE */}
+            {activeSubpage === 'vehicles' ? (
+              <div className="vehicles-wrap">
+                <form onSubmit={handleAddVehicle} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                  <input type="text" placeholder="Загвар (Prius)" required style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #ddd' }}
+                    value={newVehicle.model} onChange={e => setNewVehicle({...newVehicle, model: e.target.value})} />
+                  <input type="text" placeholder="Улсын дугаар" required style={{ width: '120px', padding: '10px', borderRadius: '8px', border: '1px solid #ddd' }}
+                    value={newVehicle.plate} onChange={e => setNewVehicle({...newVehicle, plate: e.target.value})} />
+                  <button type="submit" style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '0 15px', borderRadius: '8px' }}>Нэмэх</button>
+                </form>
+
+                <div className="vehicles-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {vehicles.map(v => (
+                    <div key={v._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', background: '#f9f9f9', borderRadius: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ fontSize: '24px' }}>{v.emoji}</span>
+                        <div>
+                          <div style={{ fontWeight: 'bold' }}>{v.model}</div>
+                          <div style={{ color: '#666', fontSize: '14px' }}>{v.plate}</div>
+                        </div>
+                      </div>
+                      <button onClick={() => handleDeleteVehicle(v._id)} style={{ background: '#ff4d4f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '6px' }}>Устгах</button>
+                    </div>
+                  ))}
+                  {vehicles.length === 0 && <p style={{ textAlign: 'center', color: '#999' }}>Машин бүртгүүлээгүй байна.</p>}
+                </div>
+              </div>
+            ) : (
+              <p style={{ textAlign: 'center', marginTop: '40px', color: 'var(--text-muted)' }}>
+                Энэ хэсэг хөгжүүлэлтийн шатанд байна.
+              </p>
+            )}
+
           </div>
         </div>
       )}
