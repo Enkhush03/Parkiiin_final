@@ -638,6 +638,22 @@ function toggleDarkMode() {
     localStorage.setItem('theme', 'dark');
   }
 }
+
+function toggleDarkMode() {
+  const html   = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const btn    = document.querySelector('.dark-toggle');
+
+  if (isDark) {
+    html.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+    btn.textContent = '🌙';
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    btn.textContent = '☀️';
+  }
+}
 /* ═══════════════════════════════════════════════════════════
    FIND PARK PAGE  (pages/findPark.html)
    ═══════════════════════════════════════════════════════════ */
