@@ -616,6 +616,16 @@ function showRepairMap() {
   window.location.href = '../findPark.html?category=repair';
 }
 
+const html = document.documentElement; // <html> таг
+
+// Dark болгох
+html.setAttribute('data-theme', 'dark');
+
+// Light буцаах
+html.removeAttribute('data-theme');
+// эсвэл
+html.setAttribute('data-theme', 'light');
+
 /* ═══════════════════════════════════════════════════════════
    FIND PARK PAGE  (pages/findPark.html)
    ═══════════════════════════════════════════════════════════ */
