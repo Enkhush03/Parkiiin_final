@@ -32,7 +32,9 @@ mongoose.connect('mongodb://localhost:27017/parkiiin_db')
         rating: spot.rating,
         cssClass: spot.cssClass,
         badge: spot.badge,
-        emoji: marker.emoji,
+        top: spot.top,
+        left: spot.left,
+        emoji: spot.emoji || marker.emoji,
         markerPrice: marker.price,
         markerSlots: marker.slots,
         markerLoc: marker.loc

@@ -10,11 +10,16 @@ const parkingSchema = new mongoose.Schema({
   rating: Number,
   cssClass: String,
   badge: String,
+  top: String,
+  left: String,
   // MARKER_DATA values
   emoji: String,
   markerPrice: String,
   markerSlots: String,
-  markerLoc: String
+  markerLoc: String,
+  // GPS coordinates
+  lat: Number,
+  lng: Number
 });
 
 module.exports = mongoose.model('Parking', parkingSchema);

@@ -59,7 +59,12 @@
       "dist": 0.3,
       "rating": 4.8,
       "cssClass": "c1",
-      "badge": "12 зогсоол"
+      "badge": "12 зогсоол",
+      "top": "50%",
+      "left": "35%",
+      "emoji": "🏢",
+      "lat": 47.9184,
+      "lng": 106.9177
     },
     {
       "id": "shangri",
@@ -70,7 +75,12 @@
       "dist": 0.8,
       "rating": 4.9,
       "cssClass": "c2",
-      "badge": "Нээлттэй"
+      "badge": "Нээлттэй",
+      "top": "28%",
+      "left": "65%",
+      "emoji": "🏬",
+      "lat": 47.9192,
+      "lng": 106.9221
     },
     {
       "id": "bluesky",
@@ -81,7 +91,12 @@
       "dist": 1.2,
       "rating": 4.7,
       "cssClass": "c3",
-      "badge": null
+      "badge": null,
+      "top": "62%",
+      "left": "55%",
+      "emoji": "🅿️",
+      "lat": 47.9138,
+      "lng": 106.9203
     },
     {
       "id": "ubdel",
@@ -92,7 +107,12 @@
       "dist": 1.8,
       "rating": 4.5,
       "cssClass": "c4",
-      "badge": null
+      "badge": null,
+      "top": "40%",
+      "left": "20%",
+      "emoji": "🏪",
+      "lat": 47.9212,
+      "lng": 106.9089
     }
   ]
 }

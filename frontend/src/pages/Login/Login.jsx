@@ -1,36 +1,42 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import s from './Login.module.css'
+import { apiUrl } from '../../services/api'
 
 export default function Login() {
   const navigate = useNavigate()
   const [tab, setTab]           = useState('login')   // 'login' | 'signup'
   const [showPass, setShowPass] = useState(false)
   const [form, setForm]         = useState({ email: '', password: '', name: '' })
+  const [loading, setLoading]   = useState(false)
 
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = tab === 'login' ? '/api/auth/login' : '/api/auth/register';
-    
+    setLoading(true);
+    const endpoint = tab === 'login' ? '/auth/login' : '/auth/register';
+
     try {
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(apiUrl(endpoint), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
+        // token болон хэрэглэгчийн мэдээллийг хамтад нь хадгалах
         localStorage.setItem('user', JSON.stringify(data));
-        navigate('/profile'); // or '/'
+        navigate('/profile');
       } else {
         alert(data.message || 'Алдаа гарлаа');
       }
     } catch (error) {
       alert('Сэрвэртэй холбогдож чадсангүй');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -71,6 +77,7 @@ export default function Login() {
                 placeholder="••••••••"
                 value={form.password}
                 onChange={set('password')}
+                minLength={6}
                 required
               />
               <button type="button" className={s.eyeBtn} onClick={() => setShowPass(v => !v)} aria-label="Нууц үг харах">
@@ -88,8 +95,8 @@ export default function Login() {
             <Link to="/forgot" className={s.forgot}>Нууц үгээ мартсан уу?</Link>
           )}
 
-          <button type="submit" className={s.btnFull}>
-            {tab === 'login' ? 'Нэвтрэх' : 'Бүртгэл үүсгэх'}
+          <button type="submit" className={s.btnFull} disabled={loading}>
+            {loading ? 'Түр хүлээнэ үү...' : tab === 'login' ? 'Нэвтрэх' : 'Бүртгэл үүсгэх'}
           </button>
         </form>
 

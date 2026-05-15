@@ -1,12 +1,11 @@
 
-
-const BASE_URL = 'http://localhost:5000/api';
+import { apiUrl } from './api';
 
 export const userService = {
  
   getTips: async () => {
     try {
-      const response = await fetch(`${BASE_URL}/tips`);
+      const response = await fetch(apiUrl('/tips'));
       if (!response.ok) throw new Error('Network response was not ok');
       return await response.json();
     } catch (error) {
@@ -17,11 +16,11 @@ export const userService = {
 
   /**
    * Хэрэглэгчийн бүртгэл/профайл мэдээлэл авах
-   * (Одоогоор статик JSON ашиглаж байна)
+   * Backend API-аар MongoDB-ээс уншина.
    */
   getUserProfile: async () => {
     try {
-      const response = await fetch(`${BASE_URL}/user.json`);
+      const response = await fetch(apiUrl('/user-profile'));
       if (!response.ok) throw new Error('Network response was not ok');
       return await response.json();
     } catch (error) {

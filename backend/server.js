@@ -11,28 +11,26 @@ mongoose.connect('mongodb://localhost:27017/parkiiin_db')
     .catch(err => console.log(err));
 
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 
-// Helper function to read data from JSON files
 const readData = (filename) => {
     const filePath = path.join(__dirname, 'data', filename);
     const rawData = fs.readFileSync(filePath);
     return JSON.parse(rawData);
 };
 
-// --- API Endpoints ---
 
 const Parking = require('./models/Parking');
 const TipArticle = require('./models/TipArticle');
 const TipVideo = require('./models/TipVideo');
 
-// 1. Parking API
+
 app.get('/api/parking', async (req, res) => {
     try {
         const parkingSpots = await Parking.find();
-        
+
         const PARKING_SPOTS = parkingSpots.map(spot => ({
             id: spot.spotId,
             name: spot.name,
@@ -47,7 +45,7 @@ app.get('/api/parking', async (req, res) => {
 
         const MARKER_DATA = {};
         parkingSpots.forEach(spot => {
-            if(spot.emoji || spot.markerPrice) {
+            if (spot.emoji || spot.markerPrice) {
                 MARKER_DATA[spot.spotId] = {
                     emoji: spot.emoji,
                     name: spot.name,
@@ -65,7 +63,7 @@ app.get('/api/parking', async (req, res) => {
     }
 });
 
-// Create new parking spot
+
 app.post('/api/parking', async (req, res) => {
     try {
         const newSpot = new Parking(req.body);
@@ -76,7 +74,7 @@ app.post('/api/parking', async (req, res) => {
     }
 });
 
-// Delete parking spot
+
 app.delete('/api/parking/:spotId', async (req, res) => {
     try {
         const result = await Parking.findOneAndDelete({ spotId: req.params.spotId });
@@ -89,7 +87,7 @@ app.delete('/api/parking/:spotId', async (req, res) => {
     }
 });
 
-// 2. Booking API
+
 app.get('/api/booking', (req, res) => {
     try {
         const bookingData = readData('booking.json');
@@ -99,7 +97,7 @@ app.get('/api/booking', (req, res) => {
     }
 });
 
-// 3. Tips API
+
 app.get('/api/tips', async (req, res) => {
     try {
         const TipsArticles = await TipArticle.find();
@@ -110,10 +108,10 @@ app.get('/api/tips', async (req, res) => {
     }
 });
 
-// 4. Auth & User API
+
 const User = require('./models/User');
 
-// Register
+
 app.post('/api/auth/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -129,7 +127,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
-// Login
+
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -142,7 +140,7 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
-// Get User
+
 app.get('/api/users/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -153,7 +151,7 @@ app.get('/api/users/:id', async (req, res) => {
     }
 });
 
-// Add Vehicle
+
 app.post('/api/users/:id/vehicles', async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -167,7 +165,7 @@ app.post('/api/users/:id/vehicles', async (req, res) => {
     }
 });
 
-// Delete Vehicle
+
 app.delete('/api/users/:id/vehicles/:plateId', async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -181,7 +179,7 @@ app.delete('/api/users/:id/vehicles/:plateId', async (req, res) => {
     }
 });
 
-// Start the server
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

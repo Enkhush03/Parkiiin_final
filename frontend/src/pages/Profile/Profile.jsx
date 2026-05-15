@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
+import { apiUrl, authFetch } from '../../services/api'
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -18,12 +19,20 @@ export default function Profile() {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
       // Fetch latest user data from server to get updated vehicles
-      fetch(`http://localhost:5000/api/users/${parsedUser.id}`)
-        .then(res => res.json())
+      authFetch(apiUrl(`/users/${parsedUser.id}`))
+        .then(res => {
+          if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem('user');
+            navigate('/login');
+            return null;
+          }
+          return res.json();
+        })
         .then(data => {
-          setUser(data);
+          if (!data) return;
+          setUser(prev => ({ ...prev, ...data }));
           setVehicles(data.vehicles || []);
-          localStorage.setItem('user', JSON.stringify(data));
+          localStorage.setItem('user', JSON.stringify({ ...parsedUser, ...data }));
         })
         .catch(err => console.error(err));
     } else {
@@ -39,7 +48,7 @@ export default function Profile() {
   const handleAddVehicle = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${user.id}/vehicles`, {
+      const response = await authFetch(apiUrl(`/users/${user.id}/vehicles`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newVehicle)
@@ -63,7 +72,7 @@ export default function Profile() {
   const handleDeleteVehicle = async (vehicleId) => {
     if (!window.confirm('Энэ машиныг устгах уу?')) return;
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${user.id}/vehicles/${vehicleId}`, {
+      const response = await authFetch(apiUrl(`/users/${user.id}/vehicles/${vehicleId}`), {
         method: 'DELETE'
       });
       if (response.ok) {
