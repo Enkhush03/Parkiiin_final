@@ -9,12 +9,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-  <script>
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-  </script>
   <style>
     :root {
       --primary: #2BBFA0;
@@ -1852,6 +1846,7 @@
     <button class="nav-link" onclick="location.href='pages/profile.html';closeMenu()"> Профайл</button>
     <button class="nav-link" onclick="location.href='pages/login.html';closeMenu()"
       style="color:var(--primary);font-weight:700;" data-auth-visible="logged-out">Нэвтрэх →</button>
+    <button class="bottom-nav-item" onclick="toggleDarkMode()" id="theme-nav-btn">
   </div>
 
   <!-- BOTTOM NAV -->
@@ -1886,6 +1881,9 @@
         <circle cx="12" cy="7" r="4" />
       </svg>Профайл
     </a>
+    <button class="dark-toggle" onclick="toggleDarkMode()" aria-label="Dark mode">
+      🌙
+    </button>
   </div>
 
   <!-- ===== HOME ===== -->
@@ -2045,6 +2043,11 @@
   <!-- ===== SERVICES — moved to pages/nearby_washing.html + pages/nearby_repairing.html ===== -->
 
   <script>
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
     function nav(id) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       const t = document.getElementById(id);
