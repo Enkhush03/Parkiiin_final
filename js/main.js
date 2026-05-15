@@ -626,6 +626,18 @@ html.removeAttribute('data-theme');
 // эсвэл
 html.setAttribute('data-theme', 'light');
 
+function toggleDarkMode() {
+  const html   = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+
+  if (isDark) {
+    html.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+  }
+}
 /* ═══════════════════════════════════════════════════════════
    FIND PARK PAGE  (pages/findPark.html)
    ═══════════════════════════════════════════════════════════ */
