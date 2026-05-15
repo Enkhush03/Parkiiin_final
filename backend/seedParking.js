@@ -7,11 +7,11 @@ mongoose.connect('mongodb://localhost:27017/parkiiin_db')
   .then(async () => {
     console.log('MongoDB connected for seeding...');
     
-    // Clear existing data
+    // Одоо байгаа өгөгдлийг арилгах
     await Parking.deleteMany({});
     console.log('Cleared existing parking data.');
 
-    // Read static JSON
+    // JSON унших
     const dataPath = path.join(__dirname, 'data', 'parking.json');
     const rawData = fs.readFileSync(dataPath);
     const jsonData = JSON.parse(rawData);
@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/parkiiin_db')
     const spots = jsonData.PARKING_SPOTS;
     const markers = jsonData.MARKER_DATA;
 
-    // Combine and format data for MongoDB
+    // MongoDB-д зориулсан өгөгдлийг нэгтгэж форматлах
     const seedData = spots.map(spot => {
       const marker = markers[spot.id] || {};
       return {
@@ -41,7 +41,7 @@ mongoose.connect('mongodb://localhost:27017/parkiiin_db')
       };
     });
 
-    // Insert into DB
+    // DB-д оруулах
     await Parking.insertMany(seedData);
     console.log('Seeded Parking data successfully!');
     
