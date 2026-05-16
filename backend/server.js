@@ -25,6 +25,7 @@ const readData = (filename) => {
 const Parking = require('./models/Parking');
 const TipArticle = require('./models/TipArticle');
 const TipVideo = require('./models/TipVideo');
+const Service = require('./models/Service');
 
 
 app.get('/api/parking', async (req, res) => {
@@ -88,6 +89,36 @@ app.delete('/api/parking/:spotId', async (req, res) => {
 });
 
 
+app.get('/api/services', async (req, res) => {
+    try {
+        const filter = req.query.type ? { type: req.query.type } : {};
+        const services = await Service.find(filter);
+        res.json({ services });
+    } catch (error) {
+        res.status(500).json({ message: "Error reading services", error: error.message });
+    }
+});
+
+app.post('/api/services', async (req, res) => {
+    try {
+        const service = new Service(req.body);
+        await service.save();
+        res.status(201).json(service);
+    } catch (error) {
+        res.status(400).json({ message: "Error creating service", error: error.message });
+    }
+});
+
+app.delete('/api/services/:serviceId', async (req, res) => {
+    try {
+        const result = await Service.findOneAndDelete({ serviceId: req.params.serviceId });
+        if (!result) return res.status(404).json({ message: "Service not found" });
+        res.json({ message: "Deleted" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting service", error: error.message });
+    }
+});
+
 app.get('/api/booking', (req, res) => {
     try {
         const bookingData = readData('booking.json');
@@ -105,6 +136,46 @@ app.get('/api/tips', async (req, res) => {
         res.json({ TipsArticles, TipsVideos });
     } catch (error) {
         res.status(500).json({ message: "Error reading tips data from DB", error: error.message });
+    }
+});
+
+app.post('/api/tips/article', async (req, res) => {
+    try {
+        const article = new TipArticle(req.body);
+        await article.save();
+        res.status(201).json(article);
+    } catch (error) {
+        res.status(400).json({ message: "Error creating article", error: error.message });
+    }
+});
+
+app.delete('/api/tips/article/:id', async (req, res) => {
+    try {
+        const result = await TipArticle.findOneAndDelete({ id: req.params.id });
+        if (!result) return res.status(404).json({ message: "Article not found" });
+        res.json({ message: "Deleted" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting article", error: error.message });
+    }
+});
+
+app.post('/api/tips/video', async (req, res) => {
+    try {
+        const video = new TipVideo(req.body);
+        await video.save();
+        res.status(201).json(video);
+    } catch (error) {
+        res.status(400).json({ message: "Error creating video", error: error.message });
+    }
+});
+
+app.delete('/api/tips/video/:id', async (req, res) => {
+    try {
+        const result = await TipVideo.findOneAndDelete({ id: req.params.id });
+        if (!result) return res.status(404).json({ message: "Video not found" });
+        res.json({ message: "Deleted" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting video", error: error.message });
     }
 });
 

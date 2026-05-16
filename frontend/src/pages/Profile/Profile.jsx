@@ -1,38 +1,26 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
-import { apiUrl, authFetch } from '../../services/api'
+import { apiUrl } from '../../services/api'
 
 export default function Profile() {
   const navigate = useNavigate();
   const [activeSubpage, setActiveSubpage] = useState(null)
   const [user, setUser] = useState(null)
-  
-  // Vehicles state
   const [vehicles, setVehicles] = useState([])
   const [newVehicle, setNewVehicle] = useState({ model: '', plate: '', emoji: '🚗' })
 
   useEffect(() => {
-    // Load user from localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
-      // Fetch latest user data from server to get updated vehicles
-      authFetch(apiUrl(`/users/${parsedUser.id}`))
-        .then(res => {
-          if (res.status === 401 || res.status === 403) {
-            localStorage.removeItem('user');
-            navigate('/login');
-            return null;
-          }
-          return res.json();
-        })
+      fetch(apiUrl(`/users/${parsedUser.id}`))
+        .then(res => res.json())
         .then(data => {
-          if (!data) return;
-          setUser(prev => ({ ...prev, ...data }));
+          setUser(data);
           setVehicles(data.vehicles || []);
-          localStorage.setItem('user', JSON.stringify({ ...parsedUser, ...data }));
+          localStorage.setItem('user', JSON.stringify(data));
         })
         .catch(err => console.error(err));
     } else {
@@ -48,7 +36,7 @@ export default function Profile() {
   const handleAddVehicle = async (e) => {
     e.preventDefault();
     try {
-      const response = await authFetch(apiUrl(`/users/${user.id}/vehicles`), {
+      const response = await fetch(apiUrl(`/users/${user.id}/vehicles`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newVehicle)
@@ -57,7 +45,6 @@ export default function Profile() {
         const updatedVehicles = await response.json();
         setVehicles(updatedVehicles);
         setNewVehicle({ model: '', plate: '', emoji: '🚗' });
-        // Update localStorage
         const updatedUser = { ...user, vehicles: updatedVehicles };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -72,7 +59,7 @@ export default function Profile() {
   const handleDeleteVehicle = async (vehicleId) => {
     if (!window.confirm('Энэ машиныг устгах уу?')) return;
     try {
-      const response = await authFetch(apiUrl(`/users/${user.id}/vehicles/${vehicleId}`), {
+      const response = await fetch(apiUrl(`/users/${user.id}/vehicles/${vehicleId}`), {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -190,8 +177,8 @@ export default function Profile() {
             borderBottom: '1px solid #eee', background: '#fff',
             position: 'sticky', top: 0, zIndex: 10
           }}>
-            <button 
-              className="subpage-back" 
+            <button
+              className="subpage-back"
               onClick={() => setActiveSubpage(null)}
               style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', marginRight: '16px' }}
             >←</button>
@@ -202,10 +189,8 @@ export default function Profile() {
                     activeSubpage === 'payments' ? 'Төлбөрийн хэрэгсэл' : 'Тохиргоо'
             }</h2>
           </div>
-          
+
           <div className="subpage-content" style={{ padding: '20px', flex: 1 }}>
-            
-            {/* VEHICLES SUBPAGE */}
             {activeSubpage === 'vehicles' ? (
               <div className="vehicles-wrap">
                 <form onSubmit={handleAddVehicle} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
@@ -215,7 +200,6 @@ export default function Profile() {
                     value={newVehicle.plate} onChange={e => setNewVehicle({...newVehicle, plate: e.target.value})} />
                   <button type="submit" style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '0 15px', borderRadius: '8px' }}>Нэмэх</button>
                 </form>
-
                 <div className="vehicles-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {vehicles.map(v => (
                     <div key={v._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', background: '#f9f9f9', borderRadius: '8px' }}>
@@ -237,7 +221,6 @@ export default function Profile() {
                 Энэ хэсэг хөгжүүлэлтийн шатанд байна.
               </p>
             )}
-
           </div>
         </div>
       )}

@@ -5,9 +5,9 @@ import { apiUrl } from '../../services/api'
 
 export default function Login() {
   const navigate = useNavigate()
-  const [tab, setTab]           = useState('login')   // 'login' | 'signup'
+  const [tab, setTab] = useState('login')   
   const [showPass, setShowPass] = useState(false)
-  const [form, setForm]         = useState({ email: '', password: '', name: '' })
+  const [form, setForm]  = useState({ email: '', password: '', name: '' })
   const [loading, setLoading]   = useState(false)
 
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
@@ -27,7 +27,7 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // token болон хэрэглэгчийн мэдээллийг хамтад нь хадгалах
+        // token bolon hereglegchiin medeellig hamtad ni hadgalna
         localStorage.setItem('user', JSON.stringify(data));
         navigate('/profile');
       } else {

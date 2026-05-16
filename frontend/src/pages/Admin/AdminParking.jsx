@@ -10,8 +10,8 @@ import { apiUrl, authFetch } from '../../services/api';
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl:   'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
 const UB_CENTER = [47.9184, 106.9177];
@@ -35,7 +35,7 @@ export default function AdminParking() {
   const [pickedPos, setPickedPos] = useState(null);   // { lat, lng }
   const [showMap, setShowMap]   = useState(false);
   const [saving, setSaving]     = useState(false);
-  const [toast, setToast]       = useState(null);
+  const [toast, setToast]  = useState(null);
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type });
@@ -71,21 +71,21 @@ export default function AdminParking() {
       const response = await authFetch(apiUrl('/parking'), {
         method: 'POST',
         body: JSON.stringify({
-          spotId:      formData.spotId,
-          name:        formData.name,
-          loc:         formData.loc,
-          price:       Number(formData.price),
-          slots:       Number(formData.slots),
-          dist:        1.0,
-          rating:      Number(formData.rating),
-          cssClass:    'c1',
-          badge:       `${formData.slots} зогсоол`,
-          emoji:       formData.emoji,
+          spotId:   formData.spotId,
+          name:   formData.name,
+          loc: formData.loc,
+          price: Number(formData.price),
+          slots:   Number(formData.slots),
+          dist:  1.0,
+          rating:  Number(formData.rating),
+          cssClass: 'c1',
+          badge:`${formData.slots} зогсоол`,
+          emoji: formData.emoji,
           markerPrice: `${formData.price}₮`,
           markerSlots: `${formData.slots} зогсоол`,
-          markerLoc:   formData.loc,
-          lat:         formData.lat ? Number(formData.lat) : null,
-          lng:         formData.lng ? Number(formData.lng) : null,
+          markerLoc: formData.loc,
+          lat:  formData.lat ? Number(formData.lat) : null,
+          lng: formData.lng ? Number(formData.lng) : null,
         })
       });
 
