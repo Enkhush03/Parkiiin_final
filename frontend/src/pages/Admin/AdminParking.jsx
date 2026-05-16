@@ -146,12 +146,6 @@ export default function AdminParking() {
                     placeholder="жишээ нь: emart" value={formData.spotId}
                     onChange={handleChange} required />
                 </div>
-                <div className={s.fieldGroup}>
-                  <label className={s.label}>Emoji</label>
-                  <input className={s.input} type="text" name="emoji"
-                    placeholder="🅿️" value={formData.emoji}
-                    onChange={handleChange} style={{ fontSize: '20px' }} />
-                </div>
               </div>
 
               <div className={s.fieldGroup}>
@@ -249,7 +243,7 @@ export default function AdminParking() {
             <h3 className={s.cardTitle}>🅿️ Одоо байгаа зогсоолууд</h3>
             <div className={s.spotList}>
               {spots.map(spot => (
-                <div key={spot.id} className={s.spotItem}>
+                <div key={spot.spotId} className={s.spotItem}>
                   <div className={s.spotEmoji}>{spot.emoji}</div>
                   <div className={s.spotInfo}>
                     <strong className={s.spotName}>{spot.name}</strong>
@@ -258,12 +252,12 @@ export default function AdminParking() {
                       <span className={s.metaChip}>{spot.price?.toLocaleString('mn-MN')}₮/цаг</span>
                       <span className={s.metaChip}>{spot.slots} зогсоол</span>
                       {spot.lat && spot.lng
-                        ? <span className={`${s.metaChip} ${s.metaChipGps}`}>📍 GPS бий</span>
-                        : <span className={`${s.metaChip} ${s.metaChipNoGps}`}>⚠️ GPS байхгүй</span>
+                        ? <span className={`${s.metaChip} ${s.metaChipGps}`}>GPS</span>
+                        : <span className={`${s.metaChip} ${s.metaChipNoGps}`}>GPS байхгүй</span>
                       }
                     </div>
                   </div>
-                  <button onClick={() => handleDelete(spot.id)} className={s.deleteBtn} aria-label="Устгах">
+                  <button onClick={() => handleDelete(spot.spotId)} className={s.deleteBtn} aria-label="Устгах">
                     🗑
                   </button>
                 </div>

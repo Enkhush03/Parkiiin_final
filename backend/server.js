@@ -41,7 +41,10 @@ app.get('/api/parking', async (req, res) => {
             dist: spot.dist,
             rating: spot.rating,
             cssClass: spot.cssClass,
-            badge: spot.badge
+            badge: spot.badge,
+            emoji: spot.emoji,
+            lat: spot.lat,
+            lng: spot.lng
         }));
 
         const MARKER_DATA = {};
