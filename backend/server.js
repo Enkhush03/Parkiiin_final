@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+require('./config/loadEnv')();
+
 const BookingConfig = require('./models/BookingConfig');
 const Order = require('./models/Order');
 const Parking = require('./models/Parking');

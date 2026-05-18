@@ -31,11 +31,10 @@ const OrderSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Захиалга хадгалахын өмнө orderId автоматаар үүсгэх
-OrderSchema.pre('save', function(next) {
+OrderSchema.pre('save', function() {
     if (!this.orderId) {
         this.orderId = '#' + Math.floor(10000 + Math.random() * 90000).toString();
     }
-    next();
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

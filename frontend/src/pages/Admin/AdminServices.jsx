@@ -97,12 +97,12 @@ export default function AdminServices() {
 
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
-          {[{ key: 'washing', label: '🚿 Угаалга' }, { key: 'repair', label: '🔧 Засвар' }].map(t => (
+          {[{ key: 'washing', label: 'Угаалга' }, { key: 'repair', label: 'Засвар' }].map(t => (
             <button key={t.key} onClick={() => handleTabChange(t.key)} style={{
               padding: '8px 20px', borderRadius: 10, border: 'none', cursor: 'pointer',
               fontWeight: 700, fontSize: 14,
-              background: tab === t.key ? '#4f46e5' : '#e2e8f0',
-              color: tab === t.key ? '#fff' : '#475569'
+              background: tab === t.key ? 'var(--primary)' : 'var(--primary-light)',
+              color: tab === t.key ? '#fff' : 'var(--primary)'
             }}>
               {t.label}
             </button>
@@ -112,7 +112,7 @@ export default function AdminServices() {
         <div className={s.grid}>
           {/* Form */}
           <div className={s.formCard}>
-            <h3 className={s.cardTitle}>➕ Шинэ {tab === 'washing' ? 'угаалга' : 'засвар'} нэмэх</h3>
+            <h3 className={s.cardTitle}>Шинэ {tab === 'washing' ? 'угаалга' : 'засвар'} нэмэх</h3>
             <form onSubmit={handleAdd} className={s.form}>
               <div className={s.fieldGroup}>
                 <label className={s.label}>ID <span className={s.req}>*</span></label>
@@ -147,7 +147,7 @@ export default function AdminServices() {
                 </div>
               </div>
               <button type="submit" className={s.submitBtn} disabled={saving}>
-                {saving ? 'Хадгалж байна...' : '✓ Нэмэх'}
+                {saving ? 'Хадгалж байна...' : 'Нэмэх'}
               </button>
             </form>
           </div>
@@ -155,7 +155,7 @@ export default function AdminServices() {
           {/* List */}
           <div className={s.listCard}>
             <h3 className={s.cardTitle}>
-              {tab === 'washing' ? '🚿 Угаалгын газрууд' : '🔧 Засварын газрууд'} ({filtered.length})
+              {tab === 'washing' ? 'Угаалгын газрууд' : 'Засварын газрууд'} ({filtered.length})
             </h3>
             <div className={s.spotList}>
               {filtered.map(svc => (
@@ -165,14 +165,14 @@ export default function AdminServices() {
                   </div>
                   <div className={s.spotInfo}>
                     <strong className={s.spotName}>{svc.name}</strong>
-                    <p className={s.spotLoc}>📍 {svc.loc}</p>
+                    <p className={s.spotLoc}>{svc.loc}</p>
                     <div className={s.spotMeta}>
                       <span className={s.metaChip}>{svc.price}</span>
                       {svc.distance && <span className={s.metaChip}>{svc.distance}</span>}
-                      {svc.rating && <span className={s.metaChip}>⭐ {svc.rating}</span>}
+                      {svc.rating && <span className={s.metaChip}>{svc.rating}</span>}
                     </div>
                   </div>
-                  <button onClick={() => handleDelete(svc.serviceId)} className={s.deleteBtn}>🗑</button>
+                  <button onClick={() => handleDelete(svc.serviceId)} className={s.deleteBtn}>Устгах</button>
                 </div>
               ))}
               {filtered.length === 0 && <p className={s.empty}>Үйлчилгээ байхгүй байна.</p>}

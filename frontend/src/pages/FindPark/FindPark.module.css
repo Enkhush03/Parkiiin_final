@@ -4,7 +4,7 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  background: #f1f5f9;
+  background: var(--bg);
   overflow: hidden;
 }
 
@@ -22,9 +22,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f1f5f9;
+  background: var(--bg);
   gap: 16px;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 14px;
 }
 
@@ -32,7 +32,7 @@
   width: 36px;
   height: 36px;
   border: 3px solid #e2e8f0;
-  border-top-color: #4f46e5;
+  border-top-color: #2BBFA0;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -70,11 +70,12 @@
   flex: 1;
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 14px;
   padding: 0 14px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.12);
   gap: 8px;
+  border: 1px solid var(--border);
 }
 
 .searchBar svg {
@@ -93,7 +94,7 @@
   font-size: 14px;
   padding: 12px 0;
   background: transparent;
-  color: #1e293b;
+  color: var(--text);
 }
 
 .searchBar input::placeholder { color: #94a3b8; }
@@ -130,8 +131,8 @@
   cursor: pointer;
   white-space: nowrap;
   text-decoration: none;
-  background: #fff;
-  color: #64748b;
+  background: var(--card-bg);
+  color: var(--text-muted);
   box-shadow: 0 1px 8px rgba(0,0,0,0.1);
   transition: all 0.15s;
 }
@@ -144,7 +145,7 @@
   stroke-width: 2;
 }
 
-.catActive { background: #4f46e5; color: #fff; box-shadow: 0 2px 12px rgba(79,70,229,0.35); }
+.catActive { background: #2BBFA0; color: #fff; box-shadow: 0 2px 12px rgba(43,191,160,0.35); }
 .catBlue   { }
 .catOrange { }
 .cat:not(.catActive):hover { background: #f8fafc; }
@@ -158,19 +159,19 @@
 .sortTab {
   padding: 6px 14px;
   border-radius: 20px;
-  border: 1.5px solid #e2e8f0;
-  background: rgba(255,255,255,0.9);
+  border: 1.5px solid var(--border);
+  background: var(--card-bg);
   font-size: 12px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   cursor: pointer;
   backdrop-filter: blur(4px);
   transition: all 0.15s;
 }
 
 .sortTabActive {
-  background: #4f46e5;
-  border-color: #4f46e5;
+  background: #2BBFA0;
+  border-color: #2BBFA0;
   color: #fff;
 }
 
@@ -181,12 +182,13 @@
   left: 0;
   right: 0;
   z-index: 20;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 20px 20px 0 0;
   padding: 12px 20px 32px;
-  box-shadow: 0 -4px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.18);
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top: 1px solid var(--border);
 }
 
 .detailCardActive {
@@ -247,13 +249,13 @@
 .detailName {
   font-weight: 700;
   font-size: 16px;
-  color: #1e293b;
+  color: var(--text);
   margin-bottom: 3px;
 }
 
 .detailLoc {
   font-size: 12px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 8px;
 }
 
@@ -266,7 +268,7 @@
 
 .detailPrice {
   font-weight: 700;
-  color: #4f46e5;
+  color: #2BBFA0;
   font-size: 15px;
 }
 
@@ -286,7 +288,7 @@
 }
 
 .detailBook {
-  background: #4f46e5;
+  background: #2BBFA0;
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -299,7 +301,7 @@
   transition: background 0.15s;
 }
 
-.detailBook:hover { background: #4338ca; }
+.detailBook:hover { background: #1e9e85; }
 
 /* Sub services row */
 .subServices {
@@ -336,15 +338,15 @@
 .subServiceBtn {
   font-size: 12px;
   font-weight: 600;
-  color: #4f46e5;
+  color: #2BBFA0;
   text-decoration: none;
   padding: 4px 12px;
   border-radius: 8px;
-  border: 1.5px solid #4f46e5;
+  border: 1.5px solid #2BBFA0;
   transition: all 0.15s;
 }
 
-.subServiceBtn:hover { background: #4f46e5; color: #fff; }
+.subServiceBtn:hover { background: #2BBFA0; color: #fff; }
 
 /* ── Parking List Sheet ──────────────────────────────── */
 .listSheet {
@@ -353,12 +355,13 @@
   left: 0;
   right: 0;
   z-index: 15;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 20px 20px 0 0;
   max-height: 52vh;
   overflow-y: auto;
-  box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
   transition: transform 0.3s;
+  border-top: 1px solid var(--border);
 }
 
 /* Push sheet down when detail card is active */
@@ -385,7 +388,7 @@
 .sheetTitle {
   font-size: 15px;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text);
   margin: 0;
   display: flex;
   align-items: center;
@@ -393,7 +396,7 @@
 }
 
 .sheetCount {
-  background: #4f46e5;
+  background: #2BBFA0;
   color: #fff;
   border-radius: 10px;
   padding: 1px 8px;
@@ -417,20 +420,20 @@
 }
 
 .parkingCard:hover { background: #f8fafc; }
-.parkingCardActive { background: #eef2ff !important; }
+.parkingCardActive { background: #e8faf6 !important; }
 
 .parkingBody { flex: 1; }
 
 .parkingName {
   font-size: 14px;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text);
   margin-bottom: 2px;
 }
 
 .parkingLoc {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 6px;
 }
 

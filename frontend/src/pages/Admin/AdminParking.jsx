@@ -90,7 +90,7 @@ export default function AdminParking() {
       });
 
       if (response.ok) {
-        showToast('Зогсоол амжилттай нэмэгдлээ! 🎉');
+        showToast('Зогсоол амжилттай нэмэгдлээ!');
         loadSpots();
         setFormData(EMPTY_FORM);
         setPickedPos(null);
@@ -128,7 +128,7 @@ export default function AdminParking() {
 
       <div className={s.adminContainer}>
         <div className={s.pageHeader}>
-          <h2 className={s.pageTitle}>⚙️ Зогсоол удирдах</h2>
+          <h2 className={s.pageTitle}>Зогсоол удирдах</h2>
           <span className={s.badge}>{spots.length} зогсоол</span>
         </div>
 
@@ -136,7 +136,7 @@ export default function AdminParking() {
 
           {/* ── Add Form ─────────────────────────────── */}
           <div className={s.formCard}>
-            <h3 className={s.cardTitle}>➕ Шинэ зогсоол нэмэх</h3>
+            <h3 className={s.cardTitle}>Шинэ зогсоол нэмэх</h3>
             <form onSubmit={handleAddSpot} className={s.form}>
 
               <div className={s.fieldRow}>
@@ -180,10 +180,10 @@ export default function AdminParking() {
               {/* ── GPS Section ────────────────────────── */}
               <div className={s.gpsSection}>
                 <div className={s.gpsSectionHeader}>
-                  <span className={s.gpsLabel}>📍 GPS Координат</span>
+                  <span className={s.gpsLabel}>GPS Координат</span>
                   <button type="button" className={s.mapToggle}
                     onClick={() => setShowMap(v => !v)}>
-                    {showMap ? '🗺️ Газрын зураг хаах' : '🗺️ Газрын зурагаас сонгох'}
+                    {showMap ? 'Газрын зураг хаах' : 'Газрын зурагаас сонгох'}
                   </button>
                 </div>
                 <p className={s.gpsHint}>
@@ -233,21 +233,21 @@ export default function AdminParking() {
               </div>
 
               <button type="submit" className={s.submitBtn} disabled={saving}>
-                {saving ? 'Хадгалж байна...' : '✓ Хадгалах'}
+                {saving ? 'Хадгалж байна...' : 'Хадгалах'}
               </button>
             </form>
           </div>
 
           {/* ── Spot List ────────────────────────────── */}
           <div className={s.listCard}>
-            <h3 className={s.cardTitle}>🅿️ Одоо байгаа зогсоолууд</h3>
+            <h3 className={s.cardTitle}>Одоо байгаа зогсоолууд</h3>
             <div className={s.spotList}>
               {spots.map(spot => (
                 <div key={spot.spotId} className={s.spotItem}>
                   <div className={s.spotEmoji}>{spot.emoji}</div>
                   <div className={s.spotInfo}>
                     <strong className={s.spotName}>{spot.name}</strong>
-                    <p className={s.spotLoc}>📍 {spot.loc}</p>
+                    <p className={s.spotLoc}>{spot.loc}</p>
                     <div className={s.spotMeta}>
                       <span className={s.metaChip}>{spot.price?.toLocaleString('mn-MN')}₮/цаг</span>
                       <span className={s.metaChip}>{spot.slots} зогсоол</span>
@@ -258,7 +258,7 @@ export default function AdminParking() {
                     </div>
                   </div>
                   <button onClick={() => handleDelete(spot.spotId)} className={s.deleteBtn} aria-label="Устгах">
-                    🗑
+                    Устгах
                   </button>
                 </div>
               ))}

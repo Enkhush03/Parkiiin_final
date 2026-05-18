@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar/Navbar'
 import { bookingService } from '../services/bookingService'
-import { apiUrl, authFetch } from '../services/api'
 
 export default function Booking() {
   const { state } = useLocation()
@@ -12,6 +11,7 @@ export default function Booking() {
   const [hour, setHour] = useState(2)
   const [useLoyalty, setUseLoyalty] = useState(false)
   const [payment, setPayment] = useState('qpay')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [vehicles, setVehicles] = useState([])
   const [selectedVehicleId, setSelectedVehicleId] = useState('')
@@ -48,6 +48,8 @@ export default function Booking() {
   const total = basePrice - discount
 
   const handleConfirm = async () => {
+    if (isSubmitting) return;
+
     const userStr = localStorage.getItem('user');
     if (!userStr) {
       alert('Та нэвтэрсэн байх шаардлагатай.');
@@ -55,43 +57,54 @@ export default function Booking() {
       return;
     }
 
-    const selectedVehicle = vehicles.find(v => v._id === selectedVehicleId);
-    let savedOrderId = '#' + Math.floor(10000 + Math.random() * 90000);
-
-    try {
-      const res = await authFetch(apiUrl('/orders'), {
-        method: 'POST',
-        body: JSON.stringify({
-          type: type || 'parking',
-          name,
-          loc: 'Сүхбаатар дүүрэг, УБ',
-          price: total,
-          hour,
-          payment,
-          vehicle: selectedVehicle
-            ? { model: selectedVehicle.model, plate: selectedVehicle.plate, emoji: selectedVehicle.emoji }
-            : {}
-        })
+    if (vehicles.length === 0) {
+      alert('Захиалга хийхийн өмнө машинаа бүртгүүлнэ үү.');
+      navigate('/profile', {
+        state: {
+          subpage: 'vehicles',
+          returnToBooking: state
+        }
       });
-
-      if (res.ok) {
-        const order = await res.json();
-        savedOrderId = order.orderId || savedOrderId;
-      }
-    } catch (err) {
-      console.error('Захиалга хадгалахад алдаа:', err);
+      return;
     }
 
-    navigate('/success', {
-      state: {
+    const selectedVehicle = vehicles.find(v => v._id === selectedVehicleId);
+    if (!selectedVehicle) {
+      alert('Захиалга хийх машинаа сонгоно уу.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const order = await bookingService.saveOrder({
+        type: type || 'parking',
         name,
         loc: 'Сүхбаатар дүүрэг, УБ',
+        price: total,
         hour,
-        total,
-        orderId: savedOrderId,
-        type
-      }
-    })
+        payment,
+        vehicle: selectedVehicle
+          ? { model: selectedVehicle.model, plate: selectedVehicle.plate, emoji: selectedVehicle.emoji }
+          : {}
+      });
+
+      navigate('/success', {
+        state: {
+          name,
+          loc: 'Сүхбаатар дүүрэг, УБ',
+          hour,
+          total,
+          orderId: order.orderId,
+          type
+        }
+      })
+    } catch (err) {
+      console.error('Захиалга хадгалахад алдаа:', err);
+      alert(err.message || 'Захиалга хадгалахад алдаа гарлаа. Дахин оролдоно уу.');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   // Loading state
@@ -164,8 +177,15 @@ export default function Booking() {
                 </select>
               </div>
             ) : (
-              <div style={{ padding: '15px', background: '#fff3cd', color: '#856404', borderRadius: '8px' }}>
-                Та профайл хэсэгт орж машинаа бүртгүүлнэ үү.
+              <div style={{ padding: '15px', background: '#fff3cd', color: '#856404', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
+                <span>Та захиалга хийхийн өмнө машинаа бүртгүүлнэ үү.</span>
+                <button
+                  type="button"
+                  onClick={() => navigate('/profile', { state: { subpage: 'vehicles', returnToBooking: state } })}
+                  style={{ border: 'none', background: 'var(--primary)', color: '#fff', borderRadius: '8px', padding: '9px 12px', fontWeight: 700, cursor: 'pointer' }}
+                >
+                  Бүртгүүлэх
+                </button>
               </div>
             )}
           </div>
@@ -247,8 +267,8 @@ export default function Booking() {
           </div>
 
           {/* ── Confirm button ────────────────────────────── */}
-          <button className="btn-full" onClick={handleConfirm}>
-            Төлбөр баталгаажуулах 
+          <button className="btn-full" onClick={handleConfirm} disabled={isSubmitting}>
+            {isSubmitting ? 'Баталгаажуулж байна...' : 'Төлбөр баталгаажуулах'}
           </button>
 
         </div>

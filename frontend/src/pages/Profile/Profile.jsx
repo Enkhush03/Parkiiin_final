@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
 import { apiUrl, authFetch } from '../../services/api'
 
 export default function Profile() {
   const navigate = useNavigate();
-  const [activeSubpage, setActiveSubpage] = useState(null)
+  const location = useLocation();
+  const [activeSubpage, setActiveSubpage] = useState(location.state?.subpage || null)
   const [user, setUser] = useState(null)
   const [vehicles, setVehicles] = useState([])
   const [newVehicle, setNewVehicle] = useState({ model: '', plate: '', emoji: '🚗' })
   const [orders, setOrders] = useState([])
   const [ordersLoading, setOrdersLoading] = useState(false)
+  const returnToBooking = location.state?.returnToBooking || null
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -50,6 +52,12 @@ export default function Profile() {
       .catch(() => setOrdersLoading(false));
   }, [navigate]);
 
+  useEffect(() => {
+    if (location.state?.subpage) {
+      setActiveSubpage(location.state.subpage);
+    }
+  }, [location.state]);
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
@@ -70,6 +78,9 @@ export default function Profile() {
         const updatedUser = { ...user, vehicles: updatedVehicles };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
+        if (returnToBooking) {
+          navigate('/booking', { state: returnToBooking, replace: true });
+        }
       } else {
         alert('Машин нэмэхэд алдаа гарлаа');
       }
@@ -186,7 +197,7 @@ export default function Profile() {
         <div className="subpage active" style={{
           position: 'fixed',
           top: 0, left: 0, right: 0, bottom: 0,
-          background: '#fff',
+          background: 'var(--bg)',
           zIndex: 9999,
           overflowY: 'auto',
           display: 'flex',
@@ -194,15 +205,15 @@ export default function Profile() {
         }}>
           <div className="subpage-header" style={{
             display: 'flex', alignItems: 'center', padding: '16px',
-            borderBottom: '1px solid #eee', background: '#fff',
+            borderBottom: '1px solid var(--border)', background: 'var(--card-bg)',
             position: 'sticky', top: 0, zIndex: 10
           }}>
             <button
               className="subpage-back"
               onClick={() => setActiveSubpage(null)}
-              style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', marginRight: '16px' }}
+              style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', marginRight: '16px', color: 'var(--text)' }}
             >←</button>
-            <h2 className="subpage-title" style={{ margin: 0, fontSize: '18px' }}>{
+            <h2 className="subpage-title" style={{ margin: 0, fontSize: '18px', color: 'var(--text)' }}>{
               activeSubpage === 'history' ? 'Захиалгын түүх' :
                 activeSubpage === 'loyalty' ? 'Loyalty оноо' :
                   activeSubpage === 'vehicles' ? 'Миний машинууд' :
@@ -214,12 +225,11 @@ export default function Profile() {
             {activeSubpage === 'history' ? (
               <div className="history-wrap">
                 {ordersLoading ? (
-                  <p style={{ textAlign: 'center', color: '#999', marginTop: '40px' }}>Уншиж байна...</p>
+                  <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginTop: '40px' }}>Уншиж байна...</p>
                 ) : orders.length === 0 ? (
                   <div style={{ textAlign: 'center', marginTop: '60px' }}>
-                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>📝</div>
-                    <p style={{ color: '#999', fontSize: '16px' }}>Захиалга байхгүй байна.</p>
-                    <p style={{ color: '#bbb', fontSize: '14px' }}>Зогсоол болон үйлчилгээ захиалахад энд харагдана.</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '16px', marginBottom: '8px' }}>Захиалга байхгүй байна.</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '14px', opacity: 0.7 }}>Зогсоол болон үйлчилгээ захиалахад энд харагдана.</p>
                   </div>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -235,11 +245,11 @@ export default function Profile() {
 
                       return (
                         <div key={order._id} style={{
-                          background: '#fff',
+                          background: 'var(--card-bg)',
                           borderRadius: '12px',
                           padding: '16px',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                          border: '1px solid #f0f0f0'
+                          boxShadow: 'var(--shadow)',
+                          border: '1px solid var(--border)'
                         }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -253,11 +263,11 @@ export default function Profile() {
                             <span style={{ fontSize: '11px', color: '#bbb' }}>{dateStr} {timeStr}</span>
                           </div>
 
-                          <div style={{ fontWeight: '700', fontSize: '16px', marginBottom: '4px' }}>{order.name}</div>
-                          {order.loc && <div style={{ color: '#888', fontSize: '13px', marginBottom: '8px' }}>{order.loc}</div>}
+                          <div style={{ fontWeight: '700', fontSize: '16px', marginBottom: '4px', color: 'var(--text)' }}>{order.name}</div>
+                          {order.loc && <div style={{ color: 'var(--text-muted)', fontSize: '13px', marginBottom: '8px' }}>{order.loc}</div>}
 
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <div style={{ display: 'flex', gap: '12px', fontSize: '13px', color: '#666' }}>
+                            <div style={{ display: 'flex', gap: '12px', fontSize: '13px', color: 'var(--text-muted)' }}>
                               {order.hour && <span>{order.hour} цаг</span>}
                               {order.vehicle?.plate && <span>{order.vehicle.plate}</span>}
                               <span style={{ color: '#aaa' }}>{order.orderId}</span>
@@ -284,12 +294,12 @@ export default function Profile() {
 
                 <div className="vehicles-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {vehicles.map(v => (
-                    <div key={v._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', background: '#f9f9f9', borderRadius: '8px' }}>
+                    <div key={v._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', background: 'var(--bg)', borderRadius: '8px', border: '1px solid var(--border)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <span style={{ fontSize: '24px' }}>{v.emoji}</span>
                         <div>
-                          <div style={{ fontWeight: 'bold' }}>{v.model}</div>
-                          <div style={{ color: '#666', fontSize: '14px' }}>{v.plate}</div>
+                          <div style={{ fontWeight: 'bold', color: 'var(--text)' }}>{v.model}</div>
+                          <div style={{ color: 'var(--text-muted)', fontSize: '14px' }}>{v.plate}</div>
                         </div>
                       </div>
                       <button onClick={() => handleDeleteVehicle(v._id)} style={{ background: '#ff4d4f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '6px' }}>Устгах</button>
