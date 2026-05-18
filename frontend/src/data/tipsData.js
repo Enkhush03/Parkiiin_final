@@ -1,14 +1,4 @@
-/* =========================================================
-   PARKIIIN — js/data/tipsData.js
-   Багийн гишүүн: Зөвлөмжийн статик JSON өгөгдөл
-   ES6 export ашиглан бусад модулиудад нийтэлж байна.
-   ========================================================= */
 
-/**
- * Зөвлөмжийн нийтлэлүүдийн жагсаалт.
- * tips.js-д import хийж tips.html хуудасны карт үүсгэхэд ашиглагдана.
- * @type {Array.<{id: string, cat: string, tag: string, title: string, desc: string, gradient: string, iconPath: string}>}
- */
 export const TIPS_ARTICLES = [
   {
     id: 'safety-1',
@@ -48,11 +38,7 @@ export const TIPS_ARTICLES = [
   },
 ];
 
-/**
- * Видео контентийн жагсаалт.
- * tips.js-д import хийж видео хэсгийг үүсгэхэд ашиглагдана.
- * @type {Array.<{id: string, label: string, duration: string, gradient: string, featured?: boolean}>}
- */
+
 export const TIPS_VIDEOS = [
   {
     id: 'park-1',

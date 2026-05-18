@@ -1,14 +1,4 @@
-/* =========================================================
-   PARKIIIN — js/data/parkingData.js
-   Багийн гишүүн: Зогсоолын статик JSON өгөгдөл
-   ES6 export ашиглан бусад модулиудад нийтэлж байна.
-   ========================================================= */
 
-/**
- * Газрын зургийн marker-уудын дэлгэрэнгүй мэдээлэл.
- * parking.js дотор import хийж ашиглана.
- * @type {Object.<string, {emoji: string, name: string, loc: string, price: string, slots: string, rating: string, top: string, left: string}>}
- */
 export const MARKER_DATA = {
   central: {
     emoji: '🏢',
@@ -72,11 +62,7 @@ export const MARKER_DATA = {
   },
 };
 
-/**
- * Зогсоолын карт жагсаалтын өгөгдөл.
- * Хайлт, эрэмбэлэлтэд ашиглагдана.
- * @type {Array.<{id: string, name: string, loc: string, price: number, slots: number, dist: number, rating: number, cssClass: string, badge: string, top: string, left: string}>}
- */
+
 export const PARKING_SPOTS = [
   {
     id: 'central',

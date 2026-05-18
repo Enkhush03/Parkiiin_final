@@ -8,6 +8,9 @@ export default function Success() {
   const name = state?.name || 'Central Tower Parking'
   const loc = state?.loc || 'Сүхбаатар дүүрэг, УБ'
   const hour = state?.hour || 2
+  const orderId = state?.orderId || ('#' + Math.floor(10000 + Math.random() * 90000))
+  const type = state?.type || 'parking'
+  const typeLabel = type === 'parking' ? 'Зогсоол' : 'Үйлчилгээ'
 
   return (
     <>
@@ -34,10 +37,10 @@ export default function Success() {
           <div className="section-card success-detail-card">
             <div className="success-card-top">
               <div>
-                <span className="success-eyebrow">Зогсоол</span>
+                <span className="success-eyebrow">{typeLabel}</span>
                 <h2 className="success-service-name">{name}</h2>
               </div>
-              <span className="success-id-pill" aria-label="Захиалгын дугаар 88219">ID: #88219</span>
+              <span className="success-id-pill" aria-label={`Захиалгын дугаар ${orderId}`}>ID: {orderId}</span>
             </div>
 
             <div className="success-info-row">

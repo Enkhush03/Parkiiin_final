@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar/Navbar'
 import { bookingService } from '../services/bookingService'
+import { apiUrl, authFetch } from '../services/api'
 
 export default function Booking() {
   const { state } = useLocation()
@@ -46,13 +47,49 @@ export default function Booking() {
   const discount = useLoyalty ? (config?.Booking?.Bonus || 0) : 0
   const total = basePrice - discount
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
+      alert('Та нэвтэрсэн байх шаардлагатай.');
+      navigate('/login');
+      return;
+    }
+
+    const selectedVehicle = vehicles.find(v => v._id === selectedVehicleId);
+    let savedOrderId = '#' + Math.floor(10000 + Math.random() * 90000);
+
+    try {
+      const res = await authFetch(apiUrl('/orders'), {
+        method: 'POST',
+        body: JSON.stringify({
+          type: type || 'parking',
+          name,
+          loc: 'Сүхбаатар дүүрэг, УБ',
+          price: total,
+          hour,
+          payment,
+          vehicle: selectedVehicle
+            ? { model: selectedVehicle.model, plate: selectedVehicle.plate, emoji: selectedVehicle.emoji }
+            : {}
+        })
+      });
+
+      if (res.ok) {
+        const order = await res.json();
+        savedOrderId = order.orderId || savedOrderId;
+      }
+    } catch (err) {
+      console.error('Захиалга хадгалахад алдаа:', err);
+    }
+
     navigate('/success', {
       state: {
         name,
         loc: 'Сүхбаатар дүүрэг, УБ',
         hour,
-        total
+        total,
+        orderId: savedOrderId,
+        type
       }
     })
   }

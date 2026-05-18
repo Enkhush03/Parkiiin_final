@@ -12,6 +12,10 @@ export default function Profile() {
   const [vehicles, setVehicles] = useState([])
   const [newVehicle, setNewVehicle] = useState({ model: '', plate: '', emoji: '🚗' })
 
+  // Orders state
+  const [orders, setOrders] = useState([])
+  const [ordersLoading, setOrdersLoading] = useState(false)
+
   useEffect(() => {
     // Load user from localStorage
     const storedUser = localStorage.getItem('user');
@@ -35,6 +39,16 @@ export default function Profile() {
           localStorage.setItem('user', JSON.stringify({ ...parsedUser, ...data }));
         })
         .catch(err => console.error(err));
+
+      // Fetch order history
+      setOrdersLoading(true);
+      authFetch(apiUrl(`/orders/user/${parsedUser.id}`))
+        .then(res => res.ok ? res.json() : [])
+        .then(data => {
+          setOrders(Array.isArray(data) ? data : []);
+          setOrdersLoading(false);
+        })
+        .catch(() => setOrdersLoading(false));
     } else {
       navigate('/login');
     }
@@ -118,7 +132,7 @@ export default function Profile() {
               <div className="profile-stat-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
               </div>
-              <div className="profile-stat-num">0</div>
+              <div className="profile-stat-num">{orders.filter(o => o.type === 'parking').length}</div>
               <div className="profile-stat-lbl">Зогсоол</div>
             </div>
             <div className="profile-stat-card profile-stat-card--accent" onClick={() => setActiveSubpage('loyalty')}>
@@ -205,8 +219,72 @@ export default function Profile() {
           
           <div className="subpage-content" style={{ padding: '20px', flex: 1 }}>
             
-            {/* VEHICLES SUBPAGE */}
-            {activeSubpage === 'vehicles' ? (
+            {/* HISTORY SUBPAGE */}
+            {activeSubpage === 'history' ? (
+              <div className="history-wrap">
+                {ordersLoading ? (
+                  <p style={{ textAlign: 'center', color: '#999', marginTop: '40px' }}>Уншиж байна...</p>
+                ) : orders.length === 0 ? (
+                  <div style={{ textAlign: 'center', marginTop: '60px' }}>
+                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>📝</div>
+                    <p style={{ color: '#999', fontSize: '16px' }}>Захиалга байхгүй байна.</p>
+                    <p style={{ color: '#bbb', fontSize: '14px' }}>Зогсоол болон үйлчилгээ захиалахад энд дараач.</p>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {orders.map(order => {
+                      const typeLabel = order.type === 'parking' ? 'Зогсоол' : (order.type === 'washing' || order.type === 'wash') ? 'Угаалга' : 'Засвар';
+                      const typeBg = order.type === 'parking' ? '#e8f5e9' : (order.type === 'washing' || order.type === 'wash') ? '#e3f2fd' : '#fff3e0';
+                      const typeColor = order.type === 'parking' ? '#2e7d32' : (order.type === 'washing' || order.type === 'wash') ? '#1565c0' : '#e65100';
+                      const statusLabel = order.status === 'active' ? 'Идэвхтэй' : order.status === 'completed' ? 'Дууссан' : 'Цуцлагдсан';
+                      const statusColor = order.status === 'active' ? '#2BBFA0' : order.status === 'completed' ? '#999' : '#ff4d4f';
+                      const dateStr = new Date(order.createdAt).toLocaleDateString('mn-MN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                      const timeStr = new Date(order.createdAt).toLocaleTimeString('mn-MN', { hour: '2-digit', minute: '2-digit' });
+                      return (
+                        <div key={order._id} style={{
+                          background: '#fff',
+                          borderRadius: '12px',
+                          padding: '16px',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                          border: '1px solid #f0f0f0'
+                        }}>
+                          {/* Header row */}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <span style={{
+                                background: typeBg, color: typeColor,
+                                borderRadius: '6px', padding: '3px 8px',
+                                fontSize: '12px', fontWeight: '600'
+                              }}>{typeLabel}</span>
+                              <span style={{ color: statusColor, fontSize: '12px', fontWeight: '600' }}>● {statusLabel}</span>
+                            </div>
+                            <span style={{ fontSize: '11px', color: '#bbb' }}>{dateStr} {timeStr}</span>
+                          </div>
+
+                          {/* Name + location */}
+                          <div style={{ fontWeight: '700', fontSize: '16px', marginBottom: '4px' }}>{order.name}</div>
+                          {order.loc && <div style={{ color: '#888', fontSize: '13px', marginBottom: '8px' }}>{order.loc}</div>}
+
+                          {/* Details row */}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', gap: '12px', fontSize: '13px', color: '#666' }}>
+                              {order.hour && <span>{order.hour} цаг</span>}
+                              {order.vehicle?.plate && (
+                                <span>{order.vehicle.plate}</span>
+                              )}
+                              <span style={{ color: '#aaa' }}>{order.orderId}</span>
+                            </div>
+                            <div style={{ fontWeight: '700', color: 'var(--primary)', fontSize: '16px' }}>
+                              {order.price?.toLocaleString()}₮
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            ) : activeSubpage === 'vehicles' ? (
               <div className="vehicles-wrap">
                 <form onSubmit={handleAddVehicle} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                   <input type="text" placeholder="Загвар (Prius)" required style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #ddd' }}
