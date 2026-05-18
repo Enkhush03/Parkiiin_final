@@ -1,0 +1,34 @@
+{
+  "services": [
+    {
+      "id": "cleanmax",
+      "name": "CleanMax Auto Wash",
+      "type": "washing",
+      "loc": "Сүхбаатар дүүрэг, 1.2км",
+      "price": "25,000₮",
+      "rating": 4.8,
+      "top": "38%",
+      "left": "48%",
+      "emoji": "🚿",
+      "distance": "1.2км",
+      "time": "25-35 мин",
+      "tag": "Нээлттэй",
+      "gradient": "linear-gradient(135deg,#1a2e2a,#2BBFA0)"
+    },
+    {
+      "id": "autodoc",
+      "name": "Auto Doc Repair",
+      "type": "repair",
+      "loc": "Баянзүрх дүүрэг, 1.2км",
+      "price": "Тохиролцоно",
+      "rating": 4.9,
+      "top": "56%",
+      "left": "62%",
+      "emoji": "🔧",
+      "distance": "1.2км",
+      "time": "30-60 мин",
+      "tag": "Нээлттэй",
+      "gradient": "linear-gradient(135deg,#2b1a1a,#ff6b6b)"
+    }
+  ]
+}

@@ -1,0 +1,444 @@
+/* ── Page Layout ─────────────────────────────────────── */
+.page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ── Map ─────────────────────────────────────────────── */
+.mapWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.mapLoader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #2BBFA0;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Leaflet z-index override */
+.mapWrap :global(.leaflet-container) {
+  z-index: 0;
+}
+
+/* ── Floating Top UI ─────────────────────────────────── */
+.topUi {
+  position: absolute;
+  top: 64px; /* below Navbar */
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 12px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.topUi > * { pointer-events: auto; }
+
+.searchRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.searchBar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 0 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  gap: 8px;
+  border: 1px solid var(--border);
+}
+
+.searchBar svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #94a3b8;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 12px 0;
+  background: transparent;
+  color: var(--text);
+}
+
+.searchBar input::placeholder { color: #94a3b8; }
+
+.clearBtn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* Category tabs */
+.cats {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cats::-webkit-scrollbar { display: none; }
+
+.cat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.1);
+  transition: all 0.15s;
+}
+
+.cat svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.catActive { background: #2BBFA0; color: #fff; box-shadow: 0 2px 12px rgba(43,191,160,0.35); }
+.catBlue   { }
+.catOrange { }
+.cat:not(.catActive):hover { background: #f8fafc; }
+
+/* Sort tabs */
+.sortTabs {
+  display: flex;
+  gap: 6px;
+}
+
+.sortTab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--card-bg);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.15s;
+}
+
+.sortTabActive {
+  background: #2BBFA0;
+  border-color: #2BBFA0;
+  color: #fff;
+}
+
+/* ── Bottom Detail Card ──────────────────────────────── */
+.detailCard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: var(--card-bg);
+  border-radius: 20px 20px 0 0;
+  padding: 12px 20px 32px;
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.18);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top: 1px solid var(--border);
+}
+
+.detailCardActive {
+  transform: translateY(0);
+}
+
+.detailHandle {
+  width: 40px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+
+.detailClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailClose svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #64748b;
+  stroke-width: 2;
+}
+
+.detailHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.detailImg {
+  width: 56px;
+  height: 56px;
+  background: #f1f5f9;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.detailInfo { flex: 1; }
+
+.detailName {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.detailLoc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.detailMeta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.detailPrice {
+  font-weight: 700;
+  color: #2BBFA0;
+  font-size: 15px;
+}
+
+.detailSlots {
+  font-size: 12px;
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.detailRating {
+  font-size: 12px;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.detailBook {
+  background: #2BBFA0;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.detailBook:hover { background: #1e9e85; }
+
+/* Sub services row */
+.subServices {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.subServiceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subServiceLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.subServiceLabel svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.subServiceBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2BBFA0;
+  text-decoration: none;
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #2BBFA0;
+  transition: all 0.15s;
+}
+
+.subServiceBtn:hover { background: #2BBFA0; color: #fff; }
+
+/* ── Parking List Sheet ──────────────────────────────── */
+.listSheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 15;
+  background: var(--card-bg);
+  border-radius: 20px 20px 0 0;
+  max-height: 52vh;
+  overflow-y: auto;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+  transition: transform 0.3s;
+  border-top: 1px solid var(--border);
+}
+
+/* Push sheet down when detail card is active */
+.detailCardActive ~ .listSheet {
+  transform: translateY(100%);
+}
+
+.sheetHandle {
+  width: 40px;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin: 12px auto 8px;
+}
+
+.sheetHeader {
+  padding: 0 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sheetTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sheetCount {
+  background: #2BBFA0;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 12px;
+}
+
+.parkingGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.parkingCard {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f8fafc;
+  transition: background 0.12s;
+  align-items: center;
+}
+
+.parkingCard:hover { background: #f8fafc; }
+.parkingCardActive { background: #e8faf6 !important; }
+
+.parkingBody { flex: 1; }
+
+.parkingName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.parkingLoc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.parkingFoot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

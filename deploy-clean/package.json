@@ -1,0 +1,9 @@
+{
+  "name": "parkiiin-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm start --prefix backend",
+    "install": "npm install --prefix backend"
+  }
+}
