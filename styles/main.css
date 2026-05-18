@@ -24,7 +24,317 @@
   --radius-sm: 10px;
   --top-nav-height: 64px;
 }
-
+/* ── Dark mode variables ─────────────────────────────────── */
+[data-theme="dark"] {
+  --primary:        #2BBFA0;
+  --primary-dark:   #1e9e85;
+  --primary-light:  rgba(43,191,160,0.12);
+ 
+  --bg:             #0e1714;
+  --bg-white:       #151f1c;
+  --text:           #e4f0ee;
+  --text-muted:     #7ab5ae;
+  --border:         rgba(43,191,160,0.15);
+  --card-bg:        #1a2724;
+ 
+  --shadow:         0 4px 24px rgba(0,0,0,0.35);
+  --shadow-lg:      0 8px 40px rgba(0,0,0,0.50);
+}
+ 
+/* ── Element overrides ───────────────────────────────────── */
+ 
+/* Body */
+[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+ 
+/* ── Navigation ──────────────────────────────────────────── */
+[data-theme="dark"] .top-nav {
+  background: rgba(21,31,28,0.96);
+  border-bottom-color: var(--border);
+}
+ 
+[data-theme="dark"] .mobile-menu {
+  background: #1a2724;
+  border-bottom-color: var(--border);
+}
+ 
+[data-theme="dark"] .bottom-nav {
+  background: #151f1c;
+  border-top-color: var(--border);
+}
+ 
+[data-theme="dark"] .bottom-nav-item {
+  color: var(--text-muted);
+}
+ 
+/* ── Cards & surfaces ────────────────────────────────────── */
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .parking-card,
+[data-theme="dark"] .section-card,
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .success-card,
+[data-theme="dark"] .tip-article,
+[data-theme="dark"] .service-card,
+[data-theme="dark"] .wash-card,
+[data-theme="dark"] .wash-card-small,
+[data-theme="dark"] .article-card,
+[data-theme="dark"] .history-card,
+[data-theme="dark"] .review-card,
+[data-theme="dark"] .menu-item,
+[data-theme="dark"] .profile-stat-card,
+[data-theme="dark"] .rates-stat-tile,
+[data-theme="dark"] .parking-card,
+[data-theme="dark"] .map-detail-card {
+  background: #1a2724;
+  border-color: var(--border);
+  color: var(--text);
+}
+ 
+[data-theme="dark"] .map-detail-card {
+  background: #1a2724;
+  border-top-color: var(--border);
+}
+ 
+/* ── Buttons ─────────────────────────────────────────────── */
+[data-theme="dark"] .btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+ 
+[data-theme="dark"] .btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+ 
+[data-theme="dark"] .book-btn,
+[data-theme="dark"] .social-btn,
+[data-theme="dark"] .hour-btn,
+[data-theme="dark"] .v-opt,
+[data-theme="dark"] .pay-opt,
+[data-theme="dark"] .car-type-btn,
+[data-theme="dark"] .date-pill,
+[data-theme="dark"] .appt-time-slot {
+  background: #1a2724;
+  border-color: var(--border);
+  color: var(--text);
+}
+ 
+[data-theme="dark"] .hour-btn:hover,
+[data-theme="dark"] .hour-btn.active,
+[data-theme="dark"] .v-opt:hover,
+[data-theme="dark"] .v-opt.active,
+[data-theme="dark"] .pay-opt:hover,
+[data-theme="dark"] .pay-opt.active,
+[data-theme="dark"] .car-type-btn:hover,
+[data-theme="dark"] .car-type-btn.active,
+[data-theme="dark"] .date-pill:hover,
+[data-theme="dark"] .date-pill.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+ 
+[data-theme="dark"] .back-btn {
+  background: #1a2724;
+  border-color: var(--border);
+  color: var(--text);
+}
+ 
+[data-theme="dark"] .back-btn:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+ 
+/* ── Forms ───────────────────────────────────────────────── */
+[data-theme="dark"] .form-i {
+  background: #0e1714;
+  border-color: var(--border);
+  color: var(--text);
+}
+ 
+[data-theme="dark"] .form-i:focus {
+  background: #1a2724;
+  border-color: var(--primary);
+}
+ 
+[data-theme="dark"] .form-i::placeholder {
+  color: var(--text-muted);
+}
+ 
+[data-theme="dark"] .search-bar {
+  background: #1a2724;
+  border-color: var(--border);
+}
+ 
+[data-theme="dark"] .search-bar input {
+  background: transparent;
+  color: var(--text);
+}
+ 
+[data-theme="dark"] .search-bar input::placeholder {
+  color: var(--text-muted);
+}
+ 
+/* ── Filter tabs ─────────────────────────────────────────── */
+[data-theme="dark"] .filter-tab,
+[data-theme="dark"] .tips-tab,
+[data-theme="dark"] .service-tab,
+[data-theme="dark"] .tips-cat-pill,
+[data-theme="dark"] .map-cat,
+[data-theme="dark"] .wash-filter-sort {
+  background: #1a2724;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+ 
+[data-theme="dark"] .tab-sw {
+  background: rgba(43,191,160,0.10);
+}
+ 
+[data-theme="dark"] .tab-b {
+  color: var(--text-muted);
+}
+ 
+/* ── Hero & page headers ─────────────────────────────────── */
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #0e1f1b 0%, #0a1a16 50%, #061210 100%);
+}
+ 
+[data-theme="dark"] .page-header {
+  background: linear-gradient(135deg, #0e1f1b, #0a1a16);
+}
+ 
+[data-theme="dark"] .page-header h1 {
+  color: var(--text);
+}
+ 
+[data-theme="dark"] .page-header p {
+  color: var(--text-muted);
+}
+ 
+[data-theme="dark"] .auth-wrap {
+  background: linear-gradient(135deg, #0c1a17, #081210);
+}
+ 
+/* ── Profile hero ────────────────────────────────────────── */
+[data-theme="dark"] .profile-hero {
+  background: linear-gradient(135deg, #0e1a17, #1e9e85);
+}
+ 
+/* ── Points / loyalty ────────────────────────────────────── */
+[data-theme="dark"] .points-inner {
+  background: #1a2724;
+  border-color: var(--border);
+}
+ 
+/* ── Stats row (home) ────────────────────────────────────── */
+[data-theme="dark"] .stat-item {
+  border-right-color: var(--border);
+}
+ 
+/* ── Map ─────────────────────────────────────────────────── */
+[data-theme="dark"] .map-wrap {
+  background: linear-gradient(135deg, #0e1a17, #0a1510);
+  border-color: var(--border);
+}
+ 
+[data-theme="dark"] .map-top-ui .search-bar,
+[data-theme="dark"] .map-search-bar {
+  background: #1a2724;
+}
+ 
+[data-theme="dark"] .map-filter-btn,
+[data-theme="dark"] .map-control-btn {
+  background: #1a2724;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+ 
+[data-theme="dark"] .map-cat {
+  background: #1a2724;
+}
+ 
+/* ── Summary & price rows ────────────────────────────────── */
+[data-theme="dark"] .sum-row {
+  border-bottom-color: var(--border);
+}
+ 
+/* ── Scrollbar ───────────────────────────────────────────── */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #0e1714;
+}
+ 
+/* ── Activity timeline ───────────────────────────────────── */
+[data-theme="dark"] .timeline-dot {
+  background: #1a2724;
+  border-color: var(--border);
+}
+ 
+[data-theme="dark"] .timeline-connector {
+  background: var(--border);
+}
+ 
+/* ── Dark mode toggle button itself ─────────────────────── */
+.dark-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+ 
+.dark-toggle:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+ 
+.dark-toggle svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  transition: transform 0.4s cubic-bezier(0.34,1.4,0.64,1);
+}
+ 
+[data-theme="dark"] .dark-toggle svg {
+  transform: rotate(180deg);
+}
+ 
+/* ── Smooth transitions ──────────────────────────────────── */
+body,
+.top-nav,
+.bottom-nav,
+.feature-card,
+.parking-card,
+.section-card,
+.auth-card,
+.form-i,
+.search-bar,
+.filter-tab,
+.tips-tab,
+.service-tab,
+.menu-item,
+.history-card,
+.wash-card,
+.article-card {
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
 /* ── RESET ────────────────────────────────────────────── */
 *,
 *::before,

@@ -15,7 +15,9 @@ import Login    from './pages/Login/Login'
 import Booking  from './pages/Booking'
 import Success  from './pages/Success'
 
-import AdminParking from './pages/Admin/AdminParking'
+import AdminParking   from './pages/Admin/AdminParking'
+import AdminServices  from './pages/Admin/AdminServices'
+import AdminDashboard from './pages/Admin/AdminDashboard'
 
 export default function App() {
   return (
@@ -43,7 +45,9 @@ export default function App() {
         <Route path="/login"   element={<Login />} />
 
         {/* Admin */}
-        <Route path="/admin/parking" element={<AdminParking />} />
+        <Route path="/admin"          element={<AdminDashboard />} />
+        <Route path="/admin/parking"  element={<AdminParking />} />
+        <Route path="/admin/services" element={<AdminServices />} />
       </Routes>
     </BrowserRouter>
   )

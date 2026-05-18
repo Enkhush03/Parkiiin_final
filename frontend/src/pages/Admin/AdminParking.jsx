@@ -10,8 +10,8 @@ import { apiUrl, authFetch } from '../../services/api';
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl:   'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
 const UB_CENTER = [47.9184, 106.9177];
@@ -35,7 +35,7 @@ export default function AdminParking() {
   const [pickedPos, setPickedPos] = useState(null);   // { lat, lng }
   const [showMap, setShowMap]   = useState(false);
   const [saving, setSaving]     = useState(false);
-  const [toast, setToast]       = useState(null);
+  const [toast, setToast]  = useState(null);
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type });
@@ -71,21 +71,21 @@ export default function AdminParking() {
       const response = await authFetch(apiUrl('/parking'), {
         method: 'POST',
         body: JSON.stringify({
-          spotId:      formData.spotId,
-          name:        formData.name,
-          loc:         formData.loc,
-          price:       Number(formData.price),
-          slots:       Number(formData.slots),
-          dist:        1.0,
-          rating:      Number(formData.rating),
-          cssClass:    'c1',
-          badge:       `${formData.slots} зогсоол`,
-          emoji:       formData.emoji,
+          spotId:   formData.spotId,
+          name:   formData.name,
+          loc: formData.loc,
+          price: Number(formData.price),
+          slots:   Number(formData.slots),
+          dist:  1.0,
+          rating:  Number(formData.rating),
+          cssClass: 'c1',
+          badge:`${formData.slots} зогсоол`,
+          emoji: formData.emoji,
           markerPrice: `${formData.price}₮`,
           markerSlots: `${formData.slots} зогсоол`,
-          markerLoc:   formData.loc,
-          lat:         formData.lat ? Number(formData.lat) : null,
-          lng:         formData.lng ? Number(formData.lng) : null,
+          markerLoc: formData.loc,
+          lat:  formData.lat ? Number(formData.lat) : null,
+          lng: formData.lng ? Number(formData.lng) : null,
         })
       });
 
@@ -145,12 +145,6 @@ export default function AdminParking() {
                   <input className={s.input} type="text" name="spotId"
                     placeholder="жишээ нь: emart" value={formData.spotId}
                     onChange={handleChange} required />
-                </div>
-                <div className={s.fieldGroup}>
-                  <label className={s.label}>Emoji</label>
-                  <input className={s.input} type="text" name="emoji"
-                    placeholder="🅿️" value={formData.emoji}
-                    onChange={handleChange} style={{ fontSize: '20px' }} />
                 </div>
               </div>
 
@@ -249,7 +243,7 @@ export default function AdminParking() {
             <h3 className={s.cardTitle}>🅿️ Одоо байгаа зогсоолууд</h3>
             <div className={s.spotList}>
               {spots.map(spot => (
-                <div key={spot.id} className={s.spotItem}>
+                <div key={spot.spotId} className={s.spotItem}>
                   <div className={s.spotEmoji}>{spot.emoji}</div>
                   <div className={s.spotInfo}>
                     <strong className={s.spotName}>{spot.name}</strong>
@@ -258,12 +252,12 @@ export default function AdminParking() {
                       <span className={s.metaChip}>{spot.price?.toLocaleString('mn-MN')}₮/цаг</span>
                       <span className={s.metaChip}>{spot.slots} зогсоол</span>
                       {spot.lat && spot.lng
-                        ? <span className={`${s.metaChip} ${s.metaChipGps}`}>📍 GPS бий</span>
-                        : <span className={`${s.metaChip} ${s.metaChipNoGps}`}>⚠️ GPS байхгүй</span>
+                        ? <span className={`${s.metaChip} ${s.metaChipGps}`}>GPS</span>
+                        : <span className={`${s.metaChip} ${s.metaChipNoGps}`}>GPS байхгүй</span>
                       }
                     </div>
                   </div>
-                  <button onClick={() => handleDelete(spot.id)} className={s.deleteBtn} aria-label="Устгах">
+                  <button onClick={() => handleDelete(spot.spotId)} className={s.deleteBtn} aria-label="Устгах">
                     🗑
                   </button>
                 </div>

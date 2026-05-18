@@ -6,11 +6,12 @@ export const userService = {
   getTips: async () => {
     try {
       const response = await fetch(apiUrl('/tips'));
-      if (!response.ok) throw new Error('Network response was not ok');
+      if (!response.ok) throw new Error('API failed');
       return await response.json();
-    } catch (error) {
-      console.error("Fetching tips failed:", error);
-      throw error;
+    } catch {
+      // API амжилтгүй бол статик JSON-оос уншина
+      const fallback = await fetch('/api/tips.json');
+      return await fallback.json();
     }
   },
 

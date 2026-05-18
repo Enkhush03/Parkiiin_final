@@ -6,17 +6,17 @@ import { userService } from '../../services/userService'
 import s from './Tips.module.css'
 
 const CATS = [
-  { key: 'all',    label: 'Бүгд' },
+  { key: 'all', label: 'Бүгд' },
   { key: 'safety', label: 'Аюулгүй байдал' },
-  { key: 'signs',  label: 'Тэмдэг' },
-  { key: 'eco',    label: 'Эко' },
-  { key: 'night',  label: 'Шөнийн' },
+  { key:'signs', label: 'Тэмдэг' },
+  { key: 'eco', label: 'Эко' },
+  { key:'night', label: 'Шөнийн' },
 ]
 
 export default function Tips() {
-  const [tab,    setTab]    = useState('article')
-  const [cat,    setCat]    = useState('all')
-  const [query,  setQuery]  = useState('')
+  const [tab, setTab] = useState('article')
+  const [cat, setCat] = useState('all')
+  const [query, setQuery] = useState('')
   const [apiData, setApiData] = useState({ TipsArticles: [], TipsVideos: [] })
 
   useEffect(() => {
@@ -27,7 +27,6 @@ export default function Tips() {
       .catch(err => console.error("Error loading tips:", err))
   }, [])
 
-  // Нийтлэлийн шүүлт — useMemo ашиглан
   const articles = useMemo(() =>
     apiData.TipsArticles
       .filter(a => cat === 'all' || a.cat === cat)
@@ -38,7 +37,6 @@ export default function Tips() {
     [apiData.TipsArticles, cat, query]
   )
 
-  // Видеоны шүүлт
   const videos = useMemo(() =>
     apiData.TipsVideos.filter(v =>
       !v.featured && v.label.toLowerCase().includes(query.toLowerCase())
@@ -95,7 +93,7 @@ export default function Tips() {
 
             <div className={s.sectionRow}>
               <h3>Нийтлэлүүд</h3>
-              {tab !== 'all' && <a href="#">Бүгдийг үзэх →</a>}
+              {tab !== 'all' && <a href="#">Бүгдийг нь үзэх →</a>}
             </div>
 
             {articles.length > 0 ? (
@@ -103,7 +101,7 @@ export default function Tips() {
                 <TipCard key={article.id} {...article} />
               ))
             ) : (
-              <p style={{ textAlign: 'center', opacity: 0.6 }}>Илэрц олдсонгүй.</p>
+              <p style={{ textAlign: 'center', opacity: 0.6 }}> Хайлт олдсонгүй.</p>
             )}
           </div>
         )}

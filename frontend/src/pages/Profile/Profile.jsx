@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
 import { apiUrl, authFetch } from '../../services/api'
 
@@ -7,51 +7,47 @@ export default function Profile() {
   const navigate = useNavigate();
   const [activeSubpage, setActiveSubpage] = useState(null)
   const [user, setUser] = useState(null)
-  
-  // Vehicles state
   const [vehicles, setVehicles] = useState([])
   const [newVehicle, setNewVehicle] = useState({ model: '', plate: '', emoji: '🚗' })
-
-  // Orders state
   const [orders, setOrders] = useState([])
   const [ordersLoading, setOrdersLoading] = useState(false)
 
   useEffect(() => {
-    // Load user from localStorage
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      // Fetch latest user data from server to get updated vehicles
-      authFetch(apiUrl(`/users/${parsedUser.id}`))
-        .then(res => {
-          if (res.status === 401 || res.status === 403) {
-            localStorage.removeItem('user');
-            navigate('/login');
-            return null;
-          }
-          return res.json();
-        })
-        .then(data => {
-          if (!data) return;
-          setUser(prev => ({ ...prev, ...data }));
-          setVehicles(data.vehicles || []);
-          localStorage.setItem('user', JSON.stringify({ ...parsedUser, ...data }));
-        })
-        .catch(err => console.error(err));
-
-      // Fetch order history
-      setOrdersLoading(true);
-      authFetch(apiUrl(`/orders/user/${parsedUser.id}`))
-        .then(res => res.ok ? res.json() : [])
-        .then(data => {
-          setOrders(Array.isArray(data) ? data : []);
-          setOrdersLoading(false);
-        })
-        .catch(() => setOrdersLoading(false));
-    } else {
+    if (!storedUser) {
       navigate('/login');
+      return;
     }
+
+    const parsedUser = JSON.parse(storedUser);
+    setUser(parsedUser);
+
+    authFetch(apiUrl(`/users/${parsedUser.id}`))
+      .then(res => {
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem('user');
+          navigate('/login');
+          return null;
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (!data) return;
+        const updatedUser = { ...parsedUser, ...data };
+        setUser(updatedUser);
+        setVehicles(data.vehicles || []);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      })
+      .catch(err => console.error(err));
+
+    setOrdersLoading(true);
+    authFetch(apiUrl(`/orders/user/${parsedUser.id}`))
+      .then(res => res.ok ? res.json() : [])
+      .then(data => {
+        setOrders(Array.isArray(data) ? data : []);
+        setOrdersLoading(false);
+      })
+      .catch(() => setOrdersLoading(false));
   }, [navigate]);
 
   const handleLogout = () => {
@@ -64,14 +60,13 @@ export default function Profile() {
     try {
       const response = await authFetch(apiUrl(`/users/${user.id}/vehicles`), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newVehicle)
       });
+
       if (response.ok) {
         const updatedVehicles = await response.json();
         setVehicles(updatedVehicles);
         setNewVehicle({ model: '', plate: '', emoji: '🚗' });
-        // Update localStorage
         const updatedUser = { ...user, vehicles: updatedVehicles };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -85,10 +80,12 @@ export default function Profile() {
 
   const handleDeleteVehicle = async (vehicleId) => {
     if (!window.confirm('Энэ машиныг устгах уу?')) return;
+
     try {
       const response = await authFetch(apiUrl(`/users/${user.id}/vehicles/${vehicleId}`), {
         method: 'DELETE'
       });
+
       if (response.ok) {
         const updatedVehicles = await response.json();
         setVehicles(updatedVehicles);
@@ -108,10 +105,9 @@ export default function Profile() {
       <Navbar />
 
       <main id="profilePage" className="page-enter" style={{ paddingTop: '64px', paddingBottom: '80px' }}>
-        {/* HERO BANNER */}
         <div className="profile-hero">
           <div className="profile-top">
-            <div className="avatar" aria-label="Хэрэглэгчийн дүрс тэмдэг">{user.name.charAt(0).toUpperCase()}</div>
+            <div className="avatar" aria-label="Хэрэглэгчийн дүрс тэмдэг">{user.name?.charAt(0).toUpperCase()}</div>
             <div className="profile-info">
               <h1>{user.name}</h1>
               <p>{user.email}</p>
@@ -125,7 +121,6 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* STATS GRID */}
         <div className="profile-stats-wrap">
           <div className="profile-stats-grid">
             <div className="profile-stat-card">
@@ -152,7 +147,6 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* MAIN MENU */}
         <div className="menu-list" role="navigation" aria-label="Профайл цэс">
           <div className="menu-item" onClick={() => setActiveSubpage('vehicles')} role="button" tabIndex="0">
             <div className="menu-icon" aria-hidden="true">
@@ -188,7 +182,6 @@ export default function Profile() {
         </div>
       </main>
 
-      {/* SUBPAGES */}
       {activeSubpage && (
         <div className="subpage active" style={{
           position: 'fixed',
@@ -204,8 +197,8 @@ export default function Profile() {
             borderBottom: '1px solid #eee', background: '#fff',
             position: 'sticky', top: 0, zIndex: 10
           }}>
-            <button 
-              className="subpage-back" 
+            <button
+              className="subpage-back"
               onClick={() => setActiveSubpage(null)}
               style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', marginRight: '16px' }}
             >←</button>
@@ -216,10 +209,8 @@ export default function Profile() {
                     activeSubpage === 'payments' ? 'Төлбөрийн хэрэгсэл' : 'Тохиргоо'
             }</h2>
           </div>
-          
+
           <div className="subpage-content" style={{ padding: '20px', flex: 1 }}>
-            
-            {/* HISTORY SUBPAGE */}
             {activeSubpage === 'history' ? (
               <div className="history-wrap">
                 {ordersLoading ? (
@@ -228,7 +219,7 @@ export default function Profile() {
                   <div style={{ textAlign: 'center', marginTop: '60px' }}>
                     <div style={{ fontSize: '48px', marginBottom: '16px' }}>📝</div>
                     <p style={{ color: '#999', fontSize: '16px' }}>Захиалга байхгүй байна.</p>
-                    <p style={{ color: '#bbb', fontSize: '14px' }}>Зогсоол болон үйлчилгээ захиалахад энд дараач.</p>
+                    <p style={{ color: '#bbb', fontSize: '14px' }}>Зогсоол болон үйлчилгээ захиалахад энд харагдана.</p>
                   </div>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -238,8 +229,10 @@ export default function Profile() {
                       const typeColor = order.type === 'parking' ? '#2e7d32' : (order.type === 'washing' || order.type === 'wash') ? '#1565c0' : '#e65100';
                       const statusLabel = order.status === 'active' ? 'Идэвхтэй' : order.status === 'completed' ? 'Дууссан' : 'Цуцлагдсан';
                       const statusColor = order.status === 'active' ? '#2BBFA0' : order.status === 'completed' ? '#999' : '#ff4d4f';
-                      const dateStr = new Date(order.createdAt).toLocaleDateString('mn-MN', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                      const timeStr = new Date(order.createdAt).toLocaleTimeString('mn-MN', { hour: '2-digit', minute: '2-digit' });
+                      const date = new Date(order.createdAt);
+                      const dateStr = date.toLocaleDateString('mn-MN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                      const timeStr = date.toLocaleTimeString('mn-MN', { hour: '2-digit', minute: '2-digit' });
+
                       return (
                         <div key={order._id} style={{
                           background: '#fff',
@@ -248,7 +241,6 @@ export default function Profile() {
                           boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                           border: '1px solid #f0f0f0'
                         }}>
-                          {/* Header row */}
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                               <span style={{
@@ -261,21 +253,17 @@ export default function Profile() {
                             <span style={{ fontSize: '11px', color: '#bbb' }}>{dateStr} {timeStr}</span>
                           </div>
 
-                          {/* Name + location */}
                           <div style={{ fontWeight: '700', fontSize: '16px', marginBottom: '4px' }}>{order.name}</div>
                           {order.loc && <div style={{ color: '#888', fontSize: '13px', marginBottom: '8px' }}>{order.loc}</div>}
 
-                          {/* Details row */}
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div style={{ display: 'flex', gap: '12px', fontSize: '13px', color: '#666' }}>
                               {order.hour && <span>{order.hour} цаг</span>}
-                              {order.vehicle?.plate && (
-                                <span>{order.vehicle.plate}</span>
-                              )}
+                              {order.vehicle?.plate && <span>{order.vehicle.plate}</span>}
                               <span style={{ color: '#aaa' }}>{order.orderId}</span>
                             </div>
                             <div style={{ fontWeight: '700', color: 'var(--primary)', fontSize: '16px' }}>
-                              {order.price?.toLocaleString()}₮
+                              {order.price?.toLocaleString('mn-MN')}₮
                             </div>
                           </div>
                         </div>
@@ -315,7 +303,6 @@ export default function Profile() {
                 Энэ хэсэг хөгжүүлэлтийн шатанд байна.
               </p>
             )}
-
           </div>
         </div>
       )}

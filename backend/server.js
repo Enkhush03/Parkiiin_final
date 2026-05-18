@@ -28,16 +28,15 @@ mongoose.connect(MONGO_URI)
     })
     .catch(err => console.error('MongoDB connection failed:', err.message));
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(cors({
     origin: CLIENT_ORIGIN,
     credentials: true
 }));
 app.use(express.json());
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 const formatParkingSpot = (spot) => ({
     id: spot.spotId,
+    spotId: spot.spotId,
     name: spot.name,
     loc: spot.loc,
     price: spot.price,
@@ -55,6 +54,7 @@ const formatParkingSpot = (spot) => ({
 
 const formatService = (service) => ({
     id: service.serviceId,
+    serviceId: service.serviceId,
     name: service.name,
     type: service.type,
     loc: service.loc,
@@ -82,9 +82,7 @@ const generateToken = (user) => {
     );
 };
 
-// ─── API Endpoints ────────────────────────────────────────────────────────────
-
-// 1. Parking API (Public)
+// Parking API
 app.get('/api/parking', async (req, res) => {
     try {
         const parkingSpots = await Parking.find().sort({ spotId: 1 }).lean();
@@ -122,7 +120,6 @@ app.get('/api/parking/:spotId', async (req, res) => {
     }
 });
 
-// Create parking spot (Protected)
 app.post('/api/parking', auth, async (req, res) => {
     try {
         const payload = {
@@ -137,7 +134,9 @@ app.post('/api/parking', auth, async (req, res) => {
             left: req.body.left || '50%',
             markerPrice: req.body.markerPrice || formatPrice(Number(req.body.price)),
             markerSlots: req.body.markerSlots || `${req.body.slots} зогсоол`,
-            markerLoc: req.body.markerLoc || req.body.loc
+            markerLoc: req.body.markerLoc || req.body.loc,
+            lat: req.body.lat ? Number(req.body.lat) : null,
+            lng: req.body.lng ? Number(req.body.lng) : null
         };
 
         const newSpot = new Parking(payload);
@@ -148,7 +147,6 @@ app.post('/api/parking', auth, async (req, res) => {
     }
 });
 
-// Delete parking spot (Protected)
 app.delete('/api/parking/:spotId', auth, async (req, res) => {
     try {
         const result = await Parking.findOneAndDelete({ spotId: req.params.spotId });
@@ -159,7 +157,7 @@ app.delete('/api/parking/:spotId', auth, async (req, res) => {
     }
 });
 
-// 2. Booking API (Public)
+// Booking API
 app.get('/api/booking', async (req, res) => {
     try {
         const bookingData = await BookingConfig.findOne({ key: 'default' }).lean();
@@ -171,7 +169,7 @@ app.get('/api/booking', async (req, res) => {
     }
 });
 
-// 3. Services API (Public)
+// Services API
 app.get('/api/services', async (req, res) => {
     try {
         const filter = req.query.type ? { type: req.query.type } : {};
@@ -179,6 +177,30 @@ app.get('/api/services', async (req, res) => {
         res.json({ services: services.map(formatService) });
     } catch (error) {
         res.status(500).json({ message: 'Error reading services from DB', error: error.message });
+    }
+});
+
+app.post('/api/services', auth, async (req, res) => {
+    try {
+        const service = new Service({
+            ...req.body,
+            serviceId: req.body.serviceId || req.body.id,
+            rating: req.body.rating ? Number(req.body.rating) : undefined
+        });
+        const savedService = await service.save();
+        res.status(201).json(formatService(savedService));
+    } catch (error) {
+        res.status(400).json({ message: 'Error creating service', error: error.message });
+    }
+});
+
+app.delete('/api/services/:serviceId', auth, async (req, res) => {
+    try {
+        const result = await Service.findOneAndDelete({ serviceId: req.params.serviceId });
+        if (!result) return res.status(404).json({ message: 'Service not found' });
+        res.json({ message: 'Service deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting service', error: error.message });
     }
 });
 
@@ -191,7 +213,7 @@ app.get('/api/services/:type', async (req, res) => {
     }
 });
 
-// 4. Tips API (Public)
+// Tips API
 app.get('/api/tips', async (req, res) => {
     try {
         const TipsArticles = await TipArticle.find().lean();
@@ -202,17 +224,57 @@ app.get('/api/tips', async (req, res) => {
     }
 });
 
-// ─── 5. Auth & User API ───────────────────────────────────────────────────────
+app.post('/api/tips/article', auth, async (req, res) => {
+    try {
+        const article = new TipArticle(req.body);
+        const savedArticle = await article.save();
+        res.status(201).json(savedArticle);
+    } catch (error) {
+        res.status(400).json({ message: 'Error creating article', error: error.message });
+    }
+});
 
-// Register (Public)
+app.delete('/api/tips/article/:id', auth, async (req, res) => {
+    try {
+        const result = await TipArticle.findOneAndDelete({ id: req.params.id });
+        if (!result) return res.status(404).json({ message: 'Article not found' });
+        res.json({ message: 'Article deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting article', error: error.message });
+    }
+});
+
+app.post('/api/tips/video', auth, async (req, res) => {
+    try {
+        const video = new TipVideo(req.body);
+        const savedVideo = await video.save();
+        res.status(201).json(savedVideo);
+    } catch (error) {
+        res.status(400).json({ message: 'Error creating video', error: error.message });
+    }
+});
+
+app.delete('/api/tips/video/:id', auth, async (req, res) => {
+    try {
+        const result = await TipVideo.findOneAndDelete({ id: req.params.id });
+        if (!result) return res.status(404).json({ message: 'Video not found' });
+        res.json({ message: 'Video deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting video', error: error.message });
+    }
+});
+
+// Auth and User API
 app.post('/api/auth/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        if (!name || !email || !password)
+        if (!name || !email || !password) {
             return res.status(400).json({ message: 'Бүх талбарыг бөглөнө үү.' });
-        if (password.length < 6)
+        }
+        if (password.length < 6) {
             return res.status(400).json({ message: 'Нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой.' });
+        }
 
         const existingUser = await User.findOne({ email });
         if (existingUser) return res.status(400).json({ message: 'И-мэйл бүртгэлтэй байна.' });
@@ -228,13 +290,13 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
-// Login (Public)
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        if (!email || !password)
+        if (!email || !password) {
             return res.status(400).json({ message: 'И-мэйл болон нууц үгээ оруулна уу.' });
+        }
 
         const user = await User.findOne({ email });
         if (!user) return res.status(401).json({ message: 'И-мэйл эсвэл нууц үг буруу байна.' });
@@ -249,7 +311,6 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
-// Get User (Protected)
 app.get('/api/users/:id', auth, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -260,7 +321,6 @@ app.get('/api/users/:id', auth, async (req, res) => {
     }
 });
 
-// Add Vehicle (Protected)
 app.post('/api/users/:id/vehicles', auth, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -273,7 +333,6 @@ app.post('/api/users/:id/vehicles', auth, async (req, res) => {
     }
 });
 
-// Delete Vehicle (Protected)
 app.delete('/api/users/:id/vehicles/:plateId', auth, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -286,9 +345,7 @@ app.delete('/api/users/:id/vehicles/:plateId', auth, async (req, res) => {
     }
 });
 
-// ─── 6. Orders API ───────────────────────────────────────────────────────────
-
-// Create Order (Protected) - зогсоол болон service захиалга хадгалах
+// Orders API
 app.post('/api/orders', auth, async (req, res) => {
     try {
         const { type, name, loc, price, hour, payment, vehicle } = req.body;
@@ -317,12 +374,12 @@ app.post('/api/orders', auth, async (req, res) => {
     }
 });
 
-// Get User Orders (Protected) - хэрэглэгчийн захиалгын түүх
 app.get('/api/orders/user/:userId', auth, async (req, res) => {
     try {
         if (req.user.id !== req.params.userId) {
             return res.status(403).json({ message: 'Зөвшөөрөл байхгүй.' });
         }
+
         const orders = await Order.find({ userId: req.params.userId })
             .sort({ createdAt: -1 })
             .lean();
@@ -332,7 +389,6 @@ app.get('/api/orders/user/:userId', auth, async (req, res) => {
     }
 });
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

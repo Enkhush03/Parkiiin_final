@@ -14,7 +14,6 @@
 
 .content { padding: 16px 20px; }
 
-/* Search */
 .search {
   background: white;
   border-radius: 14px;
@@ -55,7 +54,6 @@
   box-shadow: 0 2px 8px rgba(43,191,160,0.30);
 }
 
-/* Category pills */
 .cats {
   display: flex; gap: 8px; overflow-x: auto;
   margin-bottom: 18px;
